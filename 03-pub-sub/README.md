@@ -19,6 +19,7 @@ ko build -B ./orderprocsvc
 # Delete existing deployments
 ```
 kubectl delete deployment frontendsvc
+kubectl delete deployment orderprocsvc
 ```
 
 # Deploy manifests
@@ -54,7 +55,7 @@ kubectl port-forward deployment/frontendsvc 8081:8080
 
 # Test the application
 ```
-curl -i -d '{ "items": ["car"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
+curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
 
 curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-56bd2207-f333-4fa5-a5f4-afd6104b2df8"
 ```
