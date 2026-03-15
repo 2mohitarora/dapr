@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 
@@ -15,6 +14,7 @@ import (
 var (
 	appPort    = os.Getenv("APP_PORT")
 	stateStore = "orders-store"
+	genidsvcId = "genidsvc"
 
 	daprClient dapr.Client
 )
@@ -50,7 +50,14 @@ func postOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	orderID := fmt.Sprintf("order-%x", rand.Int31())
+	// invoke genidsvc service to generate order UUID
+	out, err := daprClient.InvokeMethod(r.Context(), genidsvcId, "genid", "post")
+	if err != nil {
+		log.Printf("order genid: %s", err)
+		http.Error(w, "unable to post order", http.StatusInternalServerError)
+		return
+	}
+	orderID := fmt.Sprintf("order-%s", string(out))
 	receivedOrder.ID = orderID
 	receivedOrder.Received = true
 	receivedOrder.Completed = true
