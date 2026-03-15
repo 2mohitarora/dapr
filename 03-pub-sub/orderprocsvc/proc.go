@@ -43,11 +43,11 @@ func main() {
 		Topic:      topic,
 		Route:      route,
 	}
-	dc, err := dapr.NewClient()
+
+	daprClient, err := dapr.NewClient()
 	if err != nil {
 		log.Fatalf("order proc: dapr client: %s", err)
 	}
-	daprClient = dc
 	defer daprClient.Close()
 
 	s := daprd.NewService(fmt.Sprintf(":%s", appPort))
@@ -57,7 +57,6 @@ func main() {
 		log.Fatalf("orderproc: topic subscription: %v", err)
 	}
 
-	// Start service component last
 	if err := s.Start(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("orderproc: starting: %v", err)
 	}
