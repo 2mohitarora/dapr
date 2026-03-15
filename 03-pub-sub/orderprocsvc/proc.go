@@ -44,10 +44,11 @@ func main() {
 		Route:      route,
 	}
 
-	daprClient, err := dapr.NewClient()
+	dc, err := dapr.NewClient()
 	if err != nil {
 		log.Fatalf("order proc: dapr client: %s", err)
 	}
+	daprClient = dc
 	defer daprClient.Close()
 
 	s := daprd.NewService(fmt.Sprintf(":%s", appPort))
