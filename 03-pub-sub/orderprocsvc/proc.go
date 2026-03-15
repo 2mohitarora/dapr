@@ -84,6 +84,8 @@ func subHandler(ctx context.Context, event *common.TopicEvent) (retry bool, err 
 		return true, err
 	}
 
+	log.Printf("Retrieved order: %s", orderItem.Value)
+
 	var order types.Order
 	if err := json.Unmarshal(orderItem.Value, &order); err != nil {
 		log.Printf("orders-pubsub: unmarshal: %s: %s", err, orderItem.Value)
