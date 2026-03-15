@@ -8,8 +8,10 @@ brew install helm
 brew install colima
 
 # Change colima template
-```colima template
-Change few settings```
+```
+colima template
+Change few settings
+```
 
 # Start colima with k3s
 colima start --kubernetes
