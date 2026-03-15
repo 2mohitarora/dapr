@@ -79,8 +79,9 @@ func subHandler(ctx context.Context, event *common.TopicEvent) (retry bool, err 
 		log.Printf("orders-pubsub: getstate: %s", err)
 		return true, err
 	}
-	if orderItem.Value != nil {
-		log.Printf("Retrieved order: %s", string(orderItem.Value))
+	if orderItem.Value == nil {
+		log.Printf("No state found for key: %s", orderID)
+		return false, nil
 	}
 
 	var order types.Order
