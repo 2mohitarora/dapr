@@ -79,7 +79,7 @@ func subHandler(ctx context.Context, event *common.TopicEvent) (retry bool, err 
 		log.Printf("orders-pubsub: getstate: %s", err)
 		return true, err
 	}
-	if orderItem != nil {
+	if orderItem.Value != nil {
 		log.Printf("Retrieved order: %s", string(orderItem.Value))
 	}
 
