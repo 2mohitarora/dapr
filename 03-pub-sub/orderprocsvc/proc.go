@@ -31,7 +31,7 @@ func main() {
 		pubsub = "orders-pubsub"
 	}
 	if topic == "" {
-		topic = "orders"
+		topic = "received-orders"
 	}
 	if stateStore == "" {
 		stateStore = "orders-store"

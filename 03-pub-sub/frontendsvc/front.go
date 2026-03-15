@@ -13,8 +13,6 @@ import (
 
 var (
 	appPort    = os.Getenv("APP_PORT")
-	pubsub     = os.Getenv("ORDERS_PUBSUB")
-	topic      = os.Getenv("ORDERS_PUBSUB_TOPIC")
 	stateStore = os.Getenv("ORDERS_STORE")
 	genidsvcId = "genidsvc"
 
@@ -24,12 +22,6 @@ var (
 func main() {
 	if appPort == "" {
 		appPort = "8080"
-	}
-	if pubsub == "" {
-		pubsub = "orders-pubsub"
-	}
-	if topic == "" {
-		topic = "orders"
 	}
 	if stateStore == "" {
 		stateStore = "orders-store"
@@ -82,16 +74,13 @@ func postOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Save initial state of order
-	if err := daprClient.SaveState(r.Context(), stateStore, orderID, orderData, nil); err != nil {
-		log.Printf("dapr save state: %s", err)
-		http.Error(w, "unable to post order", http.StatusInternalServerError)
-		return
-	}
+	err = daprClient.SaveState(r.Context(), stateStore, orderID, orderData, map[string]string{
+		"outbox.projection": "true",  // Enable projection mode
+		"outbox.payload":    orderID, // The specific payload for pubsub
+	})
 
-	// Publish orderID as event for downstream processing
-	log.Printf("dapr publish event: {pubsub=%s, topic=%s}", pubsub, topic)
-	if err := daprClient.PublishEvent(r.Context(), pubsub, topic, []byte(orderID)); err != nil {
-		log.Printf("dapr publish event: %s", err)
+	if err != nil {
+		log.Printf("dapr save state: %s", err)
 		http.Error(w, "unable to post order", http.StatusInternalServerError)
 		return
 	}

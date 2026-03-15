@@ -12,5 +12,9 @@ spec:
       secretKeyRef:
         name: redis
         key: redis-password
+    - name: outboxPublishPubsub # The pubsub component used for the outbox
+      value: "orders-pubsub"
+    - name: outboxPublishTopic  # The default topic for outbox messages
+      value: "received-orders"
 auth:
   secretStore: kubernetes
