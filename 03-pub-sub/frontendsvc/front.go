@@ -73,11 +73,27 @@ func postOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Save initial state of order
-	err = daprClient.SaveState(r.Context(), stateStore, orderID, orderData, map[string]string{
-		"outbox.projection": "true",  // Enable projection mode
-		"outbox.payload":    orderID, // The specific payload for pubsub
+	ops := make([]*dapr.StateOperation, 0)
+	ops = append(ops, &dapr.StateOperation{
+		Type: dapr.StateOperationTypeUpsert,
+		Item: &dapr.SetStateItem{
+			Key:   orderID,
+			Value: orderData,
+		},
 	})
+	ops = append(ops, &dapr.StateOperation{
+		Type: dapr.StateOperationTypeUpsert,
+		Item: &dapr.SetStateItem{
+			Key:   orderID,
+			Value: []byte(orderID),
+			Metadata: map[string]string{
+				"outbox.projection": "true",
+			},
+		},
+	})
+	// Save state of order and publish an event
+	meta := map[string]string{}
+	err = daprClient.ExecuteStateTransaction(r.Context(), stateStore, meta, ops)
 
 	if err != nil {
 		log.Printf("dapr save state: %s", err)
