@@ -86,6 +86,19 @@ export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
 ko build -B ./frontendsvc
 ko build -B ./genidsvc
 
+# Delete existing deployments
+kubectl delete deployment frontendsvc
+
 # Deploy manifests
 kubectl apply -f ./manifest
 
+# Test application using port forwarding 
+kubectl port-forward deployment/frontendsvc 8081:8080
+
+# Test the application
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
+
+curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-36a99c85-71dd-49f6-94b3-4c1807b850a8"
+
+# Check application logs
+kubectl logs -l app=frontendsvc --prefix
