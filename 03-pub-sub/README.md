@@ -37,12 +37,14 @@ dapr components -k
 ```
 kubectl get deployments -l app=frontendsvc -o wide
 kubectl get deployments -l app=genidsvc -o wide
+kubectl get deployments -l app=orderprocsvc -o wide
 ```
 
 # Check the pods in deployment 
 ```
 kubectl get pods -l app=frontendsvc
 kubectl get pods -l app=genidsvc
+kubectl get pods -l app=orderprocsvc
 ```
 
 # Test application using port forwarding 
@@ -60,4 +62,5 @@ curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order
 # Check application logs
 ```
 kubectl logs -l app=frontendsvc --prefix
+kubectl logs -l app=orderprocsvc --prefix
 ```
