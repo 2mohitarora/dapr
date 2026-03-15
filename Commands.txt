@@ -44,6 +44,8 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm install redis bitnami/redis
 
+# State Management
+
 # Build front end service container image
 export KO_DOCKER_REPO=ko.local
 export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
@@ -75,3 +77,15 @@ curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order
 
 # Check application logs
 kubectl logs -l app=frontendsvc --prefix
+
+# Service Invocation
+
+# Build front end service and genid service container images
+export KO_DOCKER_REPO=ko.local
+export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
+ko build -B ./frontendsvc
+ko build -B ./genidsvc
+
+# Deploy manifests
+kubectl apply -f ./manifest
+
