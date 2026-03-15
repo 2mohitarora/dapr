@@ -43,23 +43,19 @@ func main() {
 		Topic:      topic,
 		Route:      route,
 	}
-
-	// Create service
-	s := daprd.NewService(fmt.Sprintf(":%s", appPort))
-
-	// Register handler to handle received orders
-	log.Printf("orderprog: registering event handler: {%#v}", rcvdSub)
-	if err := s.AddTopicEventHandler(rcvdSub, subHandler); err != nil {
-		log.Fatalf("orderproc: topic subscription: %v", err)
-	}
-
-	// Set up Dapr client (seems to be a bug that requires client to be created after a service is declared)
 	dc, err := dapr.NewClient()
 	if err != nil {
 		log.Fatalf("order proc: dapr client: %s", err)
 	}
 	daprClient = dc
 	defer daprClient.Close()
+
+	s := daprd.NewService(fmt.Sprintf(":%s", appPort))
+
+	log.Printf("orderprog: registering event handler: {%#v}", rcvdSub)
+	if err := s.AddTopicEventHandler(rcvdSub, subHandler); err != nil {
+		log.Fatalf("orderproc: topic subscription: %v", err)
+	}
 
 	// Start service component last
 	if err := s.Start(); err != nil && err != http.ErrServerClosed {
