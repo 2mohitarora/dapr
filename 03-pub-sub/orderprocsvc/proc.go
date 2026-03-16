@@ -44,13 +44,6 @@ func main() {
 		Route:      route,
 	}
 
-	dc, err := dapr.NewClient()
-	if err != nil {
-		log.Fatalf("order proc: dapr client: %s", err)
-	}
-	daprClient = dc
-	defer daprClient.Close()
-
 	s := daprd.NewService(fmt.Sprintf(":%s", appPort))
 
 	log.Printf("orderprog: registering event handler: {%#v}", rcvdSub)
@@ -61,6 +54,14 @@ func main() {
 	if err := s.Start(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("orderproc: starting: %v", err)
 	}
+
+	dc, err := dapr.NewClient()
+	if err != nil {
+		log.Fatalf("order proc: dapr client: %s", err)
+	}
+	daprClient = dc
+	defer daprClient.Close()
+
 }
 
 func subHandler(ctx context.Context, event *common.TopicEvent) (retry bool, err error) {
