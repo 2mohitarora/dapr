@@ -81,7 +81,7 @@ func subHandler(ctx context.Context, event *common.TopicEvent) (retry bool, err 
 		return true, err
 	}
 	if orderItem.Value == nil {
-		log.Printf("No state found for key: %s", orderID)
+		log.Printf("No state found for key: %s, state item retrieved: %#v", orderID, orderItem)
 		return false, nil
 	}
 
