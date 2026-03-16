@@ -28,6 +28,10 @@ Comparison with Local Invoke Format:
 
 - [ ] Service Invocation: External HTTP service
 - [ ] Service Invocation: Different protocol (HTTP vs gRPC)
+```
+    dapr.io/app-port: "50051" # Your app's gRPC port
+    dapr.io/app-protocol: "grpc" # <--- This ensures the final hop is gRPC
+```
 - [ ] Zero Trust Security
 - [ ] Observability
     - [ ] Tracing
