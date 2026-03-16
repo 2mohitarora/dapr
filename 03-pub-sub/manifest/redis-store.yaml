@@ -16,7 +16,7 @@ spec:
       value: "orders-pubsub"
     - name: outboxPublishTopic  # The default topic for outbox messages
       value: "received-orders"
-    - name: keyPrefixStrategy
-      value: "none"
+    - name: keyPrefix
+      value: none
 auth:
   secretStore: kubernetes
