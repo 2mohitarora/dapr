@@ -70,7 +70,7 @@ kubectl logs -l app=orderprocsvc --prefix
 ```
 kubectl apply -f redis-cli.yaml
 kubectl exec -it redis-client -- /bin/sh
-redis-cli -h redis-master.default.svc.cluster.local -p 6379 -a 'CZZUducLhp'
+redis-cli -h redis-master.default.svc.cluster.local -p 6379 -a '<password>'
 keys *
 get order-56bd2207-f333-4fa5-a5f4-afd6104b2df8
 ```
