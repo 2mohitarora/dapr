@@ -14,8 +14,18 @@ spec:
     value: "your-gateway-token"
 ```
 ```
-Format: InvokeMethod(ctx, "HTTPEndpointName", "v1.0/invoke/RemoteAppID/method/RemoteMethod", "VERB")
+Remote Invoke Format: 
+    InvokeMethod(ctx, "HTTPEndpointName", "v1.0/invoke/RemoteAppID/method/RemoteMethod", "VERB")
+Comparison with Local Invoke Format: 
+    InvokeMethod(ctx, "LocalAppID", "Method", "VERB")
 ```
+```
+Example: 
+var res, err := daprClient.InvokeMethod(ctx, "target-service-gateway", "v1.0/invoke/target-service/method/hello", "GET")
+Comparison with Local Invoke Format: 
+    var res, err := daprClient.InvokeMethod(ctx, "target-service", "hello", "GET")
+```
+
 - [ ] Service Invocation: External HTTP service
 - [ ] Service Invocation: Different protocol (HTTP vs gRPC)
 - [ ] Zero Trust Security
