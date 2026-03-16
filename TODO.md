@@ -3,6 +3,11 @@
 - [ ] Service Invocation: Different name space
 - [ ] Service Invocation: Different cluster
 ```
+- Make Ingress Controller "Dapr-aware"
+- Allow the sidecar to receive traffic from the Ingress controller's IP: dapr.io/sidecar-listen-addresses: "0.0.0.0, [::]"
+- Ensure the dapr-app-id header is preserved and correctly handled by the gateway.
+```
+```
 apiVersion: dapr.io/v1alpha1
 kind: HTTPEndpoint
 metadata:
