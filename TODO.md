@@ -21,7 +21,7 @@ Comparison with Local Invoke Format:
 ```
 ```
 Example: 
-var res, err := daprClient.InvokeMethod(ctx, "target-service-gateway", "v1.0/invoke/target-service/method/hello", "GET")
+    var res, err := daprClient.InvokeMethod(ctx, "target-service-gateway", "v1.0/invoke/target-service/method/hello", "GET")
 Comparison with Local Invoke Format: 
     var res, err := daprClient.InvokeMethod(ctx, "target-service", "hello", "GET")
 ```
