@@ -9,4 +9,16 @@
     - [ ] Tracing
     - [ ] Metrics
     - [ ] Logs
-    - [ ] Health 
+    - [ ] Health
+- [ ] Bindings
+    - [ ] Input Bindings
+    - [ ] Output Bindings
+- [ ] Actors
+- [ ] Secrets Management
+- [ ] Configuration Management
+- [ ] Workflow
+- [ ] Conversational AI
+- [ ] AI Agents
+- [ ] Jobs 
+
+    
