@@ -20,5 +20,7 @@
 - [ ] Conversational AI
 - [ ] AI Agents
 - [ ] Jobs 
+- [ ] Pub/Sub with CloudEvents
+
 
     
