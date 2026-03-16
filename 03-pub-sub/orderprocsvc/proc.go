@@ -51,16 +51,16 @@ func main() {
 		log.Fatalf("orderproc: topic subscription: %v", err)
 	}
 
-	if err := s.Start(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("orderproc: starting: %v", err)
-	}
-
 	dc, err := dapr.NewClient()
 	if err != nil {
 		log.Fatalf("order proc: dapr client: %s", err)
 	}
 	daprClient = dc
 	defer daprClient.Close()
+
+	if err := s.Start(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("orderproc: starting: %v", err)
+	}
 
 }
 
