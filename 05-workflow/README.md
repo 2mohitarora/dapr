@@ -45,8 +45,6 @@ kubectl run dapr-debug --image=curlimages/curl -it --rm --restart=Never -- /bin/
 curl -H "dapr-app-id: order-processor" http://order-processor-dapr:3500/v1.0/state/orders-store/cars
 curl -H "dapr-app-id: order-processor" http://order-processor-dapr:3500/v1.0/workflows/dapr/OrderProcessingWorkflow/instances
 
-curl -H "dapr-app-id: order-processor" http://order-processor-dapr:3500/v1.0/state/orders-store/cars 
-
 curl -X POST http://order-processor-dapr:3500/v1.0/workflows/dapr/OrderProcessingWorkflow/start?instanceID=order-001 \
      -H "Content-Type: application/json" \
      -d '{
