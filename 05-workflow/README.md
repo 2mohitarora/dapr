@@ -38,3 +38,17 @@ kubectl get pods -l app=order-processor
 ```
 kubectl logs -l app=order-processor --prefix
 ```
+
+# Check workflow status
+```
+kubectl run dapr-debug --image=curlimages/curl -it --rm --restart=Never -- /bin/sh 
+curl http://order-processor-dapr:3500/v1.0-alpha1/workflows/dapr/OrderProcessingWorkflow/instances
+
+
+curl -X POST http://order-processor-dapr:3500/v1.0-alpha1/workflows/dapr/OrderProcessingWorkflow/start?instanceID=order-001 \
+     -H "Content-Type: application/json" \
+     -d '{
+           "ItemName": "Kubernetes Cluster",
+           "TotalAmount": 5000
+         }'
+```

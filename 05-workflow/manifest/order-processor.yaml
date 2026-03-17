@@ -17,6 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id:  "order-processor"
         dapr.io/log-level: "debug"
+        dapr.io/sidecar-listen-addresses: "0.0.0.0"
     spec:
       containers:
         - name: order-processor
