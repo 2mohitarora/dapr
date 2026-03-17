@@ -12,9 +12,10 @@ import (
 )
 
 var (
-	stateStoreName  = "orders-store"
-	workflowName    = "OrderProcessingWorkflow"
-	defaultItemName = "cars"
+	stateStoreName    = "orders-store"
+	workflowComponent = "dapr"
+	workflowName      = "OrderProcessingWorkflow"
+	defaultItemName   = "cars"
 )
 
 func main() {
