@@ -97,6 +97,8 @@ func main() {
 	fmt.Printf("workflow status: %v\n", respFetch.String())
 
 	fmt.Println("Purchase of item is complete")
+
+	select {} // Keep app running
 }
 
 func restockInventory(daprClient client.Client, inventory []InventoryItem) error {
