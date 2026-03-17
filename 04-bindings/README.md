@@ -21,7 +21,7 @@ kubectl run postgresql-client --rm --tty -i --restart='Never' \
   --command -- psql --host postgresql -U postgres -d orders -c "CREATE TABLE logs (id SERIAL PRIMARY KEY, message TEXT, created_at TIMESTAMP);"
 ```
 
-# Build front end service and genid service container images
+# Build container images
 ```
 export KO_DOCKER_REPO=ko.local
 export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-processor
+  labels:
+    app: order-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-processor
+  template:
+    metadata:
+      labels:
+        app: order-processor
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id:  "order-processor"
+        dapr.io/app-port: "6010"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: order-processor
+          image: ko.local/order-processor:latest
+          ports:
+            - containerPort: 6010
+          env:
+            - name: APP_PORT
+              value: "6010"
+          imagePullPolicy: IfNotPresent

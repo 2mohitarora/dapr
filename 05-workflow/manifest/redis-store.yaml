@@ -1,0 +1,24 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: orders-store
+spec:
+  type: state.redis
+  version: v1
+  metadata:
+    - name: redisHost
+      value: redis-master.default.svc.cluster.local:6379
+    - name: redisPassword
+      secretKeyRef:
+        name: redis
+        key: redis-password
+    - name: outboxPublishPubsub # The pubsub component used for the outbox
+      value: "orders-pubsub"
+    - name: outboxPublishTopic  # The default topic for outbox messages
+      value: "received-orders"
+    - name: keyPrefix
+      value: none
+    - name: actorStateStore
+      value: "true"
+auth:
+  secretStore: kubernetes
