@@ -1,0 +1,12 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: postgres-binding
+spec:
+  type: bindings.postgresql
+  version: v1
+  metadata:
+  - name: url # Required
+    value: "user=postgres password=<> host=postgresql.default.svc.cluster.local port=5432 dbname=orders sslmode=disable"
+  - name: direction
+    value: "output"

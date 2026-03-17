@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cronsvc
+  labels:
+    app: cronsvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cronsvc
+  template:
+    metadata:
+      labels:
+        app: cronsvc
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id:  "cronsvc"
+        dapr.io/app-port: "6010"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: cronsvc
+          image: ko.local/cronsvc:latest
+          ports:
+            - containerPort: 6010
+          env:
+            - name: APP_PORT
+              value: "6010"
+          imagePullPolicy: IfNotPresent
