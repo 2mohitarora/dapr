@@ -16,15 +16,9 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id:  "order-processor"
-        dapr.io/app-port: "6010"
         dapr.io/log-level: "debug"
     spec:
       containers:
         - name: order-processor
           image: ko.local/order-processor:latest
-          ports:
-            - containerPort: 6010
-          env:
-            - name: APP_PORT
-              value: "6010"
           imagePullPolicy: IfNotPresent
