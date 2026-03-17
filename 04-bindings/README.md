@@ -61,3 +61,10 @@ kubectl logs -l app=cronsvc --prefix
 ```
 
 # Check postgres data 
+kubectl run postgresql-client --rm --tty -i --restart='Never' \
+  --namespace default \
+  --image docker.io/bitnami/postgresql:latest \
+  --env="PGPASSWORD=$POSTGRES_PASSWORD" \
+  --command -- psql --host postgresql -U postgres -d orders 
+
+SELECT * FROM logs;
