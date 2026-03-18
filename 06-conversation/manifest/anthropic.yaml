@@ -4,6 +4,7 @@ metadata:
   name: anthropic
 spec:
   type: conversation.anthropic
+  version: v1
   metadata:
   - name: key
     value: "mykey"

@@ -5,3 +5,6 @@ metadata:
 spec:
   type: conversation.echo
   version: v1
+  metadata:           # <--- This section must exist
+  - name: unused      # Some components require at least one entry
+    value: "none"
