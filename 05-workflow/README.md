@@ -49,6 +49,8 @@ dapr workflow list -k --app-id order-processor \
   --connection-string "redis://:$REDIS_PASSWORD@localhost:6379" \
   -o wide
 
+dapr workflow history 3bf1d79f-6bf6-489d-8ae9-1f3f1182d8f6 -k --app-id order-processor -o wide
+
 curl -X POST http://order-processor-dapr:3500/v1.0/workflows/dapr/OrderProcessingWorkflow/start?instanceID=order-001 \
      -H "Content-Type: application/json" \
      -d '{
