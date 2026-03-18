@@ -1,3 +1,7 @@
+# Create configmap for dashboard from redis-store.yaml in workflow directory
+```
+kubectl create configmap diagrid-dashboard-config --from-file=../05-workflow/manifest/redis-store.yaml
+```
 # Install Diagrid Dashboard
 ```
  kubectl apply -f ./manifest

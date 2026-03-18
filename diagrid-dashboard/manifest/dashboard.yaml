@@ -19,13 +19,16 @@ spec:
         image: ghcr.io/diagridio/diagrid-dashboard:latest
         ports:
         - containerPort: 8080
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
+        env:
+        - name: COMPONENT_FILE
+          value: "/app/config/redis-state.yaml" # Matches the mountPath below
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: diagrid-dashboard-config
 ---
 apiVersion: v1
 kind: Service
