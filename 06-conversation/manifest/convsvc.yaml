@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convsvc
+  labels:
+    app: convsvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: convsvc
+  template:
+    metadata:
+      labels:
+        app: convsvc
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id:  "convsvc"
+        dapr.io/log-level: "debug"
+    spec:
+      containers:
+        - name: convsvc
+          image: ko.local/convsvc:latest
+          imagePullPolicy: IfNotPresent
