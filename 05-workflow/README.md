@@ -41,9 +41,13 @@ kubectl logs -l app=order-processor --prefix
 
 # Check workflow status
 ```
-kubectl run dapr-debug --image=curlimages/curl -it --rm --restart=Never -- /bin/sh 
-curl -H "dapr-app-id: order-processor" http://order-processor-dapr:3500/v1.0/state/orders-store/cars
-curl -H "dapr-app-id: order-processor" http://order-processor-dapr:3500/v1.0/workflows/dapr/OrderProcessingWorkflow/instances
+kubectl port-forward svc/redis-master 6379:6379
+
+export REDIS_PASSWORD=$(kubectl get secret --namespace default redis -o jsonpath="{.data.redis-password}" | base64 --decode)
+
+dapr workflow list -k --app-id order-processor \
+  --connection-string "redis://:$REDIS_PASSWORD@localhost:6379" \
+  -o wide
 
 curl -X POST http://order-processor-dapr:3500/v1.0/workflows/dapr/OrderProcessingWorkflow/start?instanceID=order-001 \
      -H "Content-Type: application/json" \
