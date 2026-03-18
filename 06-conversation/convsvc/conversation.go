@@ -2,63 +2,15 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 
-	"github.com/invopop/jsonschema"
-	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/structpb"
 
 	dapr "github.com/dapr/go-sdk/client"
 )
-
-// getWeatherInLocation is an example function to use as a tool call
-func getWeatherInLocation(request GetDegreesWeatherRequest, defaultValues GetDegreesWeatherRequest) string {
-	location := request.Location
-	unit := request.Unit
-	if location == "location" {
-		location = defaultValues.Location
-	}
-	if unit == "unit" {
-		unit = defaultValues.Unit
-	}
-	return fmt.Sprintf("The weather in %s is 25 degrees %s", location, unit)
-}
-
-type GetDegreesWeatherRequest struct {
-	Location string `json:"location" jsonschema:"title=Location,description=The location to look up the weather for"`
-	Unit     string `json:"unit" jsonschema:"enum=celsius,enum=fahrenheit,description=Unit"`
-}
-
-// GenerateFunctionTool helper method to create jsonschema input
-func GenerateFunctionTool[T any](name, description string) (*dapr.ConversationToolsAlpha2, error) {
-	reflector := jsonschema.Reflector{
-		AllowAdditionalProperties: false,
-		DoNotReference:            true,
-	}
-	var v T
-
-	schema := reflector.Reflect(v)
-
-	schemaBytes, err := schema.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-
-	var protoStruct structpb.Struct
-	if err := protojson.Unmarshal(schemaBytes, &protoStruct); err != nil {
-		return nil, fmt.Errorf("converting jsonschema to proto Struct: %w", err)
-	}
-
-	return (*dapr.ConversationToolsAlpha2)(&dapr.ConversationToolsFunctionAlpha2{
-		Name:        name,
-		Description: &description,
-		Parameters:  &protoStruct,
-	}), nil
-}
 
 // createUserMessageInput is a helper method to create user messages in expected proto format
 func createUserMessageInput(msg string) *dapr.ConversationInputAlpha2 {
@@ -122,52 +74,5 @@ func main() {
 	}
 	fmt.Println("Output response:", firstOut.Choices[0].Message.Content)
 
-	tool, err := GenerateFunctionTool[GetDegreesWeatherRequest]("getWeather", "get weather from a location in the given unit")
-	if err != nil {
-		log.Fatalf("err: %v", err)
-	}
-
-	weatherMessage := "What is the weather like in San Francisco in celsius?"
-	fmt.Println("Tool calling input sent:", weatherMessage)
-	requestWithTool := dapr.ConversationRequestAlpha2{
-		Name:   conversationComponent,
-		Inputs: []*dapr.ConversationInputAlpha2{createUserMessageInput(weatherMessage)},
-		Tools:  []*dapr.ConversationToolsAlpha2{tool},
-	}
-
-	resp, err = client.ConverseAlpha2(context.Background(), requestWithTool)
-	if err != nil {
-		log.Fatalf("err: %v", err)
-	}
-
-	toolOut := resp.Outputs[0]
-	if toolOut.Model != nil && *toolOut.Model != "" {
-		fmt.Println("Model:", *toolOut.Model)
-	}
-	if toolOut.Usage != nil {
-		fmt.Printf("Usage: prompt_tokens=%d completion_tokens=%d total_tokens=%d\n",
-			toolOut.Usage.PromptTokens, toolOut.Usage.CompletionTokens, toolOut.Usage.TotalTokens)
-	}
-
-	fmt.Println(toolOut.Choices[0].Message.Content)
-	for _, toolCalls := range toolOut.Choices[0].Message.ToolCalls {
-		fmt.Printf("Tool Call: Name: %s - Arguments: %v\n", toolCalls.ToolTypes.Name, toolCalls.ToolTypes.Arguments)
-
-		// parse the arguments and execute tool
-		args := []byte(toolCalls.ToolTypes.Arguments)
-
-		// find the tool (only one in this case) and execute
-		for _, toolInfo := range requestWithTool.Tools {
-			if toolInfo.Name == toolCalls.ToolTypes.Name && toolInfo.Name == "getWeather" {
-				var reqArgs GetDegreesWeatherRequest
-				if err = json.Unmarshal(args, &reqArgs); err != nil {
-					log.Fatalf("err: %v", err)
-				}
-				// execute tool
-				toolExecutionOutput := getWeatherInLocation(reqArgs, GetDegreesWeatherRequest{Location: "San Francisco", Unit: "Celsius"})
-				fmt.Printf("Tool Call Output: %s\n", toolExecutionOutput)
-			}
-		}
-	}
 	select {} // Keep app running
 }
