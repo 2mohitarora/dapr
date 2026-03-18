@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diagrid-dashboard
+  namespace: dapr-system
+  labels:
+    app: diagrid-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diagrid-dashboard
+  template:
+    metadata:
+      labels:
+        app: diagrid-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: ghcr.io/diagridio/diagrid-dashboard:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: diagrid-dashboard
+  namespace: dapr-system
+spec:
+  type: ClusterIP
+  selector:
+    app: diagrid-dashboard
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
