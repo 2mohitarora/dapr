@@ -1,6 +1,7 @@
 # Things to do
 
 - [x] Service Invocation
+- [x] Service Invocation with retries and timeouts
 - [ ] Service Invocation: Different name space
 - [ ] Service Invocation: Different cluster
 ```
@@ -51,7 +52,7 @@ Comparison with Local Invoke Format:
 - [ ] Secrets Management
 - [ ] Configuration Management
 - [x] Workflow
-- [ ] Conversational AI
+- [x] Conversational AI
 - [ ] AI Agents
 - [ ] Jobs 
 - [x] Pub/Sub
