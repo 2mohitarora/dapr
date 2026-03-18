@@ -169,4 +169,5 @@ func main() {
 			}
 		}
 	}
+	select {} // Keep app running
 }
