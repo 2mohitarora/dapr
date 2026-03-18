@@ -21,7 +21,7 @@ spec:
         - containerPort: 8080
         env:
         - name: COMPONENT_FILE
-          value: "/app/config/redis-state.yaml" # Matches the mountPath below
+          value: "/app/config/redis-store.yaml" # Matches the mountPath below
         volumeMounts:
         - name: config-volume
           mountPath: /app/config
