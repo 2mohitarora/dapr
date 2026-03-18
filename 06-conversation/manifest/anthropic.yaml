@@ -7,8 +7,8 @@ spec:
   version: v1
   metadata:
   - name: key
-    value: "mykey"
+    value: "API_KEY"
   - name: model
-    value: claude-3-5-sonnet-20240620
+    value: claude-opus-4-6
   - name: responseCacheTTL
     value: 10m

@@ -84,7 +84,7 @@ func main() {
 	}
 
 	inputMsg := "What is dapr?"
-	conversationComponent := "echo"
+	conversationComponent := "anthropic"
 
 	// Optional: structured outputs and prompt cache retention
 	responseFormat, err := structpb.NewStruct(map[string]any{
