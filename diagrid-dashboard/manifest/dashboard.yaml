@@ -42,28 +42,3 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
----
-# 2. RBAC: Allow the dashboard to read the Secret from the K8s API
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: diagrid-secret-reader
-  namespace: default
-rules:
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["get", "list"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: diagrid-read-secrets
-  namespace: default
-subjects:
-- kind: ServiceAccount
-  name: default # Ensure this matches the serviceAccountName in your deployment
-  namespace: default
-roleRef:
-  kind: Role
-  name: diagrid-secret-reader
-  apiGroup: rbac.authorization.k8s.io
