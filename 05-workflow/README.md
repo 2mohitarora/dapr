@@ -51,8 +51,11 @@ dapr workflow list -k --app-id order-processor \
 
 dapr workflow history 3bf1d79f-6bf6-489d-8ae9-1f3f1182d8f6 -k --app-id order-processor -o wide
 
-dapr workflow run OrderProcessingWorkflow -k --app-id order-processor -i order-001 -x "{\"ItemName\":\"Kubernetes Cluster\",\"Quantity\":1,\"TotalAmount\":5000}"
+dapr workflow run OrderProcessingWorkflow -k \
+  --app-id order-processor \
+  --instance-id "order-004" \
+  --input '{"item_name":"Kubernetes Cluster","total_cost":5000,"quantity":1}'
 
-dapr workflow history order-001 -k --app-id order-processor -o wide
+dapr workflow history order-004 -k --app-id order-processor -o wide
 
 ```
