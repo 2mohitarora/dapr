@@ -56,7 +56,7 @@ Comparison with Local Invoke Format:
 - [ ] AI Agents
 - [ ] Jobs 
 - [x] Pub/Sub
-- [] Zero code Change Pub/Sub Move from Redis to Kafka
+- [ ] Zero code Change Pub/Sub Move from Redis to Kafka
 - [x] State Management
 - [x] Outbox Pattern
 
