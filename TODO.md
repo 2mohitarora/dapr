@@ -1,5 +1,6 @@
 # Things to do
 
+- [x] Service Invocation
 - [ ] Service Invocation: Different name space
 - [ ] Service Invocation: Different cluster
 ```
@@ -43,17 +44,20 @@ Comparison with Local Invoke Format:
     - [ ] Metrics
     - [ ] Logs
     - [ ] Health
-- [ ] Bindings
-    - [ ] Input Bindings
-    - [ ] Output Bindings
+- [x] Bindings
+    - [x] Input Bindings
+    - [x] Output Bindings
 - [ ] Actors
 - [ ] Secrets Management
 - [ ] Configuration Management
-- [ ] Workflow
+- [x] Workflow
 - [ ] Conversational AI
 - [ ] AI Agents
 - [ ] Jobs 
-- [ ] Pub/Sub with CloudEvents
+- [x] Pub/Sub
+- [] Zero code Change Pub/Sub Move from Redis to Kafka
+- [x] State Management
+- [x] Outbox Pattern
 
 
     
