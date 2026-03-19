@@ -61,6 +61,26 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest
 ```
 
+# Inject Dapr sidecar into Traefik deployment
+
+```
+kubectl patch deployment traefik -n kube-system -p '
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "dapr.io/enabled": "true",
+          "dapr.io/app-id": "traefik-ingress",
+          "dapr.io/app-port": "8000",
+          "dapr.io/log-level": "debug"
+        }
+      }
+    }
+  }
+}'
+```
+
 # Run dapr UI and check genid svc is running
 ```
 dapr dashboard -k -p 9999
