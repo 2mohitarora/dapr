@@ -15,7 +15,11 @@ brew install colima
 # Change colima template
 ```
 colima template
-Change few settings
+Change following settings
+- network.address: true
+- vmType: vz
+- rosetta: true
+- mountType: virtiofs
 ```
 
 # Start colima with k3s
