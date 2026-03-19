@@ -48,13 +48,11 @@ docker context ls
 ```
 export KO_DOCKER_REPO=ko.local
 export DOCKER_HOST="unix:///Users/mua0008/.colima/ingress/docker.sock"
-ko build -B ./frontendsvc
 ko build -B ./genidsvc
 ```
 
 # Delete existing deployments
 ```
-kubectl delete deployment frontendsvc
 kubectl delete deployment genidsvc
 ```
 
@@ -63,8 +61,12 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest
 ```
 
-
-# Run dapr UI
+# Run dapr UI and check genid svc is running
 ```
-dapr dashboard -k
+dapr dashboard -k -p 9999
+```
+
+# Invoke genid service
+```
+curl http://localhost:9999/api/v1.0/invoke/genidsvc/method/genid
 ```
