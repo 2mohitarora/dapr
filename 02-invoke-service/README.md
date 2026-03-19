@@ -18,6 +18,7 @@ ko build -B ./genidsvc
 # Delete existing deployments
 ```
 kubectl delete deployment frontendsvc
+kubectl delete deployment genidsvc
 ```
 
 # Deploy manifests
