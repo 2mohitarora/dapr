@@ -96,3 +96,9 @@ dapr dashboard -k -p 9999
 kubectl get svc -n kube-system -l app.kubernetes.io/name=traefik
 curl -H "Host: genidsvc.ingress" http://192.168.64.4/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
+
+# Port forwarding from mac
+```
+kubectl port-forward -n kube-system service/traefik -n kube-system 8083:80
+curl -H "Host: genidsvc.ingress" http://localhost:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
+```
