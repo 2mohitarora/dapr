@@ -1,13 +1,23 @@
-apiVersion: traefik.io/v1alpha1
+apiVersion: traefik.containo.us/v1alpha1
+kind: TraefikService
+metadata:
+  name: dapr-localhost
+  namespace: kube-system
+spec:
+  endpoints:
+    - url: http://127.0.0.1:3500
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: genidsvc-api-route
+  name: dapr-gateway-route
+  namespace: kube-system
 spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`genidsvc.ingress`)
+  - match: Host(`genidsvc.ingress`) && (PathPrefix(`/v1.0/invoke`) || PathPrefix(`/v1.0/metadata`))
     kind: Rule
     services:
-    - name: genidsvc-dapr # Pointing to the sidecar
-      port: 3500
+    - name: dapr-localhost
+      kind: TraefikService

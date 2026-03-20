@@ -88,5 +88,5 @@ dapr dashboard -k -p 9999
 
 # Invoke genid service
 ```
-curl http://localhost:9999/api/v1.0/invoke/genidsvc/method/genid
+curl http://genidsvc.ingress/api/v1.0/invoke/genidsvc/method/genid
 ```
