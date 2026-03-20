@@ -102,3 +102,9 @@ curl -H "Host: genidsvc.ingress" http://192.168.64.4/v1.0/invoke/genidsvc.defaul
 kubectl port-forward -n kube-system service/traefik -n kube-system 8083:80
 curl -H "Host: genidsvc.ingress" http://localhost:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
+
+# From other colima cluster
+```
+kubectl run net-test --rm -it --image=nicolaka/netshoot -- /bin/bash
+curl -H "Host: genidsvc.ingress" http://192.168.5.2:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
+```
