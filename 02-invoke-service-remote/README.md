@@ -81,6 +81,11 @@ kubectl patch deployment traefik -n kube-system -p '
 }'
 ```
 
+# Check traffic service created by Dapr
+```
+kubectl get svc -n kube-system | grep traefik-ingress-dapr
+```
+
 # Run dapr UI and check genid svc is running
 ```
 dapr dashboard -k -p 9999
