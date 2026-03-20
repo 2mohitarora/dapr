@@ -1,11 +1,9 @@
 # Things to do
 
-- [x] Service Invocation
-- [x] Service Invocation with retries and timeouts
-- [x] Service Invocation: Different name space
+- [x] Service Invocation: gRPC end to end
 - [x] Service Invocation: Different cluster
-- [ ] gRPC end to end (same cluster)
-- [ ] gRPC end to end (different cluster)
+- [x] Service Invocation with retries and timeouts
+- [ ] Dapr Shared instead of sidecar in each container
 - [ ] Zero Trust Security
 - [ ] Observability
     - [ ] Tracing
