@@ -8,24 +8,18 @@
 apiVersion: dapr.io/v1alpha1
 kind: HTTPEndpoint
 metadata:
-  name: target-service-gateway
+  name: <TARGET_SERVICE_ENDPOINT>
 spec:
-  baseUrl: https://target-service-gateway.hosting-cluster.com
+  baseUrl: <TARGET_SERVICE_ENDPOINT_URL>
   headers:
   - name: "dapr-api-token" # If your gateway requires a secret
-    value: "your-gateway-token"
-```
-```
-Remote Invoke Format: 
-    InvokeMethod(ctx, "<HTTPEndpoint>", "v1.0/invoke/<AppID>/method/<Method>", "VERB")
-Comparison with Local Invoke Format: 
-    InvokeMethod(ctx, "<AppID>", "<Method>", "VERB")
+    value: "<TARGET_SERVICE_ENDPOINT_TOKEN>"
 ```
 ```
 Example: 
-    var res, err := daprClient.InvokeMethod(ctx, "target-service-gateway", "v1.0/invoke/target-service/method/hello", "GET")
+    var res, err := daprClient.InvokeMethod(ctx, "<TARGET_SERVICE_ENDPOINT>", "v1.0/invoke/<AppID>/method/<Method>", "VERB")
 Comparison with Local Invoke Format: 
-    var res, err := daprClient.InvokeMethod(ctx, "target-service", "hello", "GET")
+    var res, err := daprClient.InvokeMethod(ctx, "<AppID>", "<Method>", "VERB")
 ```
 - [ ] Zero Trust Security
 - [ ] Observability
