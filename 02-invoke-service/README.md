@@ -26,6 +26,11 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest
 ```
 
+# Deploy Additional manifests only if you are working on remote service invoke
+```
+kubectl apply -f ./manifest-ext
+```
+
 # Check Dapr UI 
 
 # Check dapr components
