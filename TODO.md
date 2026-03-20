@@ -4,6 +4,7 @@
 - [x] Service Invocation: Different cluster
 - [x] Service Invocation with retries and timeouts
 - [ ] Dapr Shared instead of sidecar in each container
+- [ ] Dapr with Cilium (https://youtu.be/qDAysALJVz8)
 - [ ] Zero Trust Security
 - [ ] Observability
     - [ ] Tracing
