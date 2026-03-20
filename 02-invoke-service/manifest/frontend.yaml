@@ -16,6 +16,7 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id:  "frontendsvc"
+        dapr.io/log-level: "debug"
     spec:
       containers:
         - name: frontendsvc
