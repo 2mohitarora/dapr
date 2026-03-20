@@ -11,4 +11,4 @@ spec:
     kind: Rule
     services:
     - name: traefik-ingress-dapr
-      port: 3500
+      port: 80
