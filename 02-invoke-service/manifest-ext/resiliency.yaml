@@ -1,0 +1,23 @@
+apiVersion: dapr.io/v1alpha1
+kind: Resiliency
+metadata:
+  name: frontendsvc-resiliency-policy
+scopes:
+  - frontendsvc
+spec:
+  policies:
+    retries:
+      # Define a retry strategy named "retry-three-times"
+      retry-three-times:
+        policy: exponential
+        duration: 500ms
+        maxInterval: 10s
+        maxRetries: 5
+        # Optional: Only retry on transient server errors
+        matching:
+          httpStatusCodes: "502,503,504,404,500"
+  targets:
+    apps:
+      # Apply the strategy when calling the "genidsvc" app
+      genidsvc:
+        retry: retry-three-times
