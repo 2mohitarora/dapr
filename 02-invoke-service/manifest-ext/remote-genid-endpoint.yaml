@@ -3,7 +3,7 @@ kind: HTTPEndpoint
 metadata:
   name: genid-endpoint
 spec:
-  baseUrl: http://192.168.5.2:8083
+  baseUrl: http://192.168.5.2:8083/v1.0/invoke/genidsvc.default/method/
   headers:
     - name: "Host"
       value: "genidsvc.ingress"
