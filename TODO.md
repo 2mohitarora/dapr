@@ -2,13 +2,8 @@
 
 - [x] Service Invocation
 - [x] Service Invocation with retries and timeouts
-- [ ] Service Invocation: Different name space
-- [ ] Service Invocation: Different cluster
-```
-- Make Ingress Controller "Dapr-aware"
-- Allow the sidecar to receive traffic from the Ingress controller's IP: dapr.io/sidecar-listen-addresses: "0.0.0.0, [::]"
-- Ensure the dapr-app-id header is preserved and correctly handled by the gateway.
-```
+- [x] Service Invocation: Different name space
+- [x] Service Invocation: Different cluster
 ```
 apiVersion: dapr.io/v1alpha1
 kind: HTTPEndpoint
@@ -22,22 +17,15 @@ spec:
 ```
 ```
 Remote Invoke Format: 
-    InvokeMethod(ctx, "HTTPEndpointName", "v1.0/invoke/RemoteAppID/method/RemoteMethod", "VERB")
+    InvokeMethod(ctx, "<HTTPEndpoint>", "v1.0/invoke/<AppID>/method/<Method>", "VERB")
 Comparison with Local Invoke Format: 
-    InvokeMethod(ctx, "LocalAppID", "Method", "VERB")
+    InvokeMethod(ctx, "<AppID>", "<Method>", "VERB")
 ```
 ```
 Example: 
     var res, err := daprClient.InvokeMethod(ctx, "target-service-gateway", "v1.0/invoke/target-service/method/hello", "GET")
 Comparison with Local Invoke Format: 
     var res, err := daprClient.InvokeMethod(ctx, "target-service", "hello", "GET")
-```
-
-- [ ] Service Invocation: External HTTP service
-- [ ] Service Invocation: Different protocol (HTTP vs gRPC)
-```
-    dapr.io/app-port: "50051" # Your app's gRPC port
-    dapr.io/app-protocol: "grpc" # <--- This ensures the final hop is gRPC
 ```
 - [ ] Zero Trust Security
 - [ ] Observability
