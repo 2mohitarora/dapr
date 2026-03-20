@@ -5,17 +5,6 @@
 - [x] Service Invocation: Different name space
 - [x] Service Invocation: Different cluster
 ```
-apiVersion: dapr.io/v1alpha1
-kind: HTTPEndpoint
-metadata:
-  name: <TARGET_SERVICE_ENDPOINT>
-spec:
-  baseUrl: <TARGET_SERVICE_ENDPOINT_URL>
-  headers:
-  - name: "dapr-api-token" # If your gateway requires a secret
-    value: "<TARGET_SERVICE_ENDPOINT_TOKEN>"
-```
-```
 Example: 
     var res, err := daprClient.InvokeMethod(ctx, "<TARGET_SERVICE_ENDPOINT>", "v1.0/invoke/<AppID>/method/<Method>", "VERB")
 Comparison with Local Invoke Format: 

@@ -50,8 +50,12 @@ func postOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// invoke genidsvc service to generate order UUID
-	out, err := daprClient.InvokeMethod(r.Context(), genidsvcId, "genid", "post")
+	// invoke local genidsvc service to generate order UUID
+	//out, err := daprClient.InvokeMethod(r.Context(), genidsvcId, "genid", "post")
+
+	// invoke remote genidsvc service to generate order UUID
+	out, err := daprClient.InvokeMethod(r.Context(), "genid-endpoint", "v1.0/invoke/genidsvc/method/genid", "post")
+
 	if err != nil {
 		log.Printf("order genid: %s", err)
 		http.Error(w, "unable to post order", http.StatusInternalServerError)
