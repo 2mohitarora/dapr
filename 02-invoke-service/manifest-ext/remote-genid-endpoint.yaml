@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: HTTPEndpoint
 metadata:
-  name: genid-endpoint
+  name: genidsvc
 spec:
   baseUrl: http://192.168.5.2:8083/v1.0/invoke/genidsvc.default/method
 scopes:
