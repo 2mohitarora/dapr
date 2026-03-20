@@ -4,7 +4,8 @@
 - [x] Service Invocation with retries and timeouts
 - [x] Service Invocation: Different name space
 - [x] Service Invocation: Different cluster
-- [ ] gRPC end to end
+- [ ] gRPC end to end (same cluster)
+- [ ] gRPC end to end (different cluster)
 - [ ] Zero Trust Security
 - [ ] Observability
     - [ ] Tracing
@@ -25,6 +26,7 @@
 - [ ] Zero code Change Pub/Sub Move from Redis to Kafka
 - [x] State Management
 - [x] Outbox Pattern
+- [x] Resiliency
 
 
     

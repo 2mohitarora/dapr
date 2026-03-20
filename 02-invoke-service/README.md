@@ -26,7 +26,7 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest
 ```
 
-# Deploy Additional manifests only if you are working on remote service invoke
+# Deploy Additional manifests to showcase remote service invoke and resiliency
 ```
 kubectl apply -f ./manifest-ext
 ```
