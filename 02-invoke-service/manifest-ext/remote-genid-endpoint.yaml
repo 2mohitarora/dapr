@@ -4,5 +4,8 @@ metadata:
   name: genid-endpoint
 spec:
   baseUrl: http://192.168.64.4
+  headers:
+    - name: "Host"
+      value: "genidsvc.ingress"
 scopes:
-  - frontendsvc  
+  - frontendsvc
