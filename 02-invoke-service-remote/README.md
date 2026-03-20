@@ -91,7 +91,8 @@ kubectl get svc -n kube-system | grep traefik-ingress-dapr
 dapr dashboard -k -p 9999
 ```
 
-# Invoke genid service
+# Invoke genid service by find Traefik external IP
 ```
+kubectl get svc -n kube-system -l app.kubernetes.io/name=traefik
 curl -H "Host: genidsvc.ingress" http://192.168.64.4/v1.0/invoke/genidsvc/method/genid -X POST
 ```
