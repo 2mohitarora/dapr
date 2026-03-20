@@ -93,5 +93,5 @@ dapr dashboard -k -p 9999
 
 # Invoke genid service
 ```
-curl http://genidsvc.ingress/api/v1.0/invoke/genidsvc/method/genid
+curl -H "Host: genidsvc.ingress" http://192.168.64.4/v1.0/invoke/genidsvc/method/genid -X POST
 ```
