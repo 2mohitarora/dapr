@@ -4,12 +4,7 @@
 - [x] Service Invocation with retries and timeouts
 - [x] Service Invocation: Different name space
 - [x] Service Invocation: Different cluster
-```
-Example: 
-    var res, err := daprClient.InvokeMethod(ctx, "<TARGET_SERVICE_ENDPOINT>", "v1.0/invoke/<AppID>/method/<Method>", "VERB")
-Comparison with Local Invoke Format: 
-    var res, err := daprClient.InvokeMethod(ctx, "<AppID>", "<Method>", "VERB")
-```
+- [ ] gRPC end to end
 - [ ] Zero Trust Security
 - [ ] Observability
     - [ ] Tracing

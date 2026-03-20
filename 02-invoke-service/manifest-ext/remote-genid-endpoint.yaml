@@ -3,4 +3,6 @@ kind: HTTPEndpoint
 metadata:
   name: genid-endpoint
 spec:
-  baseUrl: http://192.168.64.4 #For failover we need smartness here like Smart DNS
+  baseUrl: http://192.168.64.4
+scopes:
+  - frontendsvc  
