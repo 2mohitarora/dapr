@@ -28,7 +28,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`genidsvc.ingress`) && (PathPrefix(`/v1.0/invoke`) || PathPrefix(`/v1.0/metadata`))
+  - match: PathPrefix(`/v1.0/invoke`)
     kind: Rule
     services:
     - name: traefik-dapr-localhost
