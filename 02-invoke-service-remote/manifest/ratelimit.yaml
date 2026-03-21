@@ -18,7 +18,7 @@ kind: Configuration          # ← it's a Configuration
 metadata:
   name: genidsvc-config
 spec:
-  httpPipeline:              # ← this is where middleware gets wired in
+  appHttpPipeline:              # ← this is where middleware gets wired in
     handlers:
       - name: ratelimit      # references the Component above
         type: middleware.http.ratelimit
