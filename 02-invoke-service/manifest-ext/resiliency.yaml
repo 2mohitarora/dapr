@@ -16,8 +16,19 @@ spec:
         # Optional: Only retry on transient server errors
         matching:
           httpStatusCodes: "502,503,504,404,500"
+    timeouts:
+      shortTimeout: 5s
+      longTimeout: 30s
+    circuitBreakers:
+      simpleCB:
+        maxRequests: 1
+        interval: 10s
+        timeout: 30s         # half-open after 30s
+        trip: consecutiveFailures > 3
   targets:
     apps:
       # Apply the strategy when calling the "genidsvc" app
       genidsvc:
         retry: retry-three-times
+        timeout: shortTimeout
+        circuitBreaker: simpleCB
