@@ -6,7 +6,7 @@ spec:
   type: pubsub.rabbitmq
   version: v1
   metadata:
-    - name: connectionString
+    - name: host
       value: amqp://rabbitmq.default.svc.cluster.local:5672
     - name: username
       secretKeyRef:
