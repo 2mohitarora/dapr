@@ -7,10 +7,14 @@ spec:
   version: v1
   metadata:
     - name: connectionString
-      value: amqp://admin:@rabbitmq.default.svc.cluster.local:5672
-    - name: rabbitmqPassword
+      value: amqp://rabbitmq.default.svc.cluster.local:5672
+    - name: username
       secretKeyRef:
-        name: rabbitmq
-        key: rrabbitmq-password
+        name: rmq-auth
+        key: RABBITMQ_DEFAULT_USER
+    - name: password
+      secretKeyRef:
+        name: rmq-auth
+        key: RABBITMQ_DEFAULT_PASS
 auth:
   secretStore: kubernetes
