@@ -16,7 +16,7 @@
     - [x] Output Bindings
 - [ ] Actors
 - [ ] Secrets Management
-- [ ] Configuration Management
+- [x] Configuration
 - [x] Workflow
 - [x] Conversational AI
 - [ ] AI Agents
