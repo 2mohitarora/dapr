@@ -1,0 +1,16 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: orders-pubsub
+spec:
+  type: pubsub.rabbitmq
+  version: v1
+  metadata:
+    - name: connectionString
+      value: amqp://admin:@rabbitmq.default.svc.cluster.local:5672
+    - name: rabbitmqPassword
+      secretKeyRef:
+        name: rabbitmq
+        key: rrabbitmq-password
+auth:
+  secretStore: kubernetes
