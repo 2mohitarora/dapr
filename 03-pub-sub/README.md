@@ -68,14 +68,17 @@ kubectl logs -l app=orderprocsvc --prefix
 
 # Debug
 ```
-kubectl apply -f redis-cli.yaml
+kubectl apply -f ./manifest/redis-cli.yaml
+kubectl get secret --namespace default redis -o jsonpath="{.data.redis-password}" | base64 --decode
 kubectl exec -it redis-client -- /bin/sh
 redis-cli -h redis-master.default.svc.cluster.local -p 6379 -a '<password>'
 keys *
 get order-56bd2207-f333-4fa5-a5f4-afd6104b2df8
+TYPE received-orders
+XRANGE received-orders - +
 ```
 
-# Move from Redis to RabbitMQ without code change
+# Move from Redis to RabbitMQ without code change. First lets install rabbitmq
 ```
 kubectl apply -f ./manifest-ext/rabbitmq.yaml
 ```
@@ -90,4 +93,14 @@ http://127.0.0.1:15672/
 ```
 kubectl delete component orders-pubsub
 kubectl apply -f ./manifest-ext/rabbitmq-pubsub.yaml
+Check Dapr UI
 ```
+
+# Restart applications for new components to be picked up 
+```
+kubectl delete deployment frontendsvc
+kubectl delete deployment orderprocsvc
+kubectl apply -f ./manifest/orderproc.yaml
+kubectl apply -f ./manifest/frontend.yaml
+```
+
