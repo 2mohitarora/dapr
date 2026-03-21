@@ -6,15 +6,9 @@ spec:
   type: pubsub.rabbitmq
   version: v1
   metadata:
-    - name: host
-      value: amqp://rabbitmq.default.svc.cluster.local:5672
-    - name: username
+    - name: connectionString
       secretKeyRef:
         name: rmq-auth
-        key: RABBITMQ_DEFAULT_USER
-    - name: password
-      secretKeyRef:
-        name: rmq-auth
-        key: RABBITMQ_DEFAULT_PASS
+        key: RABBITMQ_CONNECTION_STRING
 auth:
   secretStore: kubernetes
