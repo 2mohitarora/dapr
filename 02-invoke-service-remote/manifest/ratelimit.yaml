@@ -11,12 +11,12 @@ spec:
   version: v1
   metadata:
     - name: maxRequestsPerSecond
-      value: "10"
+      value: "1"
 ---
 apiVersion: dapr.io/v1alpha1
 kind: Configuration          # ← it's a Configuration
 metadata:
-  name: frontendsvc-config
+  name: genidsvc-config
 spec:
   httpPipeline:              # ← this is where middleware gets wired in
     handlers:
