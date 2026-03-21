@@ -1,7 +1,11 @@
+# The safety net for the sidecar
+# How the sidecar handles failure (retries, timeouts, circuit breakers)
+# Auto-loaded by app-id matching (scopes)
+# Multiple resiliency policies can apply
 apiVersion: dapr.io/v1alpha1
 kind: Resiliency
 metadata:
-  name: frontendsvc-resiliency-policy
+  name: resiliency-policies
 scopes:
   - frontendsvc
 spec:

@@ -31,6 +31,10 @@ kubectl apply -f ./manifest
 kubectl apply -f ./manifest-ext
 ```
 
+# Discuss resiliency in detail
+
+# Discuss configuration in detail 
+
 # Check Dapr UI 
 
 # Check dapr components
