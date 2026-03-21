@@ -86,3 +86,8 @@ kubectl port-forward --namespace default svc/rabbitmq 15672:15672
 http://127.0.0.1:15672/
 ```
 
+# Delete redis strams pub sub Dapr component and create rabbitmq pubsub Dapr component
+```
+kubectl delete component orders-pubsub
+kubectl apply -f ./manifest-ext/rabbitmq-pubsub.yaml
+```
