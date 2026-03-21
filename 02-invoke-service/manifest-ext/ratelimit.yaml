@@ -1,0 +1,26 @@
+# How the sidecar operates (tracing, middleware, security, API access)
+# The rulebook for the sidecar
+# Attached via dapr.io/config annotation on the pod
+# One config per app
+apiVersion: dapr.io/v1alpha1
+kind: Component              # ← it's a Component
+metadata:
+  name: ratelimit
+spec:
+  type: middleware.http.ratelimit
+  version: v1
+  metadata:
+    - name: maxRequestsPerSecond
+      value: "10"
+---
+apiVersion: dapr.io/v1alpha1
+kind: Configuration          # ← it's a Configuration
+metadata:
+  name: frontendsvc-config
+spec:
+  httpPipeline:              # ← this is where middleware gets wired in
+    handlers:
+      - name: ratelimit      # references the Component above
+        type: middleware.http.ratelimit
+        # Inbound: spec.httpPipeline: When an external caller hits the sidecar (Dapr API)
+        # App-bounds: pec.appHttpPipeline: When the sidecar forwards the request to your app
