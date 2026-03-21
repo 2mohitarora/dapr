@@ -22,7 +22,7 @@
 - [ ] AI Agents
 - [ ] Jobs 
 - [x] Pub/Sub
-- [ ] Zero code Change Pub/Sub Move from Redis to Kafka
+- [x] Zero code Change Pub/Sub Move from Redis to Kafka
 - [x] State Management
 - [x] Outbox Pattern
 - [x] Resiliency
