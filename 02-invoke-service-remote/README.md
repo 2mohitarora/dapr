@@ -60,6 +60,7 @@ kubectl delete deployment genidsvc
 ```
 kubectl apply -f ./manifest
 ```
+# Discuss configuration in detail (rate limiting is just an example)
 
 # Inject Dapr sidecar into Traefik deployment
 
