@@ -109,3 +109,9 @@ curl -H "Host: genidsvc.ingress" http://localhost:8083/v1.0/invoke/genidsvc.defa
 kubectl run net-test --rm -it --image=nicolaka/netshoot -- /bin/bash
 curl -H "Host: genidsvc.ingress" http://192.168.5.2:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
+
+# Check Rate Limit
+```
+seq 1 20 | xargs -P 20 -I {} curl -s -o /dev/null -w "%{http_code}\n" \
+ http://192.168.64.4/v1.0/invoke/genidsvc.default/method/genid -X POST
+```
