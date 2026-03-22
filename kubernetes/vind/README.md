@@ -141,7 +141,7 @@ docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
 ./cluster-2-script.sh
 ```
 
-# Install Missing CRDs on cluster-1
+# Install Missing CRDs on cluster-2
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
@@ -149,7 +149,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
 ```
 
-# Enable Gateway API on cluster-1
+# Enable Gateway API on cluster-2
 ```
 kubectl get configmap cilium-config -o yaml | grep -i gateway
 
