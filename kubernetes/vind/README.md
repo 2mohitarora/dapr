@@ -60,6 +60,11 @@ kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
+# Check Gateway API
+```
+kubectl get gatewayclasses
+```
+
 # Configure Registry for first cluster
 ```
 # Start a local registry on the same Docker network as your vind cluster
@@ -67,12 +72,6 @@ docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
 
 # Configure registry for cluster-1 so that nodes can pull from insecure registry
 ./cluster-1-script.sh
-```
-
-# Check Gateway API
-```
-kubectl apply -f gateway.yaml
-kubectl get gatewayclasses
 ```
 
 # Disconnect from first cluster
@@ -106,14 +105,7 @@ kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 
 # Check Gateway API
 ```
-kubectl apply -f gateway.yaml
 kubectl get gatewayclasses
-```
-
-# Verify both clusters are running
-```
-vcluster disconnect
-vcluster list
 ```
 
 # Configure Registry for second cluster
@@ -124,44 +116,14 @@ docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
 ./cluster-2-script.sh
 ```
 
-# Install Missing CRDs on cluster-2
+# Verify both clusters are running
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
+vcluster list
 ```
-
-# Enable Gateway API on cluster-2
-```
-kubectl get configmap cilium-config -o yaml | grep -i gateway
-
-# Edit the configmap
-kubectl edit configmap cilium-config
-
-# Add the following lines:
-enable-gateway-api: "true"
-enable-gateway-api-secrets-sync: "true"
-
-# Restart cilium
-kubectl rollout restart daemonset cilium
-
-# Check if Gateway API is enabled
-kubectl get configmap cilium-config -o yaml | grep -i gateway
-```
-
 
 # Check all the docker containers that are running
 ```
 docker ps --format "table {{.Names}}\t{{.Status}}"
-```
-
-# Switching Between Clusters
-```
-vcluster connect cluster-1
-vcluster disconnect
-vcluster connect cluster-2
-vcluster disconnect (Will bring to original kubecontext)
 ```
 
 # Describe clusters
