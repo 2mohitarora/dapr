@@ -68,6 +68,9 @@ helm install cilium cilium/cilium --version 1.19.1
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
+# Check cilium status
+cilium status --namespace cilium
+
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 # Check the pod CIDR
 kubectl cluster-info dump | grep -m 1 cluster-cidr
@@ -98,6 +101,9 @@ helm install cilium cilium/cilium --version 1.19.1
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
+
+# Check cilium status
+cilium status --namespace cilium
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 # Check the pod CIDR
