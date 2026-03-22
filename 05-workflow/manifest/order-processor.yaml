@@ -21,4 +21,4 @@ spec:
       containers:
         - name: order-processor
           image: ko.local/order-processor:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always

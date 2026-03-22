@@ -28,4 +28,4 @@ spec:
             - name: APP_PORT
               value: "8080"
             
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always

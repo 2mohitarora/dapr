@@ -21,4 +21,4 @@ spec:
       containers:
         - name: convsvc
           image: ko.local/convsvc:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always

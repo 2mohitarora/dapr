@@ -27,4 +27,4 @@ spec:
           env:
             - name: APP_PORT
               value: "6010"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always

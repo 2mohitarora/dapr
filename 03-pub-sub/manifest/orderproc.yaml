@@ -36,4 +36,4 @@ spec:
             - name: ORDERS_PUBSUB_ROUTE
               value: "/received-orders"
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
