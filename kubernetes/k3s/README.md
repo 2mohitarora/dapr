@@ -37,9 +37,9 @@ docker ps
 docker context ls
 kubectl config get-contexts
 ```
-
+---------------------------------------------------------------
 # Instructions for second cluster (It's not required initially)
-
+---------------------------------------------------------------
 # Create a new kubernetes cluster with ingress enabled
 ```
 cd ~/.colima/_templates
