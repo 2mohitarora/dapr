@@ -11,7 +11,7 @@ helm install redis bitnami/redis
 ```
 export KO_DOCKER_REPO=localhost:5050
 export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./frontendsvc 
+ko build -B ./frontendsvc --platform=linux/amd64,linux/arm64
 ```
 
 # Deploy manifests
