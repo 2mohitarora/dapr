@@ -13,11 +13,13 @@ brew install docker
 # Install Orbstack
 ```
 brew install --cask orbstack
+
 # Add local registries that will be created later
 # Add registry to docker daemon in ~/.docker/daemon.json
 {
   "insecure-registries": ["localhost:5050", "localhost:5051"]
 }
+
 # Start Orbstack
 ```
 # Install Cilium CLI
