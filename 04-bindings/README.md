@@ -9,7 +9,7 @@ helm repo update
 # 2. Install Postgres with a specific password and database name
 helm install postgresql bitnami/postgresql \
   --set auth.database=orders \
-  --set auth.postgresPassword=<STRONG_PASSWORD>
+  --set auth.postgresPassword=admin123
 
 # 3. Create the logs table
 export POSTGRES_PASSWORD=$(kubectl get secret --namespace default postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
@@ -23,9 +23,9 @@ kubectl run postgresql-client --rm --tty -i --restart='Never' \
 
 # Build container images
 ```
-export KO_DOCKER_REPO=ko.local
-export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
-ko build -B ./cronsvc
+export KO_DOCKER_REPO=localhost:5050
+export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
+ko build -B ./cronsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments

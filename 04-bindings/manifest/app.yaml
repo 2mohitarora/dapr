@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: cronsvc
-          image: ko.local/cronsvc:latest
+          image: registry-1:5000/cronsvc:latest
           ports:
             - containerPort: 6010
           env:
