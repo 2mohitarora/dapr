@@ -40,21 +40,23 @@ vcluster version
 # Create your first vcluster
 ```
 vcluster create cluster-1 --driver docker --values cluster-1.yaml
+
 kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace default
+cilium status --namespace kube-system
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-kubectl get configmap  cilium-config -o yaml | grep -i cidr
+kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
@@ -67,9 +69,9 @@ docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
 ./cluster-1-script.sh
 ```
 
-# Check if Gateway API is enabled
+# Check Gateway API
 ```
-kubectl get configmap cilium-config -o yaml | grep -i gateway
+kubectl apply -f gateway.yaml
 kubectl get gatewayclasses
 ```
 
@@ -86,17 +88,26 @@ kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true
+
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
+
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace default
+cilium status --namespace kube-system
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-kubectl get configmap  cilium-config -o yaml | grep -i cidr
+kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
+```
+
+# Check Gateway API
+```
+kubectl apply -f gateway.yaml
+kubectl get gatewayclasses
 ```
 
 # Verify both clusters are running
