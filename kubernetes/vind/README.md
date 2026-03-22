@@ -70,6 +70,12 @@ This will:
 - Wait for all nodes to become Ready
 - Automatically switch your kubeconfig context to cluster-1
 
+# Configure Registry for first cluster
+```
+# Start a local registry on the same Docker network as your vind cluster
+docker run -d --name registry --network vind-cluster-1 -p 5000:5000 registry:2
+```
+
 # Disconnect from first cluster
 ```
 vcluster disconnect
@@ -102,6 +108,13 @@ vcluster disconnect
 vcluster list
 ```
 
+# Configure Registry for second cluster
+```
+# Start a local registry on the same Docker network as your vind cluster
+docker run -d --name registry --network vind-cluster-2 -p 5001:5000 registry:2
+```
+
+
 # Check all the docker containers that are running
 ```
 docker ps --format "table {{.Names}}\t{{.Status}}"
@@ -125,7 +138,6 @@ vcluster describe cluster-1
 ```
 vcluster delete cluster-1
 vcluster delete cluster-2
-colima delete -p vind
 ```
 
 # Sample command for logs

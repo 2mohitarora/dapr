@@ -9,8 +9,8 @@ helm install redis bitnami/redis
 
 # Build front end service container image
 ```
-export KO_DOCKER_REPO=ko.local
-ko build -B ./frontendsvc
+export KO_DOCKER_REPO=localhost:5000
+ko build -B ./frontendsvc 
 ```
 
 # Deploy manifests
