@@ -8,7 +8,7 @@ brew install helm
 ```
 # Install colima
 ```
-brew install colima
+brew install colima lima lima-additional-guestagents
 ```
 # Install docker
 ```
@@ -18,23 +18,21 @@ brew install docker
 ```
 brew install cilium-cli
 ```
-# Change colima template
+# Install qemu
 ```
-colima template
-Change following settings
-- network.address: true
-- vmType: vz
-- rosetta: true
-- mountType: virtiofs
+brew install qemu
 ```
 # Configure vind template
 ```
+# Delete ~/.colima (if it exists)
+colima template
+# Save without any changes
 cd ~/.colima/_templates
 cp default.yaml vind.yaml 
 ```
 # Start colima with vind template and enough resources for two 3-node clusters
 ```
-colima start --cpu 4 --memory 8 --disk 60 -p vind
+colima start --arch x86_64 --cpu 4 --memory 8 --disk 60 -p vind
 ```
 # Configure docker
 ```
