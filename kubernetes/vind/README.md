@@ -53,13 +53,68 @@ vcluster platform start
 ```
 # Create your first vcluster
 ```
-vcluster create cluster-1
+vcluster create cluster-1 --values cluster-1.yaml
 
 kubectl get nodes
 kubectl get namespaces
 ```
+This will:
 
-# Connect to your vcluster
+- Pull the vCluster container image (first run takes a minute)
+- Start the control plane container
+- Start the two worker node containers
+- Wait for all nodes to become Ready
+- Automatically switch your kubeconfig context to cluster-1
+
+# Disconnect from first cluster
+```
+vcluster disconnect
+```
+
+# Create second vcluster
+```
+vcluster create cluster-2 --values cluster-2.yaml
+kubectl get nodes
+kubectl get namespaces
+```
+
+# Verify both clusters are running
+```
+vcluster disconnect
+vcluster list
+```
+
+# Check all the docker containers that are running
+```
+docker ps --format "table {{.Names}}\t{{.Status}}"
+```
+
+# Switching Between Clusters
 ```
 vcluster connect cluster-1
+vcluster disconnect
+vcluster connect cluster-2
+vcluster disconnect (Will bring to original kubecontext)
+```
+
+# Describe clusters
+```
+vcluster describe cluster-1
+vcluster describe cluster-1
+```
+
+# Cleanup
+```
+vcluster delete cluster-1
+vcluster delete cluster-2
+colima delete -p vind
+```
+
+# Sample command for logs
+```
+# View control plane logs
+docker exec vcluster.cp.cluster-1 journalctl -u vcluster --no-pager
+
+# View worker node kubelet logs
+docker exec vcluster.node.cluster-1.worker-1 journalctl -u kubelet --no-pager
 ```
