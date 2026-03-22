@@ -22,7 +22,7 @@ brew install cilium-cli
 # Configure docker
 ```
 docker context use orbstack
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/docker.sock"
+export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
 docker context list
 ```
 # Install vcluster CLI
