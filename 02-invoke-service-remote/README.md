@@ -29,6 +29,8 @@ kubectl get gateway default-gateway
 # See the service Cilium created
 kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
 
+# See the Envoy proxy pod
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy --tail=50
 ```
 # Discuss configuration in detail (rate limiting is just an example)
 
