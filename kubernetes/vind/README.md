@@ -70,6 +70,7 @@ This will:
 ```
 # Start a local registry on the same Docker network as your vind cluster
 docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
+
 # Configure registry for cluster-1 so that nodes can pull from insecure registry
 ./cluster-1-script.sh
 ```
