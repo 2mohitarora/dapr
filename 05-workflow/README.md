@@ -49,7 +49,7 @@ dapr workflow list -k --app-id order-processor \
   --connection-string "redis://:$REDIS_PASSWORD@localhost:6379" \
   -o wide
 
-dapr workflow history 3bf1d79f-6bf6-489d-8ae9-1f3f1182d8f6 -k --app-id order-processor -o wide
+dapr workflow history 7cab37fd-a76e-41ea-8601-ae73572a6c57 -k --app-id order-processor -o wide
 
 dapr workflow run OrderProcessingWorkflow -k \
   --app-id order-processor \
