@@ -34,7 +34,7 @@ cp default.yaml vind.yaml
 ```
 # Start colima with vind template and enough resources for two 3-node clusters
 ```
-colima start --cpu 4 --memory 8 --disk 60 --runtime docker -p vind
+colima start --cpu 4 --memory 8 --disk 60 -p vind
 ```
 # Configure docker
 ```
