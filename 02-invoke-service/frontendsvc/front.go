@@ -61,7 +61,7 @@ func postOrder(w http.ResponseWriter, r *http.Request) {
 	orderID := fmt.Sprintf("order-%s", string(out))
 	receivedOrder.ID = orderID
 	receivedOrder.Received = true
-	receivedOrder.Completed = true
+	receivedOrder.Completed = false
 	log.Printf("order received: [orderid=%s]", orderID)
 
 	// marshal order for downstream processing
