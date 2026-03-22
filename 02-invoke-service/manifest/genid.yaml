@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: genidsvc
-          image: ko.local/genidsvc:latest
+          image: registry-1:5000/genidsvc:latest
           ports:
             - containerPort: 5050
           env:

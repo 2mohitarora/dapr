@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: frontendsvc
-          image: ko.local/frontendsvc:latest
+          image: registry-1:5000/frontendsvc:latest
           ports:
             - containerPort: 8080
           env:
