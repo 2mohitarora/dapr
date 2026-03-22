@@ -55,6 +55,8 @@ vcluster use driver docker
 # Start vCluster Platform UI (Optional)
 ```
 vcluster platform start
+# If you dont want UI experience
+vcluster platform logout 
 ```
 # Create your first vcluster
 ```
@@ -70,11 +72,11 @@ helm install cilium cilium/cilium --version 1.19.1
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace cilium
+cilium status --namespace default
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-# Check the pod CIDR
-kubectl cluster-info dump | grep -m 1 cluster-cidr
+kubectl get configmap  cilium-config -o yaml | grep -i cidr
+kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 This will:
 
@@ -104,11 +106,11 @@ helm install cilium cilium/cilium --version 1.19.1
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace cilium
+cilium status --namespace default
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-# Check the pod CIDR
-kubectl cluster-info dump | grep -m 1 cluster-cidr
+kubectl get configmap  cilium-config -o yaml | grep -i cidr
+kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
 # Verify both clusters are running
