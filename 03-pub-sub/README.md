@@ -101,8 +101,10 @@ Check Dapr UI
 ```
 kubectl delete deployment frontendsvc
 kubectl delete deployment orderprocsvc
+kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/orderproc.yaml
 kubectl apply -f ./manifest/frontend.yaml
+kubectl apply -f ./manifest/genid.yaml
 ```
 
 # Moment of truth
