@@ -9,7 +9,7 @@ brew install helm
 # Install Orbstack
 ```
 brew install --cask orbstack
-# Add local registries that will be created late before Starting Orbstack
+# Add local registries that will be created later
 # Add registry to docker daemon in ~/.docker/daemon.json
 {
   "insecure-registries": ["localhost:5000", "localhost:5001"]
