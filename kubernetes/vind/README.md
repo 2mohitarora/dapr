@@ -54,15 +54,26 @@ vcluster platform start
 # Create your first vcluster
 ```
 sudo vcluster create cluster-1 --values cluster-1.yaml
-
+kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
+
+helm repo add cilium https://helm.cilium.io/
+helm install cilium cilium/cilium --version 1.14.0
+
+# After CNI is installed, wait for pods to become Ready:
+kubectl get pods --all-namespaces -w
+
+# Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
+# Check the pod CIDR
+kubectl cluster-info dump | grep -m 1 cluster-cidr
 ```
 This will:
 
 - Pull the vCluster container image (first run takes a minute)
 - Start the control plane container
-- Start the two worker node containers
+- Start one worker node container
+- Install Cilium CNI plugin
 - Wait for all nodes to become Ready
 - Automatically switch your kubeconfig context to cluster-1
 
@@ -74,8 +85,19 @@ vcluster disconnect
 # Create second vcluster
 ```
 sudo vcluster create cluster-2 --values cluster-2.yaml
+kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
+
+helm repo add cilium https://helm.cilium.io/
+helm install cilium cilium/cilium --version 1.14.0
+
+# After CNI is installed, wait for pods to become Ready:
+kubectl get pods --all-namespaces -w
+
+# Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
+# Check the pod CIDR
+kubectl cluster-info dump | grep -m 1 cluster-cidr
 ```
 
 # Verify both clusters are running
@@ -120,5 +142,5 @@ docker exec vcluster.node.cluster-1.worker-1 journalctl -u kubelet --no-pager
 ```
 
 # Networking
-- Each cluster uses a separate Docker network (vind-cluster1 and vind-cluster2) to keep them isolated from each other.
+- Each cluster uses a separate Docker network (vind-cluster-1 and vind-cluster-2) to keep them isolated from each other.
 - LoadBalancer is enabled for both clusters, so you can access services using `kubectl port-forward` or by exposing them via Docker port mappings.
