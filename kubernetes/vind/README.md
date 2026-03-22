@@ -6,9 +6,10 @@ brew install kubectl
 ```
 brew install helm
 ```
-# Install colima
+# Install Orbstack
 ```
-brew install colima lima lima-additional-guestagents
+brew install --cask orbstack
+# Start Orbstack
 ```
 # Install docker
 ```
@@ -18,26 +19,10 @@ brew install docker
 ```
 brew install cilium-cli
 ```
-# Install qemu
-```
-brew install qemu
-```
-# Configure vind template
-```
-# Delete ~/.colima (if it exists)
-colima template
-# Save without any changes
-cd ~/.colima/_templates
-cp default.yaml vind.yaml 
-```
-# Start colima with vind template and enough resources for two 3-node clusters
-```
-colima start --arch x86_64 --cpu 4 --memory 8 --disk 60 -p vind
-```
 # Configure docker
 ```
-docker context use colima-vind
-export DOCKER_HOST="unix:///Users/mua0008/.colima/vind/docker.sock"
+docker context use orbstack
+export DOCKER_HOST="unix:///Users/mua0008/.orbstack/docker.sock"
 docker context list
 ```
 # Install vcluster CLI
