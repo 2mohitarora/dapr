@@ -6,6 +6,10 @@ brew install kubectl
 ```
 brew install helm
 ```
+# Install docker
+```
+brew install docker
+```
 # Install Orbstack
 ```
 brew install --cask orbstack
@@ -15,10 +19,6 @@ brew install --cask orbstack
   "insecure-registries": ["localhost:5050", "localhost:5051"]
 }
 # Start Orbstack
-```
-# Install docker
-```
-brew install docker
 ```
 # Install Cilium CLI
 ```
