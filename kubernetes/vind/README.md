@@ -45,7 +45,7 @@ kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.19.1
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
@@ -57,14 +57,6 @@ cilium status --namespace default
 kubectl get configmap  cilium-config -o yaml | grep -i cidr
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
-This will:
-
-- Pull the vCluster container image (first run takes a minute)
-- Start the control plane container
-- Start one worker node container
-- Install Cilium CNI plugin
-- Wait for all nodes to become Ready
-- Automatically switch your kubeconfig context to cluster-1
 
 # Configure Registry for first cluster
 ```
@@ -75,30 +67,10 @@ docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
 ./cluster-1-script.sh
 ```
 
-# Install Missing CRDs on cluster-1
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
-```
-
-# Enable Gateway API on cluster-1
-```
-kubectl get configmap cilium-config -o yaml | grep -i gateway
-
-# Edit the configmap
-kubectl edit configmap cilium-config
-
-# Add the following lines:
-enable-gateway-api: "true"
-enable-gateway-api-secrets-sync: "true"
-
-# Restart cilium
-kubectl rollout restart daemonset cilium
-
 # Check if Gateway API is enabled
+```
 kubectl get configmap cilium-config -o yaml | grep -i gateway
+kubectl get gatewayclasses
 ```
 
 # Disconnect from first cluster
@@ -114,7 +86,7 @@ kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.19.1
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
