@@ -23,7 +23,7 @@ kubectl get pods -o wide -n dapr-system
 
 # Run dapr UI
 ```
-dapr dashboard -k
+dapr dashboard -k # For second cluster use -p 9999
 ```
 
 # Install ko
