@@ -46,8 +46,10 @@ kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
+
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system
+
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
@@ -90,7 +92,7 @@ helm repo add cilium https://helm.cilium.io/
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system --set ipam.operator.clusterPoolIPv4PodCIDRList=10.2.0.0/16
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
