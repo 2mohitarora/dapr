@@ -38,8 +38,9 @@ colima start --cpu 4 --memory 8 --disk 60 -p vind
 ```
 # Configure docker
 ```
-docker context list
 docker context use colima-vind
+export DOCKER_HOST="unix:///Users/mua0008/.colima/vind/docker.sock"
+docker context list
 ```
 # Install vcluster CLI
 ```
@@ -51,7 +52,7 @@ vcluster version
 vcluster use driver docker
 ```
 
-# Start vCluster Platform UI
+# Start vCluster Platform UI (Optional)
 ```
 vcluster platform start
 ```
