@@ -70,6 +70,8 @@ curl -H "Host: genidsvc.ingress" http://192.168.5.2:8083/v1.0/invoke/genidsvc.de
 
 # Check Rate Limit
 ```
+# Uncomment dapr.io/config: "genidsvc-config" in genid.yaml
+kubectl apply -f ./manifest/genid.yaml
 kubectl apply -f ./manifest/rate-limit.yaml
 
 seq 1 20 | xargs -P 20 -I {} curl -s -o /dev/null -w "%{http_code}\n" \
