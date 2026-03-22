@@ -10,7 +10,7 @@ helm install redis bitnami/redis
 # Build front end service container image
 ```
 export KO_DOCKER_REPO=ko.local
-export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
+export DOCKER_HOST="unix:///Users/mua0008/.colima/vind/docker.sock"
 ko build -B ./frontendsvc
 ```
 
