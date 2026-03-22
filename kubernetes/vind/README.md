@@ -12,7 +12,7 @@ brew install --cask orbstack
 # Add local registries that will be created later
 # Add registry to docker daemon in ~/.docker/daemon.json
 {
-  "insecure-registries": ["localhost:5000", "localhost:5001"]
+  "insecure-registries": ["localhost:5050", "localhost:5051"]
 }
 # Start Orbstack
 ```
@@ -67,7 +67,7 @@ This will:
 # Configure Registry for first cluster
 ```
 # Start a local registry on the same Docker network as your vind cluster
-docker run -d --name registry-1 --network vind-cluster-1 -p 5000:5000 registry:2
+docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
 ```
 
 # Disconnect from first cluster
@@ -105,7 +105,7 @@ vcluster list
 # Configure Registry for second cluster
 ```
 # Start a local registry on the same Docker network as your vind cluster
-docker run -d --name registry-2 --network vind-cluster-2 -p 5001:5000 registry:2
+docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
 ```
 
 
