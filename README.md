@@ -6,7 +6,7 @@ Option 2: k3s (Instructions in kubernetes/k3s)
 
 # Install Dapr
 ```
-brew install ko dapr/tap/dapr-cli
+brew install go ko dapr/tap/dapr-cli
 ```
 
 # Initialize Dapr on Kubernetes
