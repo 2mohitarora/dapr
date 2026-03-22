@@ -20,5 +20,5 @@ spec:
     spec:
       containers:
         - name: order-processor
-          image: ko.local/order-processor:latest
+          image: registry-1:5000/order-processor:latest
           imagePullPolicy: Always
