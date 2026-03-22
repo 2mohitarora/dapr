@@ -53,7 +53,7 @@ vcluster platform start
 ```
 # Create your first vcluster
 ```
-vcluster create cluster-1 --values cluster-1.yaml
+sudo vcluster create cluster-1 --values cluster-1.yaml
 
 kubectl get nodes
 kubectl get namespaces
@@ -73,7 +73,7 @@ vcluster disconnect
 
 # Create second vcluster
 ```
-vcluster create cluster-2 --values cluster-2.yaml
+sudo vcluster create cluster-2 --values cluster-2.yaml
 kubectl get nodes
 kubectl get namespaces
 ```
@@ -118,3 +118,7 @@ docker exec vcluster.cp.cluster-1 journalctl -u vcluster --no-pager
 # View worker node kubelet logs
 docker exec vcluster.node.cluster-1.worker-1 journalctl -u kubelet --no-pager
 ```
+
+# Networking
+- Each cluster uses a separate Docker network (vind-cluster1 and vind-cluster2) to keep them isolated from each other.
+- LoadBalancer is enabled for both clusters, so you can access services using `kubectl port-forward` or by exposing them via Docker port mappings.
