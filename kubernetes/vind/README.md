@@ -53,13 +53,13 @@ vcluster platform start
 ```
 # Create your first vcluster
 ```
-vcluster create cluster-1 --values cluster-1.yaml
+vcluster create cluster-1 --driver docker --values cluster-1.yaml
 kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.14.0
+helm install cilium cilium/cilium --version 1.19.1
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
@@ -84,13 +84,13 @@ vcluster disconnect
 
 # Create second vcluster
 ```
-vcluster create cluster-2 --values cluster-2.yaml
+vcluster create cluster-2 --driver docker --values cluster-2.yaml
 kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.14.0
+helm install cilium cilium/cilium --version 1.19.1
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
