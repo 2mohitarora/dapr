@@ -108,5 +108,5 @@ kubectl apply -f ./manifest/frontend.yaml
 # Moment of truth
 curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-31ac367c-44fc-42d7-9156-3f5515d3db09"
+curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-e8744aa9-933d-4983-ae29-16b18ae6a24d"
 ```
