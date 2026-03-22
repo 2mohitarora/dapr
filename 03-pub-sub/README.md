@@ -114,5 +114,5 @@ kubectl apply -f ./manifest/genid.yaml
 # Moment of truth
 curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-02aea9b9-f79c-4647-b826-dacfb02c42c3"
+curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-2ab62228-7004-4bc5-9b3a-8ca43aaf5635"
 ```
