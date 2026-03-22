@@ -53,7 +53,7 @@ vcluster platform start
 ```
 # Create your first vcluster
 ```
-sudo vcluster create cluster-1 --values cluster-1.yaml
+vcluster create cluster-1 --values cluster-1.yaml
 kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces
@@ -84,7 +84,7 @@ vcluster disconnect
 
 # Create second vcluster
 ```
-sudo vcluster create cluster-2 --values cluster-2.yaml
+vcluster create cluster-2 --values cluster-2.yaml
 kubectl config get-contexts
 kubectl get nodes
 kubectl get namespaces

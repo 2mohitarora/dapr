@@ -4,7 +4,7 @@ experimental:
     nodes:
       - name: worker-1
     loadBalancer:
-      enabled: true
+      enabled: false
     registryProxy:
       enabled: true
 # CNI Configuration
