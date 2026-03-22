@@ -41,10 +41,6 @@ vcluster version
 ```
 vcluster create cluster-1 --driver docker --values cluster-1.yaml
 
-kubectl config get-contexts
-kubectl get nodes
-kubectl get namespaces
-
 helm repo add cilium https://helm.cilium.io/
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
@@ -64,9 +60,19 @@ kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
-# Check Gateway API
+# Add Envoy Gateway for Dapr communication between clusters
 ```
-kubectl get gatewayclasses
+kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
+
+kubectl apply -f eg.yaml
+
+# For any issues
+kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
+```
+
+# Check Gateway Classes
+```
+kubectl get gatewayclasses -o wide
 ```
 
 # Configure Registry for first cluster
@@ -86,9 +92,6 @@ vcluster disconnect
 # Create second vcluster
 ```
 vcluster create cluster-2 --driver docker --values cluster-2.yaml
-kubectl config get-contexts
-kubectl get nodes
-kubectl get namespaces
 
 helm repo add cilium https://helm.cilium.io/
 
@@ -106,9 +109,19 @@ cilium status --namespace kube-system
 kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 ```
 
+# Add Envoy Gateway for Dapr communication between clusters
+```
+kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
+
+kubectl apply -f eg.yaml
+
+# For any issues
+kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
+```
+
 # Check Gateway API
 ```
-kubectl get gatewayclasses
+kubectl get gatewayclasses -o wide
 ```
 
 # Configure Registry for second cluster
