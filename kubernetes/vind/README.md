@@ -9,6 +9,11 @@ brew install helm
 # Install Orbstack
 ```
 brew install --cask orbstack
+# Add local registries that will be created late before Starting Orbstack
+# Add registry to docker daemon in ~/.docker/daemon.json
+{
+  "insecure-registries": ["localhost:5000", "localhost:5001"]
+}
 # Start Orbstack
 ```
 # Install docker
@@ -29,17 +34,6 @@ docker context list
 ```
 brew install vcluster
 vcluster version
-```
-# Configure vcluster - Set Docker as default deamon
-```
-vcluster use driver docker
-```
-
-# Start vCluster Platform UI (Optional)
-```
-vcluster platform start
-# If you dont want UI experience
-vcluster platform logout 
 ```
 # Create your first vcluster
 ```
