@@ -21,38 +21,19 @@ kubectl delete deployment genidsvc
 # Deploy manifests
 ```
 kubectl apply -f ./manifest/genid.yaml
-kubectl apply -f ./manifest/ingress.yaml
+kubectl apply -f ./manifest/gateway.yaml
+
+# Check the gateway status
+kubectl get gateway default-gateway
+
+# See the service Cilium created
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
+
 ```
 # Discuss configuration in detail (rate limiting is just an example)
 
-# Inject Dapr sidecar into Traefik deployment
-
-```
-kubectl patch deployment traefik -n kube-system -p '
-{
-  "spec": {
-    "template": {
-      "metadata": {
-        "annotations": {
-          "dapr.io/enabled": "true",
-          "dapr.io/app-id": "traefik-ingress",
-          "dapr.io/app-port": "8000",
-          "dapr.io/log-level": "debug"
-        }
-      }
-    }
-  }
-}'
-```
-
-# Check traffic service created by Dapr
-```
-kubectl get svc -n kube-system | grep traefik-ingress-dapr
-```
-
 # Invoke genid service by find Traefik external IP
 ```
-kubectl get svc -n kube-system -l app.kubernetes.io/name=traefik
 curl -H "Host: genidsvc.ingress" http://192.168.64.4/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
 

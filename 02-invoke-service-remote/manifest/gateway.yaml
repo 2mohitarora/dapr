@@ -23,7 +23,7 @@ spec:
   rules:
     - matches:
         - path:
-            value: /
+            value: /v1.0/invoke
       backendRefs:
-        - name: frontendsvc
-          port: 80   
+        - name: genidsvc-dapr
+          port: 3500   
