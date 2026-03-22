@@ -68,8 +68,6 @@ This will:
 ```
 # Start a local registry on the same Docker network as your vind cluster
 docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
-# Note registry-1 IP Address, you will need it
-docker inspect registry-1 | grep IPAddress
 ```
 
 # Disconnect from first cluster
@@ -108,8 +106,6 @@ vcluster list
 ```
 # Start a local registry on the same Docker network as your vind cluster
 docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
-# Note registry-2 IP Address, you will need it
-docker inspect registry-2 | grep IPAddress
 ```
 
 
