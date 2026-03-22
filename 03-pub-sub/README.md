@@ -58,7 +58,7 @@ kubectl port-forward deployment/frontendsvc 8081:8080
 ```
 curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-4f11fe4a-7408-4fec-aaf9-619011cf9bdd"
+curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-b9f4be78-e3d1-4ad9-ba42-c7cbc22ed007"
 ```
 
 # Check application logs
