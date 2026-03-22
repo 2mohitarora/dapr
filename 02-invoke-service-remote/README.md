@@ -1,47 +1,9 @@
 # Service Invocation in different cluster
 
-# Create a new kubernetes cluster with ingress enabled
-```
-cd ~/.colima/_templates
-cp default.yaml ingress.yaml 
-```
-
-# Edit ingress.yaml
-```
-Comment following lines
-k3sArgs:
-    - --disable=traefik
-```
-
-# Start colima with ingress enabled
-```
-colima start --kubernetes --k3s-arg "" -p ingress
-```
-
-# Check kuberneres contexts
-```
-kubectl config get-contexts
-```
-
-# Check traefik is installed
-```
-kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
-```
-
-# Install Dapr on the new cluster
-```
-dapr init -k
-```
-
-# Verify Dapr
-```
-dapr status -k
-kubectl get pods -o wide -n dapr-system
-```
-
-# Docker checks
+# Context Checks
 ```
 docker context ls
+kubectl config get-contexts
 ```
 
 # Build front end service and genid service container images
@@ -85,11 +47,6 @@ kubectl patch deployment traefik -n kube-system -p '
 # Check traffic service created by Dapr
 ```
 kubectl get svc -n kube-system | grep traefik-ingress-dapr
-```
-
-# Run dapr UI and check genid svc is running
-```
-dapr dashboard -k -p 9999
 ```
 
 # Invoke genid service by find Traefik external IP

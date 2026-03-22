@@ -1,0 +1,10 @@
+experimental:
+  docker:
+    network: "vind-cluster-1"
+    nodes:
+      - name: worker-1
+      - name: worker-2
+    loadBalancer:
+      enabled: false
+    registryProxy:
+      enabled: false

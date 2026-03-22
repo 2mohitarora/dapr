@@ -1,42 +1,7 @@
-# Install kubectl
+# Install kubernetes cluster
 ```
-brew install kubectl
-```
-# Install helm
-```
-brew install helm
-```
-
-# Install colima
-```
-brew install colima
-```
-
-# Change colima template
-```
-colima template
-Change following settings
-- network.address: true
-- vmType: vz
-- rosetta: true
-- mountType: virtiofs
-```
-
-# Start colima with k3s
-```
-colima start --kubernetes
-```
-
-# Verify kubernetes
-```
-kubectl get svc -o wide -A 
-colima ssh 
-```
-
-# Docker checks
-```
-docker ps 
-docker context ls
+Option 1: vind (Instructions in kubernetes/vind)
+Option 2: k3s (Instructions in kubernetes/k3s)
 ```
 
 # Install Dapr
@@ -46,6 +11,7 @@ brew install dapr/tap/dapr-cli
 
 # Initialize Dapr on Kubernetes
 ```
+kubectl config get-contexts
 dapr init -k
 ```
 
