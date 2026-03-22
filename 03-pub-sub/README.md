@@ -9,16 +9,17 @@ helm install redis bitnami/redis
 
 # Build front end service and genid service container images
 ```
-export KO_DOCKER_REPO=ko.local
-export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
-ko build -B ./frontendsvc
-ko build -B ./genidsvc
-ko build -B ./orderprocsvc
+export KO_DOCKER_REPO=localhost:5050
+export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
+ko build -B ./frontendsvc --platform=linux/arm64
+ko build -B ./genidsvc --platform=linux/arm64
+ko build -B ./orderprocsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments
 ```
 kubectl delete deployment frontendsvc
+kubectl delete deployment genidsvc
 kubectl delete deployment orderprocsvc
 ```
 

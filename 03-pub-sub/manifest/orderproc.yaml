@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: orderprocsvc
-          image: ko.local/orderprocsvc:latest
+          image: registry-1:5000/orderprocsvc:latest
           ports:
             - containerPort: 6060
           env:
