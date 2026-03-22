@@ -59,6 +59,8 @@ cilium status --namespace kube-system
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
+
+# Cilium doesn't use this. Cilium with its own IPAM mode
 kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
@@ -102,7 +104,6 @@ cilium status --namespace kube-system
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
-kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
 # Check Gateway API
