@@ -14,6 +14,10 @@ brew install colima
 ```
 brew install docker
 ```
+# Install Cilium CLI
+```
+brew install cilium-cli
+```
 # Change colima template
 ```
 colima template
