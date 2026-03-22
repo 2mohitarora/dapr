@@ -7,8 +7,12 @@ server = "http://registry-1:5000"
   capabilities = ["pull", "resolve"]
   skip_verify = true
 EOF'
-done
 
-for node in vcluster.cp.cluster-1 vcluster.node.cluster-1.worker-1; do
+  # Set config_path in containerd config
+  docker exec "$node" sed -i 's|config_path = ""|config_path = "/etc/containerd/certs.d"|' /etc/containerd/config.toml
+
+  # Restart containerd
   docker exec "$node" systemctl restart containerd
+
+  echo "✅ Done: $node"
 done
