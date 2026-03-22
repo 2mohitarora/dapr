@@ -90,6 +90,13 @@ kubectl port-forward --namespace default svc/rabbitmq 15672:15672
 http://127.0.0.1:15672/
 ```
 
+# Delete existing deployments
+```
+kubectl delete deployment frontendsvc
+kubectl delete deployment orderprocsvc
+kubectl delete deployment genidsvc
+```
+
 # Delete redis strams pub sub Dapr component and create rabbitmq pubsub Dapr component
 ```
 kubectl delete component orders-pubsub
@@ -99,9 +106,6 @@ Check Dapr UI
 
 # Restart applications for new components to be picked up 
 ```
-kubectl delete deployment frontendsvc
-kubectl delete deployment orderprocsvc
-kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/orderproc.yaml
 kubectl apply -f ./manifest/frontend.yaml
 kubectl apply -f ./manifest/genid.yaml
