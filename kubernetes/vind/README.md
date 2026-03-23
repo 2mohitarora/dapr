@@ -68,7 +68,7 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
+  --set providers.kubernetesCRD.allowExternalNameServices=true
 
 kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
 
@@ -166,7 +166,7 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
+  --set providers.kubernetesCRD.allowExternalNameServices=true
   
 kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
 
