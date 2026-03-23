@@ -24,7 +24,8 @@ spec:
   rules:
     - matches:
         - path:
+            type: PathPrefix
             value: /v1.0/invoke
       backendRefs:
-        - name: genidsvc-dapr
+        - name: envoy-gateway-dapr
           port: 3500   
