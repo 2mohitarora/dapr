@@ -68,8 +68,21 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true
+  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
 
+# Install CRDs manually
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutetcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressrouteudps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_middlewares.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_middlewaretcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_serverstransports.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_serverstransporttcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_tlsoptions.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_tlsstores.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_traefikservices.yaml
+
+# Create Dapr IngressRoute
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
@@ -164,8 +177,21 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true
-  
+  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
+
+# Install CRDs manually
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutetcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressrouteudps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_middlewares.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_middlewaretcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_serverstransports.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_serverstransporttcps.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_tlsoptions.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_tlsstores.yaml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_traefikservices.yaml
+
+# Create Dapr IngressRoute
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
