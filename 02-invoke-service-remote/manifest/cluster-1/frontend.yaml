@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontendsvc
+spec:
+  selector:
+    app: frontendsvc
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendsvc
+  labels:
+    app: frontendsvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendsvc
+  template:
+    metadata:
+      labels:
+        app: frontendsvc
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id:  "frontendsvc"
+        dapr.io/log-level: "debug"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+        - name: frontendsvc
+          image: registry-1:5000/frontendsvc:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_PORT
+              value: "8080"
+          imagePullPolicy: Always
