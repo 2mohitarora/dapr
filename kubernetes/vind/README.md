@@ -74,7 +74,26 @@ kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
 
 # Add Traefik Ingress for Dapr communication between clusters
 ```
+kubectl apply -f traefik-dapr-ingress.yaml
+```
 
+# Inject Dapr sidecar into Traefik deployment
+```
+kubectl patch deployment traefik -n kube-system -p '
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "dapr.io/enabled": "true",
+          "dapr.io/app-id": "traefik-ingress",
+          "dapr.io/app-port": "8000",
+          "dapr.io/log-level": "debug"
+        }
+      }
+    }
+  }
+}'
 ```
 
 # Configure Registry for first cluster
@@ -128,7 +147,26 @@ kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
 
 # Add Traefik Ingress for Dapr communication between clusters
 ```
+kubectl apply -f traefik-dapr-ingress.yaml
+```
 
+# Inject Dapr sidecar into Traefik deployment
+```
+kubectl patch deployment traefik -n kube-system -p '
+{
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "dapr.io/enabled": "true",
+          "dapr.io/app-id": "traefik-ingress",
+          "dapr.io/app-port": "8000",
+          "dapr.io/log-level": "debug"
+        }
+      }
+    }
+  }
+}'
 ```
 
 # Configure Registry for second cluster
