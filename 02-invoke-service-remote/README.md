@@ -32,6 +32,9 @@ kubectl apply -f ./manifest/cluster-2/genid.yaml
 # Invoke genid service by find Traefik external IP
 ```
 curl -H "Host: genidsvc.ingress" http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
+
+# Test front end application
+
 ```
 
 # Discuss rate limit and Check Rate Limit
