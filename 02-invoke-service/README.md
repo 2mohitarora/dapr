@@ -23,12 +23,15 @@ kubectl delete deployment genidsvc
 
 # Deploy manifests
 ```
-kubectl apply -f ./manifest
+kubectl apply -f ./manifest/frontend.yaml
+kubectl apply -f ./manifest/genid.yaml
+kubectl apply -f ./manifest/redis-store.yaml
 ```
 
 # Deploy Additional manifests to showcase remote service invoke and resiliency
 ```
-kubectl apply -f ./manifest-ext
+kubectl apply -f ./manifest-ext/remote-genid-endpoint.yaml
+kubectl apply -f ./manifest-ext/resiliency.yaml
 ```
 
 # Discuss resiliency in detail
