@@ -70,8 +70,6 @@ helm install traefik traefik/traefik \
   --create-namespace \
   --set providers.kubernetesCRD.allowExternalNameServices=true
 
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
-
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
@@ -168,8 +166,6 @@ helm install traefik traefik/traefik \
   --create-namespace \
   --set providers.kubernetesCRD.allowExternalNameServices=true
   
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
-
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
