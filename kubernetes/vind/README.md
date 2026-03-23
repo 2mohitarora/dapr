@@ -136,6 +136,7 @@ kubectl apply -f cilium-gateway.yaml
 ```
 # Start a local registry on the same Docker network as your vind cluster
 docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
+
 # Configure registry for cluster-2 so that nodes can pull from insecure registry
 ./cluster-2-script.sh
 ```
