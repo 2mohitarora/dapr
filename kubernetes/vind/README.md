@@ -64,7 +64,7 @@ kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
 
-kubectl apply -f eg.yaml
+kubectl apply -f 1_eg.yaml
 
 # For any issues
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
@@ -74,7 +74,7 @@ kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
 ```
 kubectl get gatewayclasses -o wide
 
-kubectl apply -f eg-gateway.yaml
+kubectl apply -f 3_eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
 
@@ -131,7 +131,7 @@ kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 ```
 kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
 
-kubectl apply -f eg.yaml
+kubectl apply -f 1_eg.yaml
 
 # For any issues
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
@@ -141,7 +141,7 @@ kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
 ```
 kubectl get gatewayclasses -o wide
 
-kubectl apply -f eg-gateway.yaml
+kubectl apply -f 3_eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
 
