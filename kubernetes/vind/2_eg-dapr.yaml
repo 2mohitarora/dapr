@@ -13,3 +13,4 @@ spec:
             dapr.io/enabled: "true"
             dapr.io/app-id: "eg-gateway"
             dapr.io/sidecar-listen-addresses: "0.0.0.0"
+            dapr.io/disable-builtin-k8s-secret-store: "true"
