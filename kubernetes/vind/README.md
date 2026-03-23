@@ -74,6 +74,13 @@ kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
 
 # Add Traefik Ingress for Dapr communication between clusters
 ```
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm install traefik traefik/traefik \
+  --namespace traefik \
+  --create-namespace \
+  --set providers.kubernetesCRD.allowExternalNameServices=true
+
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
@@ -150,6 +157,13 @@ kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
 
 # Add Traefik Ingress for Dapr communication between clusters
 ```
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm install traefik traefik/traefik \
+  --namespace traefik \
+  --create-namespace \
+  --set providers.kubernetesCRD.allowExternalNameServices=true
+
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
