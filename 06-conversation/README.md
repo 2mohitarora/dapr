@@ -4,7 +4,7 @@
 ```
 export KO_DOCKER_REPO=ko.local
 export DOCKER_HOST="unix:///Users/mua0008/.colima/default/docker.sock"
-ko build -B ./convsvc
+ko build -B ./convsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments

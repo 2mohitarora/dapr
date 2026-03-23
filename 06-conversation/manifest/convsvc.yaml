@@ -20,5 +20,5 @@ spec:
     spec:
       containers:
         - name: convsvc
-          image: ko.local/convsvc:latest
+          image: registry-1:5000/convsvc:latest
           imagePullPolicy: Always
