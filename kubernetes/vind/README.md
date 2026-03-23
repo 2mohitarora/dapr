@@ -79,6 +79,18 @@ kubectl apply -f eg-gateway.yaml
 kubectl apply -f cilium-gateway.yaml
 
 kubectl get gateways
+
+# Debug Cilium Gateway
+# See the service Cilium created
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
+# See the Cilium Envoy proxy pod
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+
+# Debug Envoy Gateway
+# See the service EG created
+kubectl get svc -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -n envoy-gateway-system
+# See the EG Envoy proxy pod
+kubectl -n envoy-gateway-system logs -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -f
 ```
 
 # Configure Registry for first cluster
@@ -134,6 +146,18 @@ kubectl apply -f eg-gateway.yaml
 kubectl apply -f cilium-gateway.yaml
 
 kubectl get gateways
+
+# Debug Cilium Gateway
+# See the service Cilium created
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
+# See the Cilium Envoy proxy pod
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+
+# Debug Envoy Gateway
+# See the service EG created
+kubectl get svc -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -n envoy-gateway-system
+# See the EG Envoy proxy pod
+kubectl -n envoy-gateway-system logs -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -f
 ```
 
 # Configure Registry for second cluster
