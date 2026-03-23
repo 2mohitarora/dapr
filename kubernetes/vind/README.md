@@ -77,6 +77,8 @@ kubectl get gatewayclasses -o wide
 kubectl apply -f eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
+
+kubectl get gateways
 ```
 
 # Configure Registry for first cluster
@@ -130,6 +132,8 @@ kubectl get gatewayclasses -o wide
 kubectl apply -f eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
+
+kubectl get gateways
 ```
 
 # Configure Registry for second cluster

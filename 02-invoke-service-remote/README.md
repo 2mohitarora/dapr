@@ -1,5 +1,9 @@
-# Service Invocation in different cluster
+# On First Cluster create route for frontendsvc for easier testing
+```
+kubectl apply -f ./manifest/frontendsvc-route.yaml
+```
 
+# Switch to second cluster
 # Context Checks
 ```
 docker context ls
@@ -21,16 +25,6 @@ kubectl delete deployment genidsvc
 # Deploy manifests
 ```
 kubectl apply -f ./manifest/genid.yaml
-kubectl apply -f ./manifest/gateway.yaml
-
-# Check the gateway status
-kubectl get gateway default-gateway
-
-# See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
-
-# See the Envoy proxy pod
-kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
 ```
 # Discuss configuration in detail (rate limiting is just an example)
 
