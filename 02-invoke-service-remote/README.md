@@ -1,10 +1,4 @@
-# On First Cluster create route for frontendsvc for easier testing
-```
-kubectl apply -f ./manifest/frontendsvc-route.yaml
-```
-
-# Switch to second cluster
-# Context Checks
+# Make sure you are using cluster-2
 ```
 docker context ls
 kubectl config get-contexts

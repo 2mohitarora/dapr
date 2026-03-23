@@ -56,6 +56,9 @@ kubectl get gateways -n cilium
 kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway -n cilium
 # See the Cilium Envoy proxy pod
 kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
+
+# Create a route for front end service
+kubectl apply -f ./frontendsvc-route.yaml
 ```
 
 # Add Traefik Ingress for Dapr communication between clusters
