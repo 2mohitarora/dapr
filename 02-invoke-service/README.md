@@ -55,16 +55,11 @@ kubectl get pods -l app=frontendsvc
 kubectl get pods -l app=genidsvc
 ```
 
-# Test application using port forwarding 
-```
-kubectl port-forward deployment/frontendsvc 8081:8080
-```
-
 # Test the application
 ```
-curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://localhost:8081/orders/new"
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://localhost:8081/orders/order/order-e65d61de-5eb2-4a30-b11c-cb96c94ce817"
+curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-e65d61de-5eb2-4a30-b11c-cb96c94ce817"
 ```
 
 # Check application logs
