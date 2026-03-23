@@ -94,6 +94,9 @@ kubectl patch deployment traefik -n kube-system -p '
     }
   }
 }'
+
+# Check traffic service created by Dapr
+kubectl get svc -n kube-system | grep traefik-ingress-dapr
 ```
 
 # Configure Registry for first cluster
@@ -167,6 +170,10 @@ kubectl patch deployment traefik -n kube-system -p '
     }
   }
 }'
+
+# Check traffic service created by Dapr
+kubectl get svc -n kube-system | grep traefik-ingress-dapr
+
 ```
 
 # Configure Registry for second cluster
