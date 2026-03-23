@@ -49,11 +49,11 @@ kubectl get gatewayclasses -o wide
 
 kubectl apply -f cilium-gateway.yaml
 
-kubectl get gateways
+kubectl get gateways -n cilium
 
 # Debug Cilium Gateway
 # See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=cilium-gateway -n cilium
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway -n cilium
 # See the Cilium Envoy proxy pod
 kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
 ```
@@ -147,11 +147,11 @@ kubectl get gatewayclasses -o wide
 
 kubectl apply -f cilium-gateway.yaml
 
-kubectl get gateways
+kubectl get gateways -n cilium
 
 # Debug Cilium Gateway
 # See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=cilium-gateway -n cilium
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway -n cilium
 # See the Cilium Envoy proxy pod
 kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
 ```
