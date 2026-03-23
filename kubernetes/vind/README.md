@@ -86,7 +86,7 @@ kubectl apply -f traefik-dapr-ingress.yaml
 
 # Inject Dapr sidecar into Traefik deployment
 ```
-kubectl patch deployment traefik -n kube-system -p '
+kubectl patch deployment traefik -n traefik -p '
 {
   "spec": {
     "template": {
@@ -163,13 +163,13 @@ helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
   --set providers.kubernetesCRD.allowExternalNameServices=true
-
+  
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
 # Inject Dapr sidecar into Traefik deployment
 ```
-kubectl patch deployment traefik -n kube-system -p '
+kubectl patch deployment traefik -n traefik -p '
 {
   "spec": {
     "template": {
