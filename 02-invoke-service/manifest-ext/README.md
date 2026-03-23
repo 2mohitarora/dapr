@@ -29,10 +29,12 @@ kubectl apply -f ./manifest/genid.yaml
 kubectl apply -f ./manifest/resiliency.yaml
 ```
 
+# Deploy Additional manifests to showcase remote service invoke and resiliency
+```
+kubectl apply -f ./manifest-ext/remote-genid-endpoint.yaml
+```
+
 # Discuss resiliency in detail
-```
-kubectl apply -f ./manifest/resiliency.yaml
-```
 
 # Check Dapr UI 
 
