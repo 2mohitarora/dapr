@@ -70,6 +70,22 @@ kubectl apply -f 1_eg.yaml
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
 ```
 
+# Patch Gateway Class
+```
+kubectl apply -f 2_eg-dapr.yaml
+
+kubectl patch gatewayclass eg --type merge -p '{
+  "spec": {
+    "parametersRef": {
+      "group": "gateway.envoyproxy.io",
+      "kind": "EnvoyProxy",
+      "name": "dapr-config",
+      "namespace": "default"
+    }
+  }
+}'
+```
+
 # Check Gateway Classes# Check Gateway API and create gateways
 ```
 kubectl get gatewayclasses -o wide
@@ -135,6 +151,22 @@ kubectl apply -f 1_eg.yaml
 
 # For any issues
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
+```
+
+# Patch Gateway Class
+```
+kubectl apply -f 2_eg-dapr.yaml
+
+kubectl patch gatewayclass eg --type merge -p '{
+  "spec": {
+    "parametersRef": {
+      "group": "gateway.envoyproxy.io",
+      "kind": "EnvoyProxy",
+      "name": "dapr-config",
+      "namespace": "default"
+    }
+  }
+}'
 ```
 
 # Check Gateway API and create gateways
