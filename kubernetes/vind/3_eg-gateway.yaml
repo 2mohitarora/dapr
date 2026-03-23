@@ -27,5 +27,5 @@ spec:
             type: PathPrefix
             value: /v1.0/invoke
       backendRefs:
-        - name: envoy-gateway-dapr
+        - name: eg-gateway-dapr
           port: 3500   
