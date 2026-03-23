@@ -79,12 +79,14 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true
+  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
+
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
 
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
-# Inject Dapr sidecar into Traefik deployment
+# Inject Dapr sidecar into Traefik deployment (Make sure DAPR is installed)
 ```
 kubectl patch deployment traefik -n traefik -p '
 {
@@ -103,7 +105,7 @@ kubectl patch deployment traefik -n traefik -p '
 }'
 
 # Check traffic service created by Dapr
-kubectl get svc -n kube-system | grep traefik-ingress-dapr
+kubectl get svc -n traefik | grep traefik-ingress-dapr
 ```
 
 # Configure Registry for first cluster
@@ -162,12 +164,14 @@ helm repo update
 helm install traefik traefik/traefik \
   --namespace traefik \
   --create-namespace \
-  --set providers.kubernetesCRD.allowExternalNameServices=true
+  --set providers.kubernetesCRD.allowExternalNameServices=true --skip-crds
   
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/master/traefik/crds/traefik.io_ingressroutes.yaml
+
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
-# Inject Dapr sidecar into Traefik deployment
+# Inject Dapr sidecar into Traefik deployment (Make sure DAPR is installed)
 ```
 kubectl patch deployment traefik -n traefik -p '
 {
@@ -186,7 +190,7 @@ kubectl patch deployment traefik -n traefik -p '
 }'
 
 # Check traffic service created by Dapr
-kubectl get svc -n kube-system | grep traefik-ingress-dapr
+kubectl get svc -n traefik | grep traefik-ingress-dapr
 
 ```
 
