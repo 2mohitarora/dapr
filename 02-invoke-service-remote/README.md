@@ -34,7 +34,9 @@ kubectl apply -f ./manifest/cluster-2/genid.yaml
 curl -H "Host: genidsvc.ingress" http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 
 # Test front end application
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
 
+curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-2f9fc3c2-ee28-4885-9762-66ab63b38b55"
 ```
 
 # Discuss rate limit and Check Rate Limit
