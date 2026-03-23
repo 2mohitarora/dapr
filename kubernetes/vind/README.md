@@ -45,16 +45,16 @@ helm repo add cilium https://helm.cilium.io/
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace kube-system
+cilium status --namespace cilium
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
+kubectl get configmap cilium-config -n cilium -o yaml | grep -i cidr
 ```
 
 # Check Gateway Class and Create Cilium Gateway
@@ -67,9 +67,9 @@ kubectl get gateways
 
 # Debug Cilium Gateway
 # See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
+kubectl get svc -l io.cilium.gateway/owning-gateway=cilium-gateway -n cilium
 # See the Cilium Envoy proxy pod
-kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
 ```
 
 # Add Traefik Ingress for Dapr communication between clusters
@@ -128,16 +128,16 @@ helm repo add cilium https://helm.cilium.io/
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace kube-system --set ipam.operator.clusterPoolIPv4PodCIDRList=10.2.0.0/16
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.2.0.0/16
 
 # After CNI is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
-cilium status --namespace kube-system
+cilium status --namespace cilium
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
+kubectl get configmap cilium-config -n cilium -o yaml | grep -i cidr
 ```
 
 # Check Gateway Class and Create Cilium Gateway
@@ -150,9 +150,9 @@ kubectl get gateways
 
 # Debug Cilium Gateway
 # See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
+kubectl get svc -l io.cilium.gateway/owning-gateway=cilium-gateway -n cilium
 # See the Cilium Envoy proxy pod
-kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
 ```
 
 # Add Traefik Ingress for Dapr communication between clusters
