@@ -72,8 +72,21 @@ kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/ma
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
-# Inject Dapr sidecar into Traefik deployment (Make sure DAPR is installed)
+# Install Dapr Inject Dapr sidecar into Traefik deployment
 ```
+dapr init -k
+
+dapr status -k
+
+# Make sure Dapr containers are ready
+kubectl get pods -o wide -n dapr-system
+
+# Run DAPR UI
+
+dapr dashboard -k
+
+# Patch Traefik deployment to inject Dapr sidecar
+
 kubectl patch deployment traefik -n traefik -p '
 {
   "spec": {
@@ -157,8 +170,21 @@ kubectl apply -f https://raw.githubusercontent.com/traefik/traefik-helm-chart/ma
 kubectl apply -f traefik-dapr-ingress.yaml
 ```
 
-# Inject Dapr sidecar into Traefik deployment (Make sure DAPR is installed)
+# Install Dapr Inject Dapr sidecar into Traefik deployment
 ```
+dapr init -k
+
+dapr status -k
+
+# Make sure Dapr containers are ready
+kubectl get pods -o wide -n dapr-system
+
+# Run DAPR UI
+
+dapr dashboard -k -p 9999
+
+# Patch Traefik deployment to inject Dapr sidecar
+
 kubectl patch deployment traefik -n traefik -p '
 {
   "spec": {
@@ -177,7 +203,6 @@ kubectl patch deployment traefik -n traefik -p '
 
 # Check traffic service created by Dapr
 kubectl get svc -n traefik | grep traefik-ingress-dapr
-
 ```
 
 # Configure Registry for second cluster
