@@ -55,42 +55,11 @@ cilium status --namespace kube-system
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
-
-# Cilium doesn't use this. Cilium with its own IPAM mode
-kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 ```
 
-# Add Envoy Gateway for Dapr communication between clusters
-```
-kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
-
-kubectl apply -f 1_eg.yaml
-
-# For any issues
-kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
-```
-
-# Patch Gateway Class
-```
-kubectl apply -f 2_eg-dapr.yaml
-
-kubectl patch gatewayclass eg --type merge -p '{
-  "spec": {
-    "parametersRef": {
-      "group": "gateway.envoyproxy.io",
-      "kind": "EnvoyProxy",
-      "name": "dapr-config",
-      "namespace": "default"
-    }
-  }
-}'
-```
-
-# Check Gateway Classes# Check Gateway API and create gateways
+# Check Gateway Class and Create Cilium Gateway
 ```
 kubectl get gatewayclasses -o wide
-
-kubectl apply -f 3_eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
 
@@ -101,12 +70,11 @@ kubectl get gateways
 kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
 # See the Cilium Envoy proxy pod
 kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+```
 
-# Debug Envoy Gateway
-# See the service EG created
-kubectl get svc -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -n envoy-gateway-system
-# See the EG Envoy proxy pod
-kubectl -n envoy-gateway-system logs -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -f
+# Add Traefik Ingress for Dapr communication between clusters
+```
+
 ```
 
 # Configure Registry for first cluster
@@ -143,37 +111,9 @@ cilium status --namespace kube-system
 kubectl get configmap cilium-config -n kube-system -o yaml | grep -i cidr
 ```
 
-# Add Envoy Gateway for Dapr communication between clusters
-```
-kubectl apply --server-side --force-conflicts -f https://github.com/envoyproxy/gateway/releases/download/v1.2.0/install.yaml
-
-kubectl apply -f 1_eg.yaml
-
-# For any issues
-kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
-```
-
-# Patch Gateway Class
-```
-kubectl apply -f 2_eg-dapr.yaml
-
-kubectl patch gatewayclass eg --type merge -p '{
-  "spec": {
-    "parametersRef": {
-      "group": "gateway.envoyproxy.io",
-      "kind": "EnvoyProxy",
-      "name": "dapr-config",
-      "namespace": "default"
-    }
-  }
-}'
-```
-
-# Check Gateway API and create gateways
+# Check Gateway Class and Create Cilium Gateway
 ```
 kubectl get gatewayclasses -o wide
-
-kubectl apply -f 3_eg-gateway.yaml
 
 kubectl apply -f cilium-gateway.yaml
 
@@ -184,12 +124,11 @@ kubectl get gateways
 kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway
 # See the Cilium Envoy proxy pod
 kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f
+```
 
-# Debug Envoy Gateway
-# See the service EG created
-kubectl get svc -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -n envoy-gateway-system
-# See the EG Envoy proxy pod
-kubectl -n envoy-gateway-system logs -l gateway.envoyproxy.io/owning-gateway-name=eg-gateway -f
+# Add Traefik Ingress for Dapr communication between clusters
+```
+
 ```
 
 # Configure Registry for second cluster
