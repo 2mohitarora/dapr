@@ -1,3 +1,8 @@
+# cluster-1
+```
+kubectl apply -f ./manifest/cluster-1/remote-genid-endpoint.yaml
+```
+
 # Make sure you are using cluster-2
 ```
 docker context ls
