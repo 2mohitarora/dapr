@@ -27,24 +27,14 @@ kubectl apply -f ./manifest/genid.yaml
 curl -H "Host: genidsvc.ingress" http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
 
-# Port forwarding from mac
-```
-kubectl port-forward -n kube-system service/traefik -n kube-system 8083:80
-curl -H "Host: genidsvc.ingress" http://localhost:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
-```
-
-# From other colima cluster
-```
-kubectl run net-test --rm -it --image=nicolaka/netshoot -- /bin/bash
-curl -H "Host: genidsvc.ingress" http://192.168.5.2:8083/v1.0/invoke/genidsvc.default/method/genid -X POST
-```
-
 # Check Rate Limit
 ```
 # Uncomment dapr.io/config: "genidsvc-config" in genid.yaml
+kubectl apply -f ./manifest/ratelimit.yaml
+kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/genid.yaml
-kubectl apply -f ./manifest/rate-limit.yaml
+
 
 seq 1 20 | xargs -P 20 -I {} curl -s -o /dev/null -w "%{http_code}\n" \
- http://192.168.64.4/v1.0/invoke/genidsvc.default/method/genid -X POST
+ http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 ```
