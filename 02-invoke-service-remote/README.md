@@ -34,7 +34,7 @@ kubectl apply -f ./manifest/ratelimit.yaml
 kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/genid.yaml
 
-
 seq 1 20 | xargs -P 20 -I {} curl -s -o /dev/null -w "%{http_code}\n" \
  http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
+
 ```
