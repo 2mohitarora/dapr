@@ -26,7 +26,6 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/redis-store.yaml
 kubectl apply -f ./manifest/frontend.yaml
 kubectl apply -f ./manifest/genid.yaml
-kubectl apply -f ./manifest/resiliency.yaml
 ```
 
 # Discuss resiliency in detail
