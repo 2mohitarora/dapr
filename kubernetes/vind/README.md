@@ -70,9 +70,13 @@ kubectl apply -f eg.yaml
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
 ```
 
-# Check Gateway Classes
+# Check Gateway Classes# Check Gateway API and create gateways
 ```
 kubectl get gatewayclasses -o wide
+
+kubectl apply -f eg-gateway.yaml
+
+kubectl apply -f cilium-gateway.yaml
 ```
 
 # Configure Registry for first cluster
@@ -119,9 +123,13 @@ kubectl apply -f eg.yaml
 kubectl logs -n envoy-gateway-system -l control-plane=envoy-gateway --tail=20
 ```
 
-# Check Gateway API
+# Check Gateway API and create gateways
 ```
 kubectl get gatewayclasses -o wide
+
+kubectl apply -f eg-gateway.yaml
+
+kubectl apply -f cilium-gateway.yaml
 ```
 
 # Configure Registry for second cluster
