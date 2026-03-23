@@ -12,14 +12,12 @@ helm install redis bitnami/redis
 export KO_DOCKER_REPO=localhost:5050
 export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
 ko build -B ./frontendsvc --platform=linux/arm64
-ko build -B ./genidsvc --platform=linux/arm64
 ko build -B ./orderprocsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments
 ```
 kubectl delete deployment frontendsvc
-kubectl delete deployment genidsvc
 kubectl delete deployment orderprocsvc
 ```
 
@@ -38,14 +36,12 @@ dapr components -k
 # Check k8s deployment 
 ```
 kubectl get deployments -l app=frontendsvc -o wide
-kubectl get deployments -l app=genidsvc -o wide
 kubectl get deployments -l app=orderprocsvc -o wide
 ```
 
 # Check the pods in deployment 
 ```
 kubectl get pods -l app=frontendsvc
-kubectl get pods -l app=genidsvc
 kubectl get pods -l app=orderprocsvc
 ```
 
@@ -94,7 +90,6 @@ http://127.0.0.1:15672/
 ```
 kubectl delete deployment frontendsvc
 kubectl delete deployment orderprocsvc
-kubectl delete deployment genidsvc
 ```
 
 # Delete redis strams pub sub Dapr component and create rabbitmq pubsub Dapr component
@@ -108,7 +103,6 @@ Check Dapr UI
 ```
 kubectl apply -f ./manifest/orderproc.yaml
 kubectl apply -f ./manifest/frontend.yaml
-kubectl apply -f ./manifest/genid.yaml
 ```
 
 # Moment of truth
