@@ -1,13 +1,3 @@
-# Install kubernetes cluster
-```
-Option 1: vind (Instructions in kubernetes/vind)
-Option 2: k3s (Instructions in kubernetes/k3s)
-```
-
-# Install Dapr
-```
-brew install go ko dapr/tap/dapr-cli
-```
 
 # Initialize Dapr on Kubernetes
 ```

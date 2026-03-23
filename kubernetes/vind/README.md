@@ -1,15 +1,8 @@
-# Install kubectl
+# Install Tools
 ```
-brew install kubectl
+brew install kubectl helm docker go ko dapr/tap/dapr-cli cilium-cli vcluster
 ```
-# Install helm
-```
-brew install helm
-```
-# Install docker
-```
-brew install docker
-```
+
 # Install Orbstack
 ```
 brew install --cask orbstack
@@ -22,21 +15,14 @@ brew install --cask orbstack
 
 # Start Orbstack
 ```
-# Install Cilium CLI
-```
-brew install cilium-cli
-```
+
 # Configure docker
 ```
 docker context use orbstack
 export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
 docker context list
 ```
-# Install vcluster CLI
-```
-brew install vcluster
-vcluster version
-```
+
 # Create your first vcluster
 ```
 vcluster create cluster-1 --driver docker --values cluster-1.yaml
