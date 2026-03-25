@@ -27,13 +27,44 @@ docker context list
 ```
 vcluster create cluster-1 --driver docker --values cluster-1.yaml
 
+# Add the Jetstack repo
 helm repo add cilium https://helm.cilium.io/
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+# Upgrade Coredns
+kubectl set image deployment/coredns \
+  -n kube-system \
+  coredns=registry.k8s.io/coredns/coredns:v1.14.2
+
+# Install cilium 
+
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 --set routingMode=tunnel  --set tunnelProtocol=vxlan --set ipam.mode=cluster-pool
+
+# After CNI is installed, wait for pods to become Ready:
+kubectl get pods --all-namespaces -w
+
+# Install cert-manager
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --set installCRDs=true
+
+# After cert-manager, wait for pods to become Ready:
+kubectl get pods --all-namespaces -w
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --set gatewayAPI.enabled=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16
+kubectl apply -f cert-manager-issuer.yaml
 
-# After CNI is installed, wait for pods to become Ready:
+kubectl get clusterissuer cilium-ca-issuer 
+kubectl get certificates -n cilium 
+
+helm upgrade cilium cilium/cilium --version 1.19.1 \
+  --namespace cilium \
+  -f cilium-1-helm.yaml \
+
+# After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
 # Check cilium status
@@ -41,6 +72,19 @@ cilium status --namespace cilium
 
 # Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
 kubectl get configmap cilium-config -n cilium -o yaml | grep -i cidr
+```
+
+# Checks
+```
+# Multi-cluster connectivity check
+# Run from your management terminal
+cilium connectivity test \
+  --context cluster-east \
+  --multi-cluster cluster-west \
+  --test pod-to-pod,pod-to-service
+
+# The MCS-API DNS Validator
+
 ```
 
 # Check Gateway Class and Create Cilium Gateway
