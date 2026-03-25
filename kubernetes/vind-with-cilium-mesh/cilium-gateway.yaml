@@ -5,7 +5,7 @@ metadata:
   namespace: cilium
   annotations:
     # This triggers the dedicated Envoy deployment
-    # io.cilium.gateway/lb-mode: "dedicated"
+    io.cilium.gateway/lb-mode: "dedicated"
 spec:
   gatewayClassName: cilium
   listeners:
