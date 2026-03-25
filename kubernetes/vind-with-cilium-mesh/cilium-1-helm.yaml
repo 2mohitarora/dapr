@@ -31,7 +31,7 @@ clustermesh:
   mcsapi:
     enabled: true
     corednsAutoConfigure:
-      enabled: true
+      enabled: false
 
 # 4. Identity Management (Preventing "Identity Explosion")
 # CRITICAL: Exclude high-cardinality labels (timestamps, hashes, etc.)

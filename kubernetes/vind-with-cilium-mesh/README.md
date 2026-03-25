@@ -58,11 +58,11 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 kubectl apply -f cert-manager-issuer.yaml
 
 kubectl get clusterissuer cilium-ca-issuer 
-kubectl get certificates -n cilium 
+kubectl get certificates -n cert-manager 
 
 helm upgrade cilium cilium/cilium --version 1.19.1 \
   --namespace cilium \
-  -f cilium-1-helm.yaml \
+  -f cilium-1-helm.yaml
 
 # After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w

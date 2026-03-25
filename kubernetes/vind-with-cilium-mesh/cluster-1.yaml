@@ -22,7 +22,7 @@ deploy:
 controlPlane:
   distro:
     k8s:
-      version: "v1.31.0"  # or use image.tag for custom images
+      version: "v1.34.0"  # or use image.tag for custom images
 networking:
   serviceCIDR: "10.20.0.0/16"
   podCIDR: "10.1.0.0/16" # Matches your ipam.operator.clusterPoolIPv4PodCIDRList
