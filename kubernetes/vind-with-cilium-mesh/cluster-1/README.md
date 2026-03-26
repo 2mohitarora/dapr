@@ -16,7 +16,7 @@ kubectl set image deployment/coredns \
 ```
 # Install cilium 
 ```
-helm install cilium cilium/cilium --version 1.19.1 --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 --set routingMode=tunnel  --set tunnelProtocol=vxlan --set ipam.mode=cluster-pool
+helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 --set routingMode=tunnel  --set tunnelProtocol=vxlan --set ipam.mode=cluster-pool --enable-gateway-api=true --gateway-api-loadbalancer-mode=dedicated --set envoy.enabled=true --set envoy.role=daemonset
 ```
 # After CNI is installed, wait for pods to become Ready:
 ```
