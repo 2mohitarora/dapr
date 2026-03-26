@@ -8,11 +8,15 @@ helm repo add cilium https://helm.cilium.io/
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 ```
-# Upgrade Coredns
+# Upgrade Coredns as Ciliummesh is not able to modify older version of coredns
 ```
 kubectl set image deployment/coredns \
   -n kube-system \
   coredns=registry.k8s.io/coredns/coredns:v1.14.2
+```
+# Install Gateway API
+```
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 ```
 # Install cilium 
 ```
@@ -46,10 +50,6 @@ helm install cert-manager jetstack/cert-manager \
 ```
 kubectl get pods --all-namespaces -w
 ```
-# Install Gateway API
-```
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
-```
 # Install cert-manager issuer
 ```
 kubectl apply -f cert-manager-issuer.yaml
@@ -61,7 +61,7 @@ kubectl get certificates -n cert-manager
 ```
 helm upgrade cilium cilium/cilium --version 1.19.1 \
   --namespace cilium \
-  -f cilium-1-helm.yaml
+  -f cilium-1-helm.yaml --reuse-values
 
 # After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
