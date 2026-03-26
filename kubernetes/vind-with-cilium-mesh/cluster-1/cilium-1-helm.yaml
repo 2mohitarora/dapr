@@ -34,11 +34,9 @@ clustermesh:
       enabled: false
 
 # Enable CiliumEndpointSlice to reduce API server load in large clusters
-endpointSlice:
+ciliumEndpointSlice:
   enabled: true
 
 # 4. Identity Management (Preventing "Identity Explosion")
 # CRITICAL: Exclude high-cardinality labels (timestamps, hashes, etc.)
 labels: "k8s:app k8s:role k8s:team k8s:env k8s:io.kubernetes.pod.namespace"
-
-identityAllocationMode: kvstore # Required for Cluster Mesh scaling
