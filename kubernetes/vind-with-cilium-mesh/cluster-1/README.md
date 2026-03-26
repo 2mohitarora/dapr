@@ -16,7 +16,7 @@ kubectl set image deployment/coredns \
 ```
 # Install cilium 
 ```
-helm install cilium cilium/cilium --version 1.19.1 --set kubeProxyReplacement=true --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 --set routingMode=tunnel  --set tunnelProtocol=vxlan --set ipam.mode=cluster-pool
+helm install cilium cilium/cilium --version 1.19.1 --namespace cilium --create-namespace --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 --set routingMode=tunnel  --set tunnelProtocol=vxlan --set ipam.mode=cluster-pool
 ```
 # After CNI is installed, wait for pods to become Ready:
 ```
@@ -55,9 +55,6 @@ kubectl get pods --all-namespaces -w
 
 # Check cilium status
 cilium status --namespace cilium
-
-# Note: Make sure to configure the CNI plugin according to your cluster's pod CIDR
-kubectl get configmap cilium-config -n cilium -o yaml | grep -i cidr
 ```
 # Update CoreDNS ConfigMap. We have to do this because helm flag corednsAutoConfigure is not working as expected
 ```
