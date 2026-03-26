@@ -78,6 +78,17 @@ rewrite name regex "(.*)\.clusterset\.local" "{1}.cluster.local"
 rewrite name regex .*\.nodes\.vcluster\.com kubernetes.default.svc.cluster.local
 kubernetes cluster.local clusterset.local in-addr.arpa ip6.arpa {
 multicluster clusterset.local
+
+kubectl edit clusterrole system:coredns
+
+# Add following config in rules section
+- apiGroups:
+  - multicluster.x-k8s.io
+  resources:
+  - serviceimports
+  verbs:
+  - list
+  - watch
 ```
 
 # Check Gateway Class and Create Cilium Gateway
