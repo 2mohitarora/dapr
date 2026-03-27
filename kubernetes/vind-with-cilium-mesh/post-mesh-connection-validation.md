@@ -66,8 +66,11 @@ kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-headless.mcs-test.svc.clusterset.local
 ```
 
+# MCS-API Validator, Scearion 3 : CiliumNetworkPolicy and L7 Policy and CiliumClusterwideNetworkPolicy 
+``` 
+ CiliumNetworkPolicy (CNP) and CiliumClusterwideNetworkPolicy (CCNP) are not automatically replicated across clusters in a Cilium Cluster Mesh. Cluster Mesh synchronizes identities, pods, and services to allow cross-cluster communication, security policies must be managed separately in each cluster
 
-
+```
 --------NOT EXPLORED YET--------
 
 YAML
