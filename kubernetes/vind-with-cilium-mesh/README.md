@@ -37,24 +37,25 @@ Follow instructions in ./pre-mesh-connection-validation.md
 # Get the clustermesh IP from cluster-2
 cilium clustermesh status --context vcluster-docker_cluster-2 -n cilium --wait
 
+# Update cluster-1/cilium/cluster-connect.yaml with clustermesh IP
+
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  -n cilium --kube-context vcluster-docker_cluster-1 \
-  --reuse-values \
-  --set 'clustermesh.config.clusters[0].name=cluster-2' \
-  --set 'clustermesh.config.clusters[0].address=cluster-2.mesh.cilium.io' \
-  --set 'clustermesh.config.clusters[0].port=2379' \
-  --set 'clustermesh.config.clusters[0].ips[0]=192.168.107.254'
+  -n cilium --create-namespace \
+  -f ../base-values.yaml \
+  -f ../mesh-values.yaml \
+  -f cilium/cluster.yaml
 
 # Get the clustermesh IP from cluster-1
 cilium clustermesh status --context vcluster-docker_cluster-1 -n cilium --wait
 
+# Update cluster-2/cilium/cluster-connect.yaml with clustermesh IP
+
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  -n cilium --kube-context vcluster-docker_cluster-2 \
-  --reuse-values \
-  --set 'clustermesh.config.clusters[0].name=cluster-1' \
-  --set 'clustermesh.config.clusters[0].address=cluster-1.mesh.cilium.io' \
-  --set 'clustermesh.config.clusters[0].port=2379' \
-  --set 'clustermesh.config.clusters[0].ips[0]=192.168.97.254'
+  -n cilium --create-namespace \
+  -f ../base-values.yaml \
+  -f ../mesh-values.yaml \
+  -f cilium/cluster.yaml
+
 
 ```
 # Do some post-mesh connectivity validations

@@ -35,16 +35,9 @@ kubectl create namespace cilium
 kubectl apply -f cilium-ca-cilium-ns.yaml -n cilium
 
 helm install cilium cilium/cilium --version 1.19.1 \
-  --namespace cilium \
-  --create-namespace \
-  --set kubeProxyReplacement=true \
-  --set routingMode=tunnel \
-  --set tunnelProtocol=vxlan \
-  --set ipam.mode=cluster-pool \
-  --set ipam.operator.clusterPoolIPv4PodCIDRList=10.2.0.0/16 \
-  --set gatewayAPI.enabled=true \
-  --set envoy.enabled=true \
-  --set envoy.role=daemonset
+  -n cilium --create-namespace \
+  -f ../base-values.yaml \
+  -f cilium/cluster.yaml
 
 ```
 # After CNI is installed, wait for pods to become Ready:
@@ -72,9 +65,10 @@ kubectl get clusterissuer cilium-ca-issuer
 # Upgrade Cilium with ClusterMesh
 ```
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  --namespace cilium \
-  -f cilium-2-helm.yaml \
-  --reuse-values
+  -n cilium --create-namespace \
+  -f ../base-values.yaml \
+  -f ../mesh-values.yaml \
+  -f cilium/cluster.yaml
   
 # After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w

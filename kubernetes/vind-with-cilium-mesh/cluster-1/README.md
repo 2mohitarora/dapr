@@ -21,16 +21,9 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 # Install cilium 
 ```
 helm install cilium cilium/cilium --version 1.19.1 \
-  --namespace cilium \
-  --create-namespace \
-  --set kubeProxyReplacement=true \
-  --set routingMode=tunnel \
-  --set tunnelProtocol=vxlan \
-  --set ipam.mode=cluster-pool \
-  --set ipam.operator.clusterPoolIPv4PodCIDRList=10.1.0.0/16 \
-  --set gatewayAPI.enabled=true \
-  --set envoy.enabled=true \
-  --set envoy.role=daemonset
+  -n cilium --create-namespace \
+  -f base-values.yaml \
+  -f overlays/cluster.yaml
 
 ```
 # After CNI is installed, wait for pods to become Ready:

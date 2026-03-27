@@ -1,0 +1,19 @@
+mtu: 1450
+
+kubeProxyReplacement: true
+routingMode: tunnel
+tunnelProtocol: vxlan
+
+ipam:
+  mode: cluster-pool
+
+gatewayAPI:
+  enabled: true
+envoy:
+  enabled: true
+  role: daemonset
+
+ciliumEndpointSlice:
+  enabled: true
+
+labels: "k8s:app;k8s:role;k8s:team;k8s:env;k8s:io.kubernetes.pod.namespace"
