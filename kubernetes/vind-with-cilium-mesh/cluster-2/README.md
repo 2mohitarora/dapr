@@ -36,10 +36,8 @@ helm install cilium cilium/cilium --version 1.19.1 \
   --set ipam.mode=cluster-pool \
   --set ipam.operator.clusterPoolIPv4PodCIDRList=10.2.0.0/16 \
   --set gatewayAPI.enabled=true \
-  --set gatewayAPI.loadbalancerMode=dedicated \
   --set envoy.enabled=true \
-  --set envoy.role=daemonset \
-  --set endpointSlice.enabled=true
+  --set envoy.role=daemonset
 
 ```
 # After CNI is installed, wait for pods to become Ready:
