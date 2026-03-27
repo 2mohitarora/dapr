@@ -8,13 +8,18 @@ cluster:
   name: "cluster-2" # Set per cluster
   id: 2             # Set per cluster (1-255)
 
+operator:
+  # This ensures the operator is configured to manage the mesh
+  clustermesh:
+    enabled: true
+
 # 3. Cluster Mesh & KVStoreMesh (The Scaling Engine)
 clustermesh:
   useAPIServer: true
   apiserver:
+    managed: true
     service:
       type: LoadBalancer # Ensures reachability across VPCs/Regions
-    managed: true
     tls:
       auto:
         enabled: true
