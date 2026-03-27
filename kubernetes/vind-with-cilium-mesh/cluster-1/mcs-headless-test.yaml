@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: web-headless
+        environment: production
     spec:
       containers:
         - name: nginx

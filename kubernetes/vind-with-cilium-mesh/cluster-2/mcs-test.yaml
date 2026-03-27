@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: web
+        environment: production
     spec:
       containers:
         - name: nginx
