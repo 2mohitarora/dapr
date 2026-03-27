@@ -72,43 +72,9 @@ kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-h
 
 ```
 --------NOT EXPLORED YET--------
-
-YAML
-# l7-test-policy.yaml
-apiVersion: "cilium.io/v2"
-kind: CiliumNetworkPolicy
-metadata:
-  name: limit-to-health-check
-spec:
-  endpointSelector:
-    matchLabels:
-      app: my-service
-  ingress:
-  - fromEndpoints:
-    - matchLabels:
-        app: guest-pod
-    toPorts:
-    - ports:
-      - port: "80"
-        protocol: TCP
-      rules:
-        http:
-        - method: "GET"
-          path: "/health"
-Run the Validation:
-
-Bash
-# This SHOULD work (200 OK)
-kubectl exec guest-pod -- curl -I http://my-service/health
-
-# This SHOULD fail (403 Forbidden - enforced by Envoy)
-kubectl exec guest-pod -- curl -I http://my-service/admin
-What this proves: The Cilium-Envoy daemon is operational and correctly attached to your pods' network namespace.
-
-4. The Hubble "Flow-Watch" Command
+# The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
 
-Bash
 # Port-forward Hubble if not already open
 cilium hubble port-forward &
 
@@ -120,3 +86,5 @@ hubble observe --follow --output json | jq '{
   verdict: .verdict
 }'
 What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your 100-cluster identity sync is healthy.
+
+----------------
