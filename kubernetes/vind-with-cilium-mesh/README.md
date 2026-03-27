@@ -37,24 +37,28 @@ Follow instructions in ./pre-mesh-connection-validation.md
 # Get the clustermesh IP from cluster-2
 cilium clustermesh status --context vcluster-docker_cluster-2 -n cilium --wait
 
-# Update cluster-1/cilium/cluster-connect.yaml with clustermesh IP
+# Update cluster-1/cilium/cluster-connect-2.yaml with clustermesh IP
+
+# Navigate to cluster-1 folder
 
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  -n cilium --create-namespace \
+  -n cilium --create-namespace --kube-context vcluster-docker_cluster-1 \
   -f ../base-values.yaml \
   -f ../mesh-values.yaml \
-  -f cilium/cluster.yaml
+  -f cilium/cluster-connect-2.yaml
 
 # Get the clustermesh IP from cluster-1
 cilium clustermesh status --context vcluster-docker_cluster-1 -n cilium --wait
 
-# Update cluster-2/cilium/cluster-connect.yaml with clustermesh IP
+# Update cluster-2/cilium/cluster-connect-1.yaml with clustermesh IP
+
+# Navigate to cluster-2 folder
 
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  -n cilium --create-namespace \
+  -n cilium --create-namespace --kube-context vcluster-docker_cluster-2 \
   -f ../base-values.yaml \
   -f ../mesh-values.yaml \
-  -f cilium/cluster.yaml
+  -f cilium/cluster-connect-1.yaml
 
 
 ```
