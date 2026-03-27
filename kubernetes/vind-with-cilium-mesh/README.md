@@ -24,25 +24,10 @@ docker context list
 ```
 
 # Create your first vcluster
+Follow instructions in ./cluster-1/README.md
 
 # Create your second cluster 
-
-# Configure Registry for second cluster
-```
-# Start a local registry on the same Docker network as your vind cluster
-docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
-
-# Configure registry for cluster-2 so that nodes can pull from insecure registry
-./cluster-2-script.sh
-```
-
-# Debug Cilium Gateway
-```
-# See the service Cilium created
-kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway -n cilium
-# See the Cilium Envoy proxy pod
-kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy -f -n cilium
-```
+Follow instructions in ./cluster-2/README.md
 
 # Verify both clusters are running
 ```

@@ -14,7 +14,7 @@ kubectl set image deployment/coredns \
   -n kube-system \
   coredns=registry.k8s.io/coredns/coredns:v1.14.2
 ```
-# Install Gateway API
+# Install Gateway API CRD
 ```
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 ```
@@ -96,6 +96,7 @@ kubectl edit clusterrole system:coredns
 kubectl get gatewayclasses -o wide
 kubectl apply -f ../cilium-gateway.yaml
 kubectl get gateways -n cilium
+kubectl get svc -l io.cilium.gateway/owning-gateway=default-gateway -n cilium
 
 # Create a route for front end service
 kubectl apply -f ./frontendsvc-route.yaml
