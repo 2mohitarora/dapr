@@ -40,7 +40,11 @@ kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium i
 kubectl --context vcluster-docker_cluster-1 get secret cilium-ca-secret -n cert-manager -o jsonpath='{.data.ca\.crt}' | md5sum
 kubectl --context vcluster-docker_cluster-2 get secret cilium-ca-secret -n cert-manager -o jsonpath='{.data.ca\.crt}' | md5sum
 
-# Compare cluster-mesh cert
+# CA in the server cert (what etcd trusts)
+kubectl --context vcluster-docker_cluster-1 get secret clustermesh-apiserver-server-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
+kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-server-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
+
+# CA in the remote cert (what kvstoremesh presents)
 kubectl --context vcluster-docker_cluster-1 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
 kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
 
