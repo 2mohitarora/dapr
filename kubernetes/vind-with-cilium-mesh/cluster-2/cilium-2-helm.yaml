@@ -9,6 +9,8 @@ cluster:
   id: 2             # Set per cluster (1-255)
 
 operator:
+  prometheus:
+    enabled: true
   # This ensures the operator is configured to manage the mesh
   clustermesh:
     enabled: true
