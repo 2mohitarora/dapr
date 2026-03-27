@@ -34,7 +34,26 @@ Follow instructions in ./pre-mesh-connection-validation.md
 
 # Have both mesh communicate with each other
 ```
-cilium clustermesh connect --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2 --namespace cilium --helm-values-secret-name cilium-cli-helm-values
+# Get the clustermesh IP from cluster-2
+cilium clustermesh status --context vcluster-docker_cluster-2 -n cilium --wait
+
+helm upgrade cilium cilium/cilium --version 1.19.1 \
+  -n cilium --kube-context vcluster-docker_cluster-1 \
+  --reuse-values \
+  --set 'clustermesh.config.clusters[0].name=cluster-2' \
+  --set 'clustermesh.config.clusters[0].address=192.168.107.254' \
+  --set 'clustermesh.config.clusters[0].port=2379'
+
+# Get the clustermesh IP from cluster-1
+cilium clustermesh status --context vcluster-docker_cluster-1 -n cilium --wait
+
+helm upgrade cilium cilium/cilium --version 1.19.1 \
+  -n cilium --kube-context vcluster-docker_cluster-2 \
+  --reuse-values \
+  --set 'clustermesh.config.clusters[0].name=cluster-1' \
+  --set 'clustermesh.config.clusters[0].address=192.168.97.254' \
+  --set 'clustermesh.config.clusters[0].port=2379'
+
 ```
 # Do some post-mesh connectivity validations
 Follow instructions in ./post-mesh-connection-validation.md
