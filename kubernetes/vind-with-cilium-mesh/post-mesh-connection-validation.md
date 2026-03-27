@@ -17,8 +17,11 @@ cilium connectivity test --context vcluster-docker_cluster-1 --multi-cluster vcl
 kubectl --context vcluster-docker_cluster-1 delete ns cilium-test-1
 kubectl --context vcluster-docker_cluster-2 delete ns cilium-test-1
 
-# The MCS-API DNS Validator
-Since we are using the ServiceExport model, we need to verify that clusterset.local is resolving correctly. Use this "Tracer" pod to check the DNS path.
+# Create dns-validator pod on both clusters
+kubectl --context vcluster-docker_cluster-1 apply -f mcs-dns-check.yaml
+kubectl --context vcluster-docker_cluster-2 apply -f mcs-dns-check.yaml
+
+# MCS-API Validator, Scearion 1 : Service only on cluster-2
 ```
 # Create mcs-test namespace of cluster-2
 kubectl --context vcluster-docker_cluster-2 create namespace mcs-test
@@ -30,20 +33,16 @@ kubectl --context vcluster-docker_cluster-2 apply -f mcs-test.yaml
 kubectl --context vcluster-docker_cluster-2 get serviceexport -n mcs-test
 kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 
-# Create dns-validator pod on both clusters
-kubectl --context vcluster-docker_cluster-1 apply -f mcs-dns-check.yaml
-kubectl --context vcluster-docker_cluster-2 apply -f mcs-dns-check.yaml
-
-# Try to resolve the remote service (replace <svc> and <ns>)
+# Try to resolve the remote service
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
 
 # Create namespace on cluster-1
 kubectl --context vcluster-docker_cluster-1 create namespace mcs-test
 
-# Check serviceimport objects on cluster-1
+# Check serviceimport objects appearing on cluster-1
 kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
 
-# Try to resolve the remote service (replace <svc> and <ns>)
+# Try to resolve the remote service again
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
 
 What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
