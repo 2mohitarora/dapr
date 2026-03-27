@@ -4,15 +4,14 @@ cilium clustermesh status --context vcluster-docker_cluster-2 --namespace cilium
 
 # Each cluster should see nodes from the other
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium node list
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium node list
 
 # Identities from both clusters should be visible
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity list | head -20
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity list | head -20
 
 # Full connectivity test across the mesh
-cilium connectivity test --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2
-
-cilium connectivity test --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2 --multi-cluster cluster-west \
-  --test pod-to-pod,pod-to-service
+cilium connectivity test --context vcluster-docker_cluster-1 --multi-cluster vcluster-docker_cluster-2 --test pod-to-pod,pod-to-service --namespace cilium
 
 What this proves: VXLAN tunnels are up, Node-to-Node reachability on port 8472 is open, and IPAM isn't overlapping.
 
