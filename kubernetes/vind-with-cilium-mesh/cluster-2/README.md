@@ -2,7 +2,7 @@
 
 # Extract CA from cluster-1
 ```
-kubectl get secret -n cert-manager cilium-ca -o yaml > cilium-ca.yaml
+kubectl get secret -n cert-manager cilium-ca-secret -o yaml > cilium-ca-secret.yaml
 ```
 
 # Create cluster-2
@@ -59,10 +59,9 @@ kubectl get pods --all-namespaces -w
 ```
 # Import the CA certificate
 ```
-kubectl apply -f cilium-ca.yaml -n cert-manager
+kubectl apply -f cilium-ca-secret.yaml -n cert-manager
 kubectl apply -f cert-manager-issuer.yaml
 kubectl get clusterissuer cilium-ca-issuer 
-kubectl get certificates -n cert-manager 
 ```
 
 # Upgrade Cilium with ClusterMesh
