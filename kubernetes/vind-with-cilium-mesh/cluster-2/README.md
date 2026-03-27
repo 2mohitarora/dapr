@@ -3,6 +3,10 @@
 # Extract CA from cluster-1
 ```
 kubectl get secret -n cert-manager cilium-ca-secret -o yaml > cilium-ca-secret.yaml
+
+kubectl get secret cilium-ca -n cilium -o yaml \
+  | grep -v "resourceVersion\|uid\|creationTimestamp" \
+  > cilium-ca-cilium-ns.yaml
 ```
 
 # Create cluster-2
@@ -27,6 +31,9 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 ```
 # Install cilium 
 ```
+kubectl create namespace cilium
+kubectl apply -f cilium-ca-cilium-ns.yaml -n cilium
+
 helm install cilium cilium/cilium --version 1.19.1 \
   --namespace cilium \
   --create-namespace \

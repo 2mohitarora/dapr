@@ -29,12 +29,15 @@ Follow instructions in ./cluster-1/README.md
 # Create your second cluster 
 Follow instructions in ./cluster-2/README.md
 
+# Do some pre-mesh connectivity validations first
+Follow instructions in ./pre-mesh-connection-validation.md
+
 # Have both mesh communicate with each other
 ```
-# Connect to first cluster
-vcluster connect cluster-1
-
+cilium clustermesh connect --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2 --namespace cilium
 ```
+# Do some post-mesh connectivity validations
+Follow instructions in ./post-mesh-connection-validation.md
 
 # Verify both clusters are running
 ```
