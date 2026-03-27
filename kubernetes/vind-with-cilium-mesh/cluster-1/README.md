@@ -22,8 +22,8 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 ```
 helm install cilium cilium/cilium --version 1.19.1 \
   -n cilium --create-namespace \
-  -f base-values.yaml \
-  -f overlays/cluster.yaml
+  -f ../base-values.yaml \
+  -f cilium/cluster.yaml
 
 ```
 # After CNI is installed, wait for pods to become Ready:
@@ -51,10 +51,11 @@ kubectl get certificates -n cert-manager
 # Upgrade Cilium with ClusterMesh
 ```
 helm upgrade cilium cilium/cilium --version 1.19.1 \
-  --namespace cilium \
-  -f cilium-1-helm.yaml \
-  --reuse-values
-
+  -n cilium --create-namespace \
+  -f ../base-values.yaml \
+  -f ../mesh-values.yaml \
+  -f cilium/cluster.yaml
+  
 # After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
