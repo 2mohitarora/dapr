@@ -17,39 +17,40 @@ cilium connectivity test --context vcluster-docker_cluster-1 --multi-cluster vcl
 kubectl --context vcluster-docker_cluster-1 delete ns cilium-test-1
 kubectl --context vcluster-docker_cluster-2 delete ns cilium-test-1
 
+# The MCS-API DNS Validator
+Since we are using the ServiceExport model, we need to verify that clusterset.local is resolving correctly. Use this "Tracer" pod to check the DNS path.
+```
+# Create mcs-test namespace of cluster-2
+kubectl --context vcluster-docker_cluster-2 create namespace mcs-test
 
-What this proves: VXLAN tunnels are up, Node-to-Node reachability on port 8472 is open, and IPAM isn't overlapping.
+# Create deployment, service and serviceexport on cluster-2
+kubectl --context vcluster-docker_cluster-2 apply -f mcs-test.yaml
 
+# Check serviceexport and serviceimport objects on cluster-2
+kubectl --context vcluster-docker_cluster-2 get serviceexport -n mcs-test
+kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 
-2. The MCS-API DNS Validator
-Since you are using the ServiceExport model, you need to verify that clusterset.local is resolving correctly. Use this "Tracer" pod to check the DNS path.
+# Create dns-validator pod on cluster-1
+kubectl --context vcluster-docker_cluster-1 apply -f mcs-dns-check.yaml
 
-YAML
-# mcs-dns-check.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: dns-validator
-  namespace: default
-spec:
-  containers:
-  - name: alpine
-    image: alpine
-    command: ["sleep", "infinite"]
-The Test Commands:
+# Try to resolve the remote service (replace <svc> and <ns>)
+kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
 
-Bash
-# 1. Apply the pod
-kubectl apply -f mcs-dns-check.yaml
+# Create namespace on cluster-1
+kubectl --context vcluster-docker_cluster-1 create namespace mcs-test
 
-# 2. Try to resolve the remote service (replace <svc> and <ns>)
-kubectl exec dns-validator -- nslookup <service-name>.<namespace>.svc.clusterset.local
+# Check serviceimport objects on cluster-1
+kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
+
+# Try to resolve the remote service (replace <svc> and <ns>)
+kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
+
 What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
+```
 
-3. The L7 Policy "Kill-Switch" Test
-For your Kafka and API Gateway goals, you need to ensure that the Envoy proxy is actually intercepting and enforcing Layer 7 rules. We'll use a simple HTTP test to simulate this.
 
-Apply this Policy:
+
+--------NOT EXPLORED YET--------
 
 YAML
 # l7-test-policy.yaml
@@ -98,12 +99,3 @@ hubble observe --follow --output json | jq '{
   verdict: .verdict
 }'
 What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your 100-cluster identity sync is healthy.
-
-Summary Checklist for your Runbook
-[ ] cilium status shows "ClusterMesh: OK"
-
-[ ] cilium identity list | wc -l is within expected limits (< 0.5 pod ratio)
-
-[ ] nslookup ...clusterset.local returns a valid IP
-
-[ ] L7 curl to a restricted path returns a 403
