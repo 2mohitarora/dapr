@@ -69,8 +69,11 @@ kubectl get certificates -n cert-manager
 ```
 helm upgrade cilium cilium/cilium --version 1.19.1 \
   --namespace cilium \
-  -f cilium-1-helm.yaml --reuse-values
-
+  -f cilium-2-helm.yaml \
+  --set operator.clustermesh.enabled=true \
+  --set clustermesh.apiserver.managed=true \
+  --reuse-values
+  
 # After Mesh is installed, wait for pods to become Ready:
 kubectl get pods --all-namespaces -w
 
