@@ -67,6 +67,7 @@ cilium status --namespace cilium
 kubectl edit configmap coredns -n kube-system
 
 # Add the following to the configmap
+kubernetes cluster.local clusterset.local in-addr.arpa ip6.arpa {
 multicluster clusterset.local
 
 kubectl edit clusterrole system:coredns
