@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: web-ingress
+  name: web-headless-ingress
   namespace: mcs-test
 spec:
   endpointSelector:

@@ -82,16 +82,16 @@ kubectl --context vcluster-docker_cluster-2 get ccnp
 # Try connecting from cluster-1 to cluster-2 and cluster-2 to cluster-1, it will fail
 ```
 
-# Allow cluster-1 to access cluster-2 (CiliumNetworkPolicy)
+# Allow cluster-1 to access web (CiliumNetworkPolicy)
 ```
-kubectl --context vcluster-docker_cluster-2 apply -f policies/cluster-2-allow-cluster-1.yaml
-kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
+kubectl --context vcluster-docker_cluster-1 apply -f policies/allow-web.yaml
+kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
 ```
 
-# Allow cluster-2 to access cluster-1 (CiliumNetworkPolicy)
+# Allow cluster-2 to access web-headless (CiliumNetworkPolicy)
 ```
-kubectl --context vcluster-docker_cluster-1 apply -f policies/cluster-1-allow-cluster-2.yaml
-kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
+kubectl --context vcluster-docker_cluster-2 apply -f policies/allow-web-headless.yaml
+kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
 ```
 
 # Only allow prod to prod (CiliumClusterwideNetworkPolicy)
