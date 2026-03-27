@@ -59,7 +59,7 @@ kubectl --context vcluster-docker_cluster-1 apply -f mcs-headless-test.yaml
 kubectl --context vcluster-docker_cluster-1 get serviceexport -n mcs-test
 kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
 
-# Check serviceimport objects appearing on cluster-2 (It doesn't exist because no service was created)
+# Check serviceimport objects appearing on cluster-2 (Had to restart operator cluster-2)
 kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 
 # Try to resolve the remote service
