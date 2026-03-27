@@ -64,6 +64,8 @@ kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 
 # Try to resolve the remote service
 kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-headless.mcs-test.svc.clusterset.local
+
+kubectl --context vcluster-docker_cluster-2 run curl-test --rm -it --image=curlimages/curl --restart=Never -n mcs-test --labels="app=curl-test" -- curl -v -s --max-time 5 http://web-headless.mcs-test.svc.clusterset.local -o /dev/null -w "Response from: %{remote_ip}\n"
 ```
 
 # MCS-API Validator, Scearion 3 : CiliumNetworkPolicy and L7 Policy and CiliumClusterwideNetworkPolicy 
