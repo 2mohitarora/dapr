@@ -29,6 +29,13 @@ Follow instructions in ./cluster-1/README.md
 # Create your second cluster 
 Follow instructions in ./cluster-2/README.md
 
+# Have both mesh communicate with each other
+```
+# Connect to first cluster
+vcluster connect cluster-1
+
+```
+
 # Verify both clusters are running
 ```
 vcluster list
