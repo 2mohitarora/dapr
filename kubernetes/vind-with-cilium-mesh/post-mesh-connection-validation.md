@@ -30,8 +30,9 @@ kubectl --context vcluster-docker_cluster-2 apply -f mcs-test.yaml
 kubectl --context vcluster-docker_cluster-2 get serviceexport -n mcs-test
 kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
 
-# Create dns-validator pod on cluster-1
+# Create dns-validator pod on both clusters
 kubectl --context vcluster-docker_cluster-1 apply -f mcs-dns-check.yaml
+kubectl --context vcluster-docker_cluster-2 apply -f mcs-dns-check.yaml
 
 # Try to resolve the remote service (replace <svc> and <ns>)
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
