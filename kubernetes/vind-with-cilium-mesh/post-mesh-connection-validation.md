@@ -45,6 +45,29 @@ kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
 # Try to resolve the remote service again
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
 
+kubectl --context vcluster-docker_cluster-1 run curl-test --rm -it --image=curlimages/curl --restart=Never -n mcs-test -- curl -s --max-time 5 http://web.mcs-test.svc.clusterset.local -o /dev/null -w "Response from: %{remote_ip}\n"
+
+What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
+```
+
+# MCS-API Validator, Scearion 2 : Headless service on cluster-1 only and we will resolve it from cluster-2
+```
+# Create deployment, headless service and serviceexport on cluster-1
+kubectl --context vcluster-docker_cluster-1 apply -f mcs-headless-test.yaml
+
+# Check serviceexport and serviceimport objects on cluster-1
+kubectl --context vcluster-docker_cluster-1 get serviceexport -n mcs-test
+kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
+
+# Try to resolve the remote service
+kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
+
+# Check serviceimport objects appearing on cluster-2
+kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
+
+# Try to resolve the remote headless service again
+kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
+
 What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
 ```
 
