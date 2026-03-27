@@ -60,7 +60,8 @@ helm upgrade cilium cilium/cilium --version 1.19.1 \
   -f ../mesh-values.yaml \
   -f cilium/cluster-connect-1.yaml
 
-
+# Had to restart opeartor on cluster-2
+kubectl --context vcluster-docker_cluster-2 rollout restart daemonset cilium -n cilium
 ```
 # Do some post-mesh connectivity validations
 Follow instructions in ./post-mesh-connection-validation.md
