@@ -45,7 +45,7 @@ kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
 # Try to resolve the remote service again
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
 
-kubectl --context vcluster-docker_cluster-1 run curl-test --rm -it --image=curlimages/curl --restart=Never -n mcs-test -- curl -s --max-time 5 http://web.mcs-test.svc.clusterset.local -o /dev/null -w "Response from: %{remote_ip}\n"
+kubectl --context vcluster-docker_cluster-1 run curl-test --rm -it --image=curlimages/curl --restart=Never -n mcs-test --labels="app=curl-test" -- curl -v -s --max-time 5 http://web.mcs-test.svc.clusterset.local -o /dev/null -w "Response from: %{remote_ip}\n"
 
 What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
 ```
@@ -67,10 +67,39 @@ kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-h
 ```
 
 # MCS-API Validator, Scearion 3 : CiliumNetworkPolicy and L7 Policy and CiliumClusterwideNetworkPolicy 
-``` 
  CiliumNetworkPolicy (CNP) and CiliumClusterwideNetworkPolicy (CCNP) are not automatically replicated across clusters in a Cilium Cluster Mesh. Cluster Mesh synchronizes identities, pods, and services to allow cross-cluster communication, security policies must be managed separately in each cluster
 
+# Deny all remote cluster traffic (CiliumClusterwideNetworkPolicy)
 ```
+kubectl --context vcluster-docker_cluster-1 apply -f policies/deny-all-cluster-1.yaml
+kubectl --context vcluster-docker_cluster-2 apply -f policies/deny-all-cluster-2.yaml
+
+kubectl --context vcluster-docker_cluster-1 get ccnp
+kubectl --context vcluster-docker_cluster-2 get ccnp
+
+# Try connecting from cluster-1 to cluster-2 and cluster-2 to cluster-1, it will fail
+```
+
+# Allow cluster-1 to access cluster-2 (CiliumNetworkPolicy)
+```
+kubectl --context vcluster-docker_cluster-2 apply -f policies/cluster-2-allow-cluster-1.yaml
+kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
+```
+
+# Allow cluster-2 to access cluster-1 (CiliumNetworkPolicy)
+```
+kubectl --context vcluster-docker_cluster-1 apply -f policies/cluster-1-allow-cluster-2.yaml
+kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
+```
+
+# Only allow prod to prod (CiliumClusterwideNetworkPolicy)
+```
+kubectl --context vcluster-docker_cluster-1 apply -f policies/only-allow-prod-to-prod.yaml
+kubectl --context vcluster-docker_cluster-2 apply -f policies/only-allow-prod-to-prod.yaml
+```
+
+
+
 --------NOT EXPLORED YET--------
 # The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
