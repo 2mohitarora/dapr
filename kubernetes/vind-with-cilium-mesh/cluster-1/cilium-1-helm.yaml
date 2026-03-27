@@ -6,7 +6,7 @@ mtu: 1450
 # 1. Cluster Identity (Must be unique per cluster)
 cluster:
   name: "cluster-1" # Set per cluster
-  id: 1                     # Set per cluster (1-255)
+  id: 1             # Set per cluster (1-255)
 
 # 3. Cluster Mesh & KVStoreMesh (The Scaling Engine)
 clustermesh:
