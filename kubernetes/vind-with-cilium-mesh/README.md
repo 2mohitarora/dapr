@@ -34,7 +34,7 @@ Follow instructions in ./pre-mesh-connection-validation.md
 
 # Have both mesh communicate with each other
 ```
-cilium clustermesh connect --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2 --namespace cilium
+cilium clustermesh connect --context vcluster-docker_cluster-1 --destination-context vcluster-docker_cluster-2 --namespace cilium --helm-values-secret-name cilium-cli-helm-values
 ```
 # Do some post-mesh connectivity validations
 Follow instructions in ./post-mesh-connection-validation.md

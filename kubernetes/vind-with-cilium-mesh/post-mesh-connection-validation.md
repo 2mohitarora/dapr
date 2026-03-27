@@ -1,6 +1,6 @@
 # Both clusters should see each other
-cilium clustermesh status --context vcluster-docker_cluster-1
-cilium clustermesh status --context vcluster-docker_cluster-2
+cilium clustermesh status --context vcluster-docker_cluster-1 --namespace cilium
+cilium clustermesh status --context vcluster-docker_cluster-2 --namespace cilium
 
 # Each cluster should see nodes from the other
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium node list
