@@ -20,5 +20,6 @@ spec:
     - fromEndpoints:
         - matchExpressions:
             - key: io.cilium.k8s.policy.cluster
+              operator: In
               values:
                 - cluster-2
