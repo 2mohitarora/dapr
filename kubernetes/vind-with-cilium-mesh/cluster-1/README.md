@@ -28,7 +28,7 @@ helm install cilium cilium/cilium --version 1.19.1 \
 ```
 # After CNI is installed, wait for pods to become Ready:
 ```
-kubectl get pods --all-namespaces -w
+kubectl get pods --all-namespaces -w -o wide
 ```
 # Install cert-manager
 ```
@@ -39,7 +39,7 @@ helm install cert-manager jetstack/cert-manager \
 ```
 # After cert-manager, wait for pods to become Ready:
 ```
-kubectl get pods --all-namespaces -w
+kubectl get pods --all-namespaces -w -o wide
 ```
 # Install cert-manager issuer
 ```
@@ -57,7 +57,7 @@ helm upgrade cilium cilium/cilium --version 1.19.1 \
   -f cilium/cluster.yaml
   
 # After Mesh is installed, wait for pods to become Ready:
-kubectl get pods --all-namespaces -w
+kubectl get pods --all-namespaces -w -o wide
 
 # Check cilium status
 cilium status --namespace cilium
