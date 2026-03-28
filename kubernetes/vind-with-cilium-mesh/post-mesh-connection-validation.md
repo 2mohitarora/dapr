@@ -7,8 +7,8 @@ kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium n
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium node list
 
 # Identities from both clusters should be visible
-kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity list | head -20
-kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity list | head -20
+kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity list
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity list
 
 # Full connectivity test across the mesh
 cilium connectivity test --context vcluster-docker_cluster-1 --multi-cluster vcluster-docker_cluster-2 --test pod-to-pod,pod-to-service --namespace cilium
