@@ -134,3 +134,7 @@ hubble observe --follow --output json | jq '{
 }'
 
 What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your identity sync is healthy.
+
+# What labels does identity 169568 have?
+kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity get 169568
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity get 169568
