@@ -102,9 +102,8 @@ kubectl --context vcluster-docker_cluster-1 apply -f policies/only-allow-prod-to
 kubectl --context vcluster-docker_cluster-2 apply -f policies/only-allow-prod-to-prod.yaml
 ```
 
-
-
 --------NOT EXPLORED YET--------
+
 # The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
 
@@ -118,6 +117,7 @@ hubble observe --follow --output json | jq '{
   dest: .destination.identity,
   verdict: .verdict
 }'
-What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your 100-cluster identity sync is healthy.
+
+What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your identity sync is healthy.
 
 ----------------
