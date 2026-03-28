@@ -28,7 +28,7 @@ kubectl --context vcluster-docker_cluster-2 create namespace mcs-test
 kubectl --context vcluster-docker_cluster-2 label namespace mcs-test app.kubernetes.io/part-of=application
 
 # Create deployment, service and serviceexport on cluster-2
-kubectl --context vcluster-docker_cluster-2 apply -f mcs-test.yaml
+kubectl --context vcluster-docker_cluster-2 apply -f cluster-2/mcs-test.yaml
 
 # Check serviceexport and serviceimport objects on cluster-2
 kubectl --context vcluster-docker_cluster-2 get serviceexport -n mcs-test
@@ -43,6 +43,7 @@ kubectl --context vcluster-docker_cluster-1 label namespace mcs-test app.kuberne
 
 # Check serviceimport objects appearing on cluster-1
 kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
+kubectl --context vcluster-docker_cluster-1 get svc -n mcs-test
 
 # Try to resolve the remote service again
 kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.mcs-test.svc.clusterset.local
@@ -55,7 +56,7 @@ What this proves: Cilium’s MCS controller has successfully synced the ServiceI
 # MCS-API Validator, Scearion 2 : Headless service on cluster-1 only and we will resolve it from cluster-2
 ```
 # Create deployment, headless service and serviceexport on cluster-1
-kubectl --context vcluster-docker_cluster-1 apply -f mcs-headless-test.yaml
+kubectl --context vcluster-docker_cluster-1 apply -f cluster-1/mcs-headless-test.yaml
 
 # Check serviceexport and serviceimport objects on cluster-1
 kubectl --context vcluster-docker_cluster-1 get serviceexport -n mcs-test
@@ -63,6 +64,8 @@ kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
 
 # Check serviceimport objects appearing on cluster-2 (Had to restart operator cluster-2)
 kubectl --context vcluster-docker_cluster-2 get serviceimport -n mcs-test
+# Had to restart the operator on cluster-2 for serviceimport to appear
+kubectl --context vcluster-docker_cluster-2 rollout restart deployment cilium-operator -n cilium
 
 # Try to resolve the remote service
 kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-headless.mcs-test.svc.clusterset.local
