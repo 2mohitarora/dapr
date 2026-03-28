@@ -11,6 +11,7 @@ spec:
     - fromEndpoints:
         - matchLabels:
             app: curl-test
+            io.cilium.k8s.policy.cluster: cluster-1
       toPorts:
         - ports:
             - port: "80"

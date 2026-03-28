@@ -84,8 +84,8 @@ kubectl --context vcluster-docker_cluster-2 get ccnp
 
 # Allow cluster-1 to access web (CiliumNetworkPolicy)
 ```
-kubectl --context vcluster-docker_cluster-1 apply -f policies/allow-web.yaml
-kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
+kubectl --context vcluster-docker_cluster-2 apply -f policies/allow-web.yaml
+kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
 ```
 
 # Allow cluster-2 to access web-headless (CiliumNetworkPolicy)
