@@ -1,19 +1,19 @@
 # Node to Node connectivity works
 ```
 - On cluster-1 run 
-  kubectl get nodes -o wide
+  kubectl --context vcluster-docker_cluster-1 get nodes -o wide
 - Pick internal IP of any node in cluster-1
 - On cluster-2 run 
-  kubectl run ping-test --rm -it --image=busybox --restart=Never -- ping -c 4 <cluster-1-node-ip>
+  kubectl --context vcluster-docker_cluster-2 run ping-test --rm -it --image=busybox --restart=Never -- ping -c 4 <cluster-1-node-ip>
 ```
 
 # Pod to Pod connectivity doesnt work
 ```
 - On cluster-1 run 
-  kubectl get pods --all-namespaces -w -o wide
+  kubectl --context vcluster-docker_cluster-1 get pods --all-namespaces -w -o wide
 - Pick internal IP of any pod in cluster-1
 - On cluster-2 run 
-  kubectl run cross-test --rm -it --image=busybox --restart=Never -- ping -c 3 <cluster-1-pod-ip>
+  kubectl --context vcluster-docker_cluster-2 run cross-test --rm -it --image=busybox --restart=Never -- ping -c 3 <cluster-1-pod-ip>
 ``` 
 
 # Check cilium and clustermesh status
