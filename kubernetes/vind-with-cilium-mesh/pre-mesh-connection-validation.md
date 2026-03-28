@@ -47,7 +47,3 @@ kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-ser
 # CA in the remote cert (what kvstoremesh presents)
 kubectl --context vcluster-docker_cluster-1 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
 kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
-
-# Compare cilium-ca cert
-kubectl --context vcluster-docker_cluster-1 get secret cilium-ca -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
-kubectl --context vcluster-docker_cluster-2 get secret cilium-ca -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
