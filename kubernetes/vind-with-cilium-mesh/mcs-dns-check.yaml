@@ -4,9 +4,6 @@ kind: Pod
 metadata:
   name: dns-validator
   namespace: default
-  labels:                
-    environment: production
-    app: dns-validator
 spec:
   containers:
   - name: alpine
