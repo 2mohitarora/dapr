@@ -123,7 +123,7 @@ kubectl --context vcluster-docker_cluster-2 rollout restart deployment web -n mc
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
 
 # Port-forward Hubble if not already open
-cilium hubble port-forward &
+cilium hubble port-forward -n cilium
 
 # Watch flows between clusters, showing the Identity IDs
 hubble observe --follow --output json | jq '{
@@ -134,5 +134,3 @@ hubble observe --follow --output json | jq '{
 }'
 
 What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your identity sync is healthy.
-
-----------------
