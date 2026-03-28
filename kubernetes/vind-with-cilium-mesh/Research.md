@@ -259,9 +259,69 @@ The Core Components
 
 - Hubble Timescape: you'll eventually need a persistent store (like Grafana Tempo or ClickHouse) because Hubble's "live" buffer is tiny.
 
-### What is identityAllocationMode: kvstore
+### ServiceExport and ServiceImport flow
 
-### What is Cilium's ClusterPool IPAM or ENI/Azure IPAM
+Cluster-2                                          Cluster-1
+─────────                                          ─────────
 
-### What is clustermesh.cacheTTL
+1. User creates ServiceExport
+        │
+        ▼
+2. cilium-operator watches it
+        │
+        ▼
+3. operator writes service export
+   info into local ClusterMesh etcd
+        │
+        ▼
+4. ClusterMesh etcd stores it at
+   cilium/state/serviceexports/v1/
+        │
+        │
+        ├──── KVStoreMesh in cluster-1 has a
+        │     read-only connection to cluster-2's
+        │     ClusterMesh etcd
+        │
+        ▼
+5. KVStoreMesh in cluster-1 detects
+   the new key, pulls it, caches it
+   into cluster-1's local etcd
+        │
+        ▼
+6. cilium-operator in cluster-1 watches
+   local etcd for remote service exports
+        │
+        ▼
+7. operator creates ServiceImport
+   in cluster-1's Kubernetes API
+        │
+        ▼
+8. operator creates derived-$hash
+   Service in cluster-1
+        │
+        ▼
+9. CoreDNS sees the ServiceImport
+   via multicluster plugin
+        │
+        ▼
+10. web.mcs-test.svc.clusterset.local
+    is now resolvable in cluster-1
 
+# CiliumAgent
+
+cilium-agent
+    │
+    ├──→ Kubernetes API (for local cluster data)
+    │    - Local pods, services, endpoints
+    │    - Local CiliumIdentity CRDs
+    │    - Local CiliumNetworkPolicy
+    │    - Local CiliumEndpointSlice
+    │
+    ├──→ Local ClusterMesh etcd (for remote cluster data)
+    │    - Remote identities
+    │    - Remote nodes
+    │    - Remote services
+    │    - Remote endpoints
+    │
+    ✗ Never talks to remote ClusterMesh etcd directly
+      (KVStoreMesh does that on its behalf)
