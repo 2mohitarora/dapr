@@ -162,7 +162,16 @@ hubble observe --follow --output json | jq -c 'select(.flow.verdict == "DROPPED"
   verdict: .flow.verdict
 }'
 
-What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your identity sync is healthy.
+# CiliumIdentity
+```
+1. Pod gets created
+2. Local cilium-agent computes an identity from the pod's labels
+3. Agent writes that identity to the local Kubernetes API (CiliumIdentity CRD)
+4. cilium-operator syncs it into the local KVStore (etcd)
+5. KVStoreMesh in remote clusters pulls it into their local KVStore
+6. Remote cilium-agents read it from their local KVStore
+7. Now remote clusters can recognize traffic from that identity
+```
 
 # What labels does identity 169568 have?
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity get 169568
