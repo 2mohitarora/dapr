@@ -16,10 +16,9 @@ spec:
             - kube-public
             - cert-manager
             - local-path-storage
-  ingressDeny:
+  ingress:
     - fromEndpoints:
         - matchExpressions:
             - key: io.cilium.k8s.policy.cluster
-              operator: NotIn
               values:
                 - cluster-2
