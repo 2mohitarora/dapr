@@ -105,6 +105,15 @@ kubectl --context vcluster-docker_cluster-1 apply -f policies/only-allow-prod-to
 kubectl --context vcluster-docker_cluster-2 apply -f policies/only-allow-prod-to-prod.yaml
 ```
 
+# Helpful commands
+```
+kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium endpoint list
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium endpoint list
+
+kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium monitor --type drop
+kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium monitor --type drop
+```
+
 --------NOT EXPLORED YET--------
 
 # The Hubble "Flow-Watch" Command

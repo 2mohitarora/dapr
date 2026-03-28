@@ -23,3 +23,6 @@ spec:
               operator: In
               values:
                 - cluster-1
+    - fromEntities:
+        - health
+        - remote-node
