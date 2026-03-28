@@ -4,9 +4,9 @@ metadata:
   name: web-headless-ingress
   namespace: mcs-test
 spec:
-  endpointSelector:
-    matchLabels:
-      app: web-headless
+  endpointSelector: {}
+    #matchLabels:
+    #  app: web-headless
   ingress:
     - fromEndpoints:
         - matchLabels:

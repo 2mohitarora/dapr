@@ -95,8 +95,8 @@ kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
 
 # Allow cluster-2 to access web-headless (CiliumNetworkPolicy)
 ```
-kubectl --context vcluster-docker_cluster-2 apply -f policies/allow-web-headless.yaml
-kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
+kubectl --context vcluster-docker_cluster-1 apply -f policies/allow-web-headless.yaml
+kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
 ```
 
 # Only allow prod to prod (CiliumClusterwideNetworkPolicy)
@@ -113,9 +113,10 @@ kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium e
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium monitor --type drop
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium monitor --type drop
 
-# After applying allow policy, had to restart cilium pods to make it work
+# After applying allow policy, had to restart cilium pods and recreate web to make it work
 kubectl --context vcluster-docker_cluster-2 delete pods -n cilium -l k8s-app=cilium
 kubectl --context vcluster-docker_cluster-2 get pods -n cilium -l k8s-app=cilium -w
+kubectl --context vcluster-docker_cluster-2 rollout restart deployment web -n mcs-test
 ```
 
 --------NOT EXPLORED YET--------
