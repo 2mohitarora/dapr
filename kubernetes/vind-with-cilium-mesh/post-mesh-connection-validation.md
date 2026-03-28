@@ -125,12 +125,41 @@ Finally, use Hubble to see the "Identity" magic in action. This command allows y
 # Port-forward Hubble if not already open
 cilium hubble port-forward -n cilium
 
-# Watch flows between clusters, showing the Identity IDs
+# Watch flows showing the Identity IDs
 hubble observe --follow --output json | jq '{
-  time: .time,
-  source: .source.identity,
-  dest: .destination.identity,
-  verdict: .verdict
+  time: .flow.time,
+  source_identity: .flow.source.identity,
+  source_labels: .flow.source.labels,
+  source_pod: .flow.source.pod_name,
+  dest_identity: .flow.destination.identity,
+  dest_labels: .flow.destination.labels,
+  dest_pod: .flow.destination.pod_name,
+  verdict: .flow.verdict
+}'
+
+# Compact version
+hubble observe --follow --output json | jq -c '{
+  src: (.flow.source.pod_name // .flow.source.labels[0]),
+  dst: (.flow.destination.pod_name // .flow.destination.labels[0]),
+  verdict: .flow.verdict,
+  port: .flow.l4.TCP.destination_port
+}'
+
+# Cross cluster traffic only
+hubble observe --follow --output json | jq -c 'select(.flow.source.cluster_name != .flow.destination.cluster_name) | {
+  src_cluster: .flow.source.cluster_name,
+  src_pod: .flow.source.pod_name,
+  dst_cluster: .flow.destination.cluster_name,
+  dst_pod: .flow.destination.pod_name,
+  verdict: .flow.verdict
+}'
+
+# Filter for drops only
+hubble observe --follow --output json | jq -c 'select(.flow.verdict == "DROPPED") | {
+  src: .flow.source.pod_name,
+  dst: .flow.destination.pod_name,
+  drop_reason: .flow.drop_reason_desc,
+  verdict: .flow.verdict
 }'
 
 What this proves: You are seeing the actual uint32 identities assigned by the KVStore, confirming that your identity sync is healthy.
