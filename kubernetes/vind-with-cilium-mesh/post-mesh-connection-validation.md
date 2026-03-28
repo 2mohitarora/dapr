@@ -112,6 +112,10 @@ kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium e
 
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium monitor --type drop
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium monitor --type drop
+
+# After applying allow policy, had to restart cilium pods to make it work
+kubectl --context vcluster-docker_cluster-2 delete pods -n cilium -l k8s-app=cilium
+kubectl --context vcluster-docker_cluster-2 get pods -n cilium -l k8s-app=cilium -w
 ```
 
 --------NOT EXPLORED YET--------

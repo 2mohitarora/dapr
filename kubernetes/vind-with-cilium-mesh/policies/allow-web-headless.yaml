@@ -10,7 +10,7 @@ spec:
   ingress:
     - fromEndpoints:
         - matchLabels:
-            app: curl-test
+            # app: curl-test
             io.cilium.k8s.policy.cluster: cluster-2
       toPorts:
         - ports:
