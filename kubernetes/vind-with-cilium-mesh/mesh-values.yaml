@@ -35,6 +35,7 @@ hubble:
     enabled: true
   # A web application that connects to Hubble Relay's gRPC endpoint. It renders the service map (which services talk to which), shows real-time flows, displays policy verdicts (allowed/denied), and visualizes drop reasons.
   # A command-line tool that also connects to Relay's gRPC endpoint. Used for filtering and querying flows from the terminal.
+  ui:  
     enabled: true
     service:
       type: LoadBalancer
