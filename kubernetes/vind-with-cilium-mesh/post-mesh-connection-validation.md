@@ -119,8 +119,6 @@ kubectl --context vcluster-docker_cluster-2 get pods -n cilium -l k8s-app=cilium
 kubectl --context vcluster-docker_cluster-2 rollout restart deployment web -n mcs-test
 ```
 
---------NOT EXPLORED YET--------
-
 # The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
 
