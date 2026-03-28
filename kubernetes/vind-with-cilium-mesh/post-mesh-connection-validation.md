@@ -25,6 +25,7 @@ kubectl --context vcluster-docker_cluster-2 apply -f mcs-dns-check.yaml
 ```
 # Create mcs-test namespace of cluster-2
 kubectl --context vcluster-docker_cluster-2 create namespace mcs-test
+kubectl --context vcluster-docker_cluster-2 label namespace mcs-test app.kubernetes.io/part-of=application
 
 # Create deployment, service and serviceexport on cluster-2
 kubectl --context vcluster-docker_cluster-2 apply -f mcs-test.yaml
@@ -38,6 +39,7 @@ kubectl --context vcluster-docker_cluster-1 exec dns-validator -- nslookup web.m
 
 # Create namespace on cluster-1
 kubectl --context vcluster-docker_cluster-1 create namespace mcs-test
+kubectl --context vcluster-docker_cluster-1 label namespace mcs-test app.kubernetes.io/part-of=application
 
 # Check serviceimport objects appearing on cluster-1
 kubectl --context vcluster-docker_cluster-1 get serviceimport -n mcs-test
