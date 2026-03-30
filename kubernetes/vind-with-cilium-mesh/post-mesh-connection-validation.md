@@ -129,7 +129,7 @@ kubectl --context vcluster-docker_cluster-2 rollout restart deployment web -n mc
 
 ### The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
-
+```
 ### Port-forward Hubble if not already open
 cilium hubble port-forward -n cilium
 
@@ -163,7 +163,6 @@ hubble observe --follow --output json | jq -c 'select(.flow.source.cluster_name 
 }'
 
 ### Filter for drops only
-```
 hubble observe --follow --output json | jq -c 'select(.flow.verdict == "DROPPED") | {
   src: .flow.source.pod_name,
   dst: .flow.destination.pod_name,
