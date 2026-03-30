@@ -29,14 +29,19 @@ cilium clustermesh status --context vcluster-docker_cluster-2 -n cilium --wait
 ```
 
 # Check cluster nodes
+```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium node list
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium node list
+```
 
 # Check cluster identities
+```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity list | head -20
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity list | head -20
+```
 
 # Compare the Cert-manager CA
+```
 kubectl --context vcluster-docker_cluster-1 get secret cilium-ca-secret -n cert-manager -o jsonpath='{.data.ca\.crt}' | md5sum
 kubectl --context vcluster-docker_cluster-2 get secret cilium-ca-secret -n cert-manager -o jsonpath='{.data.ca\.crt}' | md5sum
 
@@ -47,3 +52,4 @@ kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-ser
 # CA in the remote cert (what kvstoremesh presents)
 kubectl --context vcluster-docker_cluster-1 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
 kubectl --context vcluster-docker_cluster-2 get secret clustermesh-apiserver-remote-cert -n cilium -o jsonpath='{.data.ca\.crt}' | md5sum
+```

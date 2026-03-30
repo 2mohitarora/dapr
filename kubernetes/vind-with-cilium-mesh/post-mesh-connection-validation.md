@@ -1,27 +1,35 @@
-# Both clusters should see each other
+### Check clustermesh status
+```
 cilium clustermesh status --context vcluster-docker_cluster-1 --namespace cilium
 cilium clustermesh status --context vcluster-docker_cluster-2 --namespace cilium
-
-# Each cluster should see nodes from the other
+```
+### Each cluster should see nodes from the other
+```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium node list
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium node list
+```
 
-# Identities from both clusters should be visible
+### Identities from both clusters should be visible
+```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity list
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity list
+```
 
-# Full connectivity test across the mesh
+### Full connectivity test across the mesh
+```
 cilium connectivity test --context vcluster-docker_cluster-1 --multi-cluster vcluster-docker_cluster-2 --test pod-to-pod,pod-to-service --namespace cilium
 
 # Clean up test resources
 kubectl --context vcluster-docker_cluster-1 delete ns cilium-test-1
 kubectl --context vcluster-docker_cluster-2 delete ns cilium-test-1
+```
 
-# Create dns-validator pod on both clusters
+### Create dns-validator pod on both clusters
+```
 kubectl --context vcluster-docker_cluster-1 apply -f mcs-dns-check.yaml
 kubectl --context vcluster-docker_cluster-2 apply -f mcs-dns-check.yaml
-
-# MCS-API Validator, Scearion 1 : Service only on cluster-2
+```
+### MCS-API Validator, Scearion 1 : Service only on cluster-2
 ```
 # Create mcs-test namespace of cluster-2
 kubectl --context vcluster-docker_cluster-2 create namespace mcs-test
@@ -53,7 +61,7 @@ kubectl --context vcluster-docker_cluster-1 run curl-test --rm -it --image=curli
 What this proves: Cilium’s MCS controller has successfully synced the ServiceImport and CoreDNS is correctly configured with the clusterset stub-domain.
 ```
 
-# MCS-API Validator, Scearion 2 : Headless service on cluster-1 only and we will resolve it from cluster-2
+### MCS-API Validator, Scearion 2 : Headless service on cluster-1 only and we will resolve it from cluster-2
 ```
 # Create deployment, headless service and serviceexport on cluster-1
 kubectl --context vcluster-docker_cluster-1 apply -f cluster-1/mcs-headless-test.yaml
@@ -73,10 +81,10 @@ kubectl --context vcluster-docker_cluster-2 exec dns-validator -- nslookup web-h
 kubectl --context vcluster-docker_cluster-2 run curl-test --rm -it --image=curlimages/curl --restart=Never -n mcs-test --labels="app=curl-test" -- curl -v -s --max-time 5 http://web-headless.mcs-test.svc.clusterset.local -o /dev/null -w "Response from: %{remote_ip}\n"
 ```
 
-# MCS-API Validator, Scearion 3 : CiliumNetworkPolicy and L7 Policy and CiliumClusterwideNetworkPolicy 
+### MCS-API Validator, Scearion 3 : CiliumNetworkPolicy and L7 Policy and CiliumClusterwideNetworkPolicy 
  CiliumNetworkPolicy (CNP) and CiliumClusterwideNetworkPolicy (CCNP) are not automatically replicated across clusters in a Cilium Cluster Mesh. Cluster Mesh synchronizes identities, pods, and services to allow cross-cluster communication, security policies must be managed separately in each cluster
 
-# Deny all remote cluster traffic (CiliumClusterwideNetworkPolicy)
+### Deny all remote cluster traffic (CiliumClusterwideNetworkPolicy)
 ```
 kubectl --context vcluster-docker_cluster-1 apply -f policies/deny-all-cluster-1.yaml
 kubectl --context vcluster-docker_cluster-2 apply -f policies/deny-all-cluster-2.yaml
@@ -87,25 +95,25 @@ kubectl --context vcluster-docker_cluster-2 get ccnp
 # Try connecting from cluster-1 to cluster-2 and cluster-2 to cluster-1, it will fail
 ```
 
-# Allow cluster-1 to access web (CiliumNetworkPolicy)
+### Allow cluster-1 to access web (CiliumNetworkPolicy)
 ```
 kubectl --context vcluster-docker_cluster-2 apply -f policies/allow-web.yaml
 kubectl --context vcluster-docker_cluster-2 get cnp -n mcs-test
 ```
 
-# Allow cluster-2 to access web-headless (CiliumNetworkPolicy)
+### Allow cluster-2 to access web-headless (CiliumNetworkPolicy)
 ```
 kubectl --context vcluster-docker_cluster-1 apply -f policies/allow-web-headless.yaml
 kubectl --context vcluster-docker_cluster-1 get cnp -n mcs-test
 ```
 
-# Only allow prod to prod (CiliumClusterwideNetworkPolicy)
+### Only allow prod to prod (CiliumClusterwideNetworkPolicy)
 ```
 kubectl --context vcluster-docker_cluster-1 apply -f policies/only-allow-prod-to-prod.yaml
 kubectl --context vcluster-docker_cluster-2 apply -f policies/only-allow-prod-to-prod.yaml
 ```
 
-# Helpful commands
+### Helpful commands
 ```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium endpoint list
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium endpoint list
@@ -119,13 +127,13 @@ kubectl --context vcluster-docker_cluster-2 get pods -n cilium -l k8s-app=cilium
 kubectl --context vcluster-docker_cluster-2 rollout restart deployment web -n mcs-test
 ```
 
-# The Hubble "Flow-Watch" Command
+### The Hubble "Flow-Watch" Command
 Finally, use Hubble to see the "Identity" magic in action. This command allows you to see traffic filtered by the numeric Identity we discussed earlier.
 
-# Port-forward Hubble if not already open
+### Port-forward Hubble if not already open
 cilium hubble port-forward -n cilium
 
-# Watch flows showing the Identity IDs
+### Watch flows showing the Identity IDs
 hubble observe --follow --output json | jq '{
   time: .flow.time,
   source_identity: .flow.source.identity,
@@ -137,7 +145,7 @@ hubble observe --follow --output json | jq '{
   verdict: .flow.verdict
 }'
 
-# Compact version
+### Compact version
 hubble observe --follow --output json | jq -c '{
   src: (.flow.source.pod_name // .flow.source.labels[0]),
   dst: (.flow.destination.pod_name // .flow.destination.labels[0]),
@@ -145,7 +153,7 @@ hubble observe --follow --output json | jq -c '{
   port: .flow.l4.TCP.destination_port
 }'
 
-# Cross cluster traffic only
+### Cross cluster traffic only
 hubble observe --follow --output json | jq -c 'select(.flow.source.cluster_name != .flow.destination.cluster_name) | {
   src_cluster: .flow.source.cluster_name,
   src_pod: .flow.source.pod_name,
@@ -154,15 +162,16 @@ hubble observe --follow --output json | jq -c 'select(.flow.source.cluster_name 
   verdict: .flow.verdict
 }'
 
-# Filter for drops only
+### Filter for drops only
+```
 hubble observe --follow --output json | jq -c 'select(.flow.verdict == "DROPPED") | {
   src: .flow.source.pod_name,
   dst: .flow.destination.pod_name,
   drop_reason: .flow.drop_reason_desc,
   verdict: .flow.verdict
 }'
-
-# CiliumIdentity
+```
+### CiliumIdentity
 ```
 1. Pod gets created
 2. Local cilium-agent computes an identity from the pod's labels
@@ -173,6 +182,8 @@ hubble observe --follow --output json | jq -c 'select(.flow.verdict == "DROPPED"
 7. Now remote clusters can recognize traffic from that identity
 ```
 
-# What labels does identity 169568 have?
+### What labels does identity 169568 have?
+```
 kubectl --context vcluster-docker_cluster-1 exec -n cilium ds/cilium -- cilium identity get 169568
 kubectl --context vcluster-docker_cluster-2 exec -n cilium ds/cilium -- cilium identity get 169568
+```
