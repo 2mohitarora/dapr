@@ -1,6 +1,6 @@
 experimental:
   docker:
-    network: "vind-mesh"
+    network: "vind-cluster-1"
     nodes:
       - name: worker-1
     loadBalancer:
@@ -16,10 +16,10 @@ experimental:
 deploy:
   cni:
     flannel:
-      enabled: false  # Disable default Flannel CNI
+      enabled: false # Disable default Flannel CNI
 # Kubernetes version (optional, defaults to v1.34.0)
 # Specify via: controlPlane.distro.k8s.version
 controlPlane:
   distro:
     k8s:
-      version: "v1.34.0"  # or use image.tag for custom images
+      version: "v1.34.0" # or use image.tag for custom images
