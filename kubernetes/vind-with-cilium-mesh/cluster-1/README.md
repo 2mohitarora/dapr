@@ -1,6 +1,6 @@
 # Instructions for first cluster
 ```
-vcluster create cluster-1 --driver docker --values cluster-1.yaml
+sudo vcluster create cluster-1 --driver docker --values cluster-1.yaml
 ```
 # Add the Jetstack repo
 ```

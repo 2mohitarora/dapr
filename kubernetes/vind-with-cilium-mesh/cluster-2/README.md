@@ -7,7 +7,7 @@ kubectl get secret -n cert-manager cilium-ca-secret -o yaml > cilium-ca-secret.y
 
 # Create cluster-2
 ```
-vcluster create cluster-2 --driver docker --values cluster-2.yaml
+sudo vcluster create cluster-2 --driver docker --values cluster-2.yaml
 ```
 # Add the Jetstack repo
 ```
