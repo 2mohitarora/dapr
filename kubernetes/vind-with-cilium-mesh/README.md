@@ -1,6 +1,6 @@
 # Install Tools
 ```
-brew install kubectl helm docker go ko dapr/tap/dapr-cli cilium-cli vcluster hubble
+brew install kubectl helm docker go ko dapr/tap/dapr-cli cilium-cli vcluster hubble k9s
 ```
 
 # Install Orbstack
