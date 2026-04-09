@@ -248,14 +248,14 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 
 # Describe clusters
 ```
-vcluster describe cluster-1
-vcluster describe cluster-1
+vcluster describe cluster-1 --driver docker
+vcluster describe cluster-2 --driver docker
 ```
 
 # Cleanup
 ```
-vcluster delete cluster-1
-vcluster delete cluster-2
+sudo vcluster delete cluster-1 --driver docker
+sudo vcluster delete cluster-2 --driver docker
 ```
 
 # Sample command for logs
