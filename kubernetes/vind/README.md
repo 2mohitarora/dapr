@@ -131,11 +131,6 @@ chmod +x cluster-1-script.sh
 ./cluster-1-script.sh
 ```
 
-# Disconnect from first cluster
-```
-vcluster disconnect
-```
-
 # Create second vcluster
 ```
 sudo vcluster create cluster-2 --driver docker --values cluster-2.yaml
@@ -237,12 +232,13 @@ kubectl get svc -n traefik | grep traefik-ingress-dapr
 docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
 
 # Configure registry for cluster-2 so that nodes can pull from insecure registry
+chmod +x cluster-2-script.sh
 ./cluster-2-script.sh
 ```
 
 # Verify both clusters are running
 ```
-vcluster list
+vcluster list --driver docker
 ```
 
 # Check all the docker containers that are running
