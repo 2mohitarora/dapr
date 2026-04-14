@@ -23,9 +23,7 @@ kubectl run postgresql-client --rm --tty -i --restart='Never' \
 
 # Build container images
 ```
-export KO_DOCKER_REPO=localhost:5050
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./cronsvc --platform=linux/arm64
+ko build -L -B ./cronsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments

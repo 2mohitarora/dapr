@@ -2,9 +2,7 @@
 
 # Build order-processor service container images
 ```
-export KO_DOCKER_REPO=localhost:5050
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./order-processor --platform=linux/arm64
+ko build -L -B ./order-processor --platform=linux/arm64
 ```
 
 # Delete existing deployments
@@ -49,13 +47,5 @@ dapr workflow list -k --app-id order-processor \
   --connection-string "redis://:$REDIS_PASSWORD@localhost:6379" \
   -o wide
 
-dapr workflow history 7cab37fd-a76e-41ea-8601-ae73572a6c57 -k --app-id order-processor -o wide
-
-dapr workflow run OrderProcessingWorkflow -k \
-  --app-id order-processor \
-  --instance-id "order-004" \
-  --input '{"item_name":"Kubernetes Cluster","total_cost":5000,"quantity":1}'
-
-dapr workflow history order-004 -k --app-id order-processor -o wide
-
+dapr workflow history 43efc694-37d3-4714-9f7a-e3870af6898e -k --app-id order-processor -o wide
 ```

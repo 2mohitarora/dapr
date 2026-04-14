@@ -15,10 +15,10 @@ spec:
         app: order-processor
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "order-processor"
+        dapr.io/app-id: "order-processor"
         dapr.io/log-level: "debug"
     spec:
       containers:
         - name: order-processor
-          image: registry-1:5000/order-processor:latest
+          image: ko.local/order-processor:latest
           imagePullPolicy: Always

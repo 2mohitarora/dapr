@@ -15,13 +15,13 @@ spec:
         app: cronsvc
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "cronsvc"
+        dapr.io/app-id: "cronsvc"
         dapr.io/app-port: "6010"
         dapr.io/log-level: "debug"
     spec:
       containers:
         - name: cronsvc
-          image: registry-1:5000/cronsvc:latest
+          image: ko.local/cronsvc:latest
           ports:
             - containerPort: 6010
           env:
