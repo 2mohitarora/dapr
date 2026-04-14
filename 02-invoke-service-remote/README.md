@@ -12,13 +12,6 @@ docker context ls
 kubectl config get-contexts
 ```
 
-# Build front end service and genid service container images
-```
-export KO_DOCKER_REPO=localhost:5051
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./genidsvc --platform=linux/arm64
-```
-
 # Delete existing deployments
 ```
 kubectl delete deployment genidsvc
@@ -31,12 +24,12 @@ kubectl apply -f ./manifest/cluster-2/genid.yaml
 
 # Invoke genid service by find Traefik external IP
 ```
-curl -H "Host: genidsvc.ingress" http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
+curl -v -H "Host: genidsvc.ingress" http://192.168.117.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 
 # Test front end application
-curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-2f9fc3c2-ee28-4885-9762-66ab63b38b55"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-2f9fc3c2-ee28-4885-9762-66ab63b38b55"
 ```
 
 # Discuss rate limit and Check Rate Limit
@@ -47,6 +40,6 @@ kubectl delete deployment genidsvc
 kubectl apply -f ./manifest/cluster-2/genid.yaml
 
 seq 1 20 | xargs -P 20 -I {} curl -s -o /dev/null -w "%{http_code}\n" \
- http://192.168.107.253/v1.0/invoke/genidsvc.default/method/genid -X POST
+ http://192.168.117.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 
 ```

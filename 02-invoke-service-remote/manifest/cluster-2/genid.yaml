@@ -15,13 +15,13 @@ spec:
         app: genidsvc
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "genidsvc"
+        dapr.io/app-id: "genidsvc"
         dapr.io/app-port: "5050"
         # dapr.io/config: "genidsvc-config"
     spec:
       containers:
         - name: genidsvc
-          image: registry-2:5000/genidsvc:latest
+          image: ko.local/genidsvc:latest
           ports:
             - containerPort: 5050
           env:

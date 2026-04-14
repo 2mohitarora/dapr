@@ -3,6 +3,6 @@ kind: HTTPEndpoint
 metadata:
   name: genidsvc
 spec:
-  baseUrl: http://192.168.107.253/v1.0/invoke/genidsvc.default/method
+  baseUrl: http://192.168.117.253/v1.0/invoke/genidsvc.default/method
 scopes:
   - frontendsvc
