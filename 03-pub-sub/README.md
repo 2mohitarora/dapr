@@ -9,10 +9,8 @@ helm install redis bitnami/redis
 
 # Build front end service and genid service container images
 ```
-export KO_DOCKER_REPO=localhost:5050
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./frontendsvc --platform=linux/arm64
-ko build -B ./orderprocsvc --platform=linux/arm64
+ko build -B -L ./frontendsvc --platform=linux/arm64
+ko build -B -L ./orderprocsvc --platform=linux/arm64
 ```
 
 # Delete existing deployments
@@ -47,9 +45,9 @@ kubectl get pods -l app=orderprocsvc
 
 # Test the application
 ```
-curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
+curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-1e33be7b-2392-4a08-9901-01b59289895c"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-16f8e4b6-b91d-4292-a78c-cf501e660a40"
 ```
 
 # Check application logs
@@ -60,12 +58,11 @@ kubectl logs -l app=orderprocsvc --prefix
 
 # Debug
 ```
-kubectl apply -f ./manifest/redis-cli.yaml
 kubectl get secret --namespace default redis -o jsonpath="{.data.redis-password}" | base64 --decode
 kubectl exec -it redis-client -- /bin/sh
 redis-cli -h redis-master.default.svc.cluster.local -p 6379 -a '<password>'
 keys *
-get order-56bd2207-f333-4fa5-a5f4-afd6104b2df8
+get order-16f8e4b6-b91d-4292-a78c-cf501e660a40
 TYPE received-orders
 XRANGE received-orders - +
 ```

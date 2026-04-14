@@ -15,13 +15,13 @@ spec:
         app: orderprocsvc
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "orderprocsvc"
+        dapr.io/app-id: "orderprocsvc"
         dapr.io/app-port: "6060"
         dapr.io/log-level: "debug"
     spec:
       containers:
         - name: orderprocsvc
-          image: registry-1:5000/orderprocsvc:latest
+          image: ko.local/orderprocsvc:latest
           ports:
             - containerPort: 6060
           env:
