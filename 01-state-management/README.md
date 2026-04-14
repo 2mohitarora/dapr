@@ -9,9 +9,7 @@ helm install redis bitnami/redis
 
 # Build front end service container image
 ```
-export KO_DOCKER_REPO=localhost:5050
-export DOCKER_HOST="unix:///Users/mua0008/.orbstack/run/docker.sock"
-ko build -B ./frontendsvc --platform=linux/arm64
+ko build -B -L ./frontendsvc --platform=linux/arm64
 ```
 
 # Deploy manifests
@@ -40,9 +38,9 @@ kubectl describe pods -l app=frontendsvc
 
 # Test the application
 ```
-curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-6c8e39bd"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-18cb53f"
 ```
 
 # Check application logs

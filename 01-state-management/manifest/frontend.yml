@@ -26,11 +26,11 @@ spec:
         app: frontendsvc
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "frontendsvc"
+        dapr.io/app-id: "frontendsvc"
     spec:
       containers:
         - name: frontendsvc
-          image: registry-1:5000/frontendsvc:latest
+          image: ko.local/frontendsvc:latest
           ports:
             - containerPort: 8080
           env:
