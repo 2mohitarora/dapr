@@ -22,6 +22,7 @@ docker context list
 sudo vcluster create cluster-1 --driver docker --values cluster-1.yaml
 
 helm repo add cilium https://helm.cilium.io/
+helm repo update
 
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 
