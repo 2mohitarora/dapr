@@ -62,7 +62,7 @@ kubectl get secret --namespace default redis -o jsonpath="{.data.redis-password}
 kubectl exec -it redis-client -- /bin/sh
 redis-cli -h redis-master.default.svc.cluster.local -p 6379 -a '<password>'
 keys *
-get order-16f8e4b6-b91d-4292-a78c-cf501e660a40
+HGETALL order-16f8e4b6-b91d-4292-a78c-cf501e660a40
 TYPE received-orders
 XRANGE received-orders - +
 ```
@@ -88,7 +88,7 @@ kubectl delete deployment orderprocsvc
 ```
 kubectl delete component orders-pubsub
 kubectl apply -f ./manifest-ext/rabbitmq-pubsub.yaml
-Check Dapr UI
+dapr components -k
 ```
 
 # Restart applications for new components to be picked up 
@@ -98,7 +98,7 @@ kubectl apply -f ./manifest/frontend.yaml
 ```
 
 # Moment of truth
-curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
+curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-da56bb75-7ca8-4e64-a7d1-bebb48321bf6"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-5602c0f9-d276-4bc7-b042-ac6e666dd943"
 ```
