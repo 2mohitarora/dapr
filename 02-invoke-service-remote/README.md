@@ -29,7 +29,7 @@ curl -v -H "Host: genidsvc.ingress" http://192.168.117.253/v1.0/invoke/genidsvc.
 # Test front end application
 curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-2f9fc3c2-ee28-4885-9762-66ab63b38b55"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-04233f93-028a-41b7-ac84-44fb3b754599"
 ```
 
 # Discuss rate limit and Check Rate Limit
