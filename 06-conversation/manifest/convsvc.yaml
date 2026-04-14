@@ -15,10 +15,10 @@ spec:
         app: convsvc
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id:  "convsvc"
+        dapr.io/app-id: "convsvc"
         dapr.io/log-level: "debug"
     spec:
       containers:
         - name: convsvc
-          image: registry-1:5000/convsvc:latest
+          image: ko.local/convsvc:latest
           imagePullPolicy: Always
