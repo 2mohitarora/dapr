@@ -5,8 +5,6 @@ experimental:
       - name: worker-1
     loadBalancer:
       enabled: true
-    registryProxy:
-      enabled: false
 # CNI Configuration
 # vCluster only supports Flannel natively. To use other CNI plugins (Calico, Cilium, etc.):
 # 1. Disable Flannel (set enabled: false)
@@ -16,10 +14,10 @@ experimental:
 deploy:
   cni:
     flannel:
-      enabled: false  # Disable default Flannel CNI
+      enabled: false # Disable default Flannel CNI
 # Kubernetes version (optional, defaults to v1.34.0)
 # Specify via: controlPlane.distro.k8s.version
 controlPlane:
   distro:
     k8s:
-      version: "v1.34.0"  # or use image.tag for custom images
+      version: "v1.34.0" # or use image.tag for custom images

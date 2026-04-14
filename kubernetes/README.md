@@ -7,12 +7,6 @@ brew install kubectl helm docker go ko dapr/tap/dapr-cli cilium-cli vcluster k9s
 ```
 brew install --cask orbstack
 
-# Add local registries that will be created later
-# Add registry to docker daemon in ~/.docker/daemon.json
-{
-  "insecure-registries": ["localhost:5050", "localhost:5051"]
-}
-
 # Start Orbstack
 ```
 
@@ -121,16 +115,6 @@ kubectl patch deployment traefik -n traefik -p '
 kubectl get svc -n traefik | grep traefik-ingress-dapr
 ```
 
-# Configure Registry for first cluster
-```
-# Start a local registry on the same Docker network as your vind cluster
-docker run -d --name registry-1 --network vind-cluster-1 -p 5050:5000 registry:2
-
-# Configure registry for cluster-1 so that nodes can pull from insecure registry
-chmod +x cluster-1-script.sh
-./cluster-1-script.sh
-```
-
 # Create second vcluster
 ```
 sudo vcluster create cluster-2 --driver docker --values cluster-2.yaml
@@ -224,16 +208,6 @@ kubectl patch deployment traefik -n traefik -p '
 
 # Check traffic service created by Dapr
 kubectl get svc -n traefik | grep traefik-ingress-dapr
-```
-
-# Configure Registry for second cluster
-```
-# Start a local registry on the same Docker network as your vind cluster
-docker run -d --name registry-2 --network vind-cluster-2 -p 5051:5000 registry:2
-
-# Configure registry for cluster-2 so that nodes can pull from insecure registry
-chmod +x cluster-2-script.sh
-./cluster-2-script.sh
 ```
 
 # Verify both clusters are running
