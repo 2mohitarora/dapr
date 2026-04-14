@@ -52,9 +52,9 @@ kubectl get pods -l app=genidsvc
 
 # Test the application
 ```
-curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.97.254/orders/new"
+curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.97.254/orders/order/order-e46d35bf-e088-4587-9818-d6af68ce81d2"
+curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-31acfc5f-b3cb-4d3d-9c5a-140da445b189"
 ```
 
 # Check application logs
