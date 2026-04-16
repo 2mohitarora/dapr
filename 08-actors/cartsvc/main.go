@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -10,15 +9,12 @@ import (
 
 	"github.com/dapr/go-sdk/actor"
 	"github.com/dapr/go-sdk/actor/config"
-	"github.com/dapr/go-sdk/client"
 	daprd "github.com/dapr/go-sdk/service/http"
 )
 
 const (
 	cartActorType = "CartActor"
-	stateKeyCart   = "cart"
-	timerName      = "cart-expiry"
-	expiryDuration = "PT30M" // 30 minutes
+	stateKeyCart  = "cart"
 )
 
 // Cart holds the shopping cart state for a user.
@@ -82,7 +78,7 @@ func (a *CartActor) getCart(ctx context.Context) (*Cart, error) {
 	return &cart, nil
 }
 
-// saveCart persists the cart to actor state and resets the expiry timer.
+// saveCart persists the cart to actor state.
 func (a *CartActor) saveCart(ctx context.Context, cart *Cart) error {
 	sm := a.GetStateManager()
 	cart.UpdatedAt = time.Now().UTC()
@@ -92,31 +88,7 @@ func (a *CartActor) saveCart(ctx context.Context, cart *Cart) error {
 	if err := sm.Save(ctx); err != nil {
 		return fmt.Errorf("save state: %w", err)
 	}
-
-	// Reset the expiry timer — if the cart is idle for 30 minutes, it auto-clears.
-	a.resetExpiryTimer(ctx)
 	return nil
-}
-
-// resetExpiryTimer registers (or re-registers) a timer that fires Clear after inactivity.
-func (a *CartActor) resetExpiryTimer(ctx context.Context) {
-	dc, err := client.NewClient()
-	if err != nil {
-		log.Printf("cartactor: timer client: %s", err)
-		return
-	}
-	defer dc.Close()
-
-	err = dc.RegisterActorTimer(ctx, &client.RegisterActorTimerRequest{
-		ActorType: cartActorType,
-		ActorID:   a.ID(),
-		Name:      timerName,
-		DueTime:   expiryDuration,
-		CallBack:  "ExpireCart",
-	})
-	if err != nil {
-		log.Printf("cartactor: register timer: %s", err)
-	}
 }
 
 // GetCart returns the current cart contents.
@@ -125,7 +97,7 @@ func (a *CartActor) GetCart(ctx context.Context) (*Cart, error) {
 }
 
 // AddItem adds an item to the cart or increments its quantity if it already exists.
-func (a *CartActor) AddItem(ctx context.Context, req *AddItemRequest) (*Cart, error) {
+func (a *CartActor) AddItem(ctx context.Context, req AddItemRequest) (*Cart, error) {
 	cart, err := a.getCart(ctx)
 	if err != nil {
 		return nil, err
@@ -162,7 +134,7 @@ func (a *CartActor) AddItem(ctx context.Context, req *AddItemRequest) (*Cart, er
 }
 
 // RemoveItem removes an item from the cart by ID.
-func (a *CartActor) RemoveItem(ctx context.Context, req *RemoveItemRequest) (*Cart, error) {
+func (a *CartActor) RemoveItem(ctx context.Context, req RemoveItemRequest) (*Cart, error) {
 	cart, err := a.getCart(ctx)
 	if err != nil {
 		return nil, err
@@ -218,12 +190,6 @@ func (a *CartActor) Clear(ctx context.Context) error {
 	return a.clearCart(ctx)
 }
 
-// ExpireCart is the timer callback — auto-clears abandoned carts.
-func (a *CartActor) ExpireCart(ctx context.Context) error {
-	log.Printf("cartactor [%s]: cart expired due to inactivity", a.ID())
-	return a.clearCart(ctx)
-}
-
 func (a *CartActor) clearCart(ctx context.Context) error {
 	sm := a.GetStateManager()
 	if err := sm.Remove(ctx, stateKeyCart); err != nil {
@@ -257,8 +223,3 @@ func main() {
 	}
 }
 
-// marshalJSON is a helper used by tests and utilities.
-func marshalJSON(v any) []byte {
-	data, _ := json.Marshal(v)
-	return data
-}
