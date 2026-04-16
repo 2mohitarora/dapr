@@ -66,6 +66,13 @@ Returns:
 
 ## Build & Deploy
 
+### Install redis on k8s
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install redis bitnami/redis
+```
+
 ### Build
 
 ```
