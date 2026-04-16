@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,7 +11,11 @@ import (
 	dapr "github.com/dapr/go-sdk/client"
 )
 
-const cartActorType = "CartActor"
+const (
+	cartActorType  = "CartActor"
+	expiryTimer    = "cart-expiry"
+	expiryDuration = "PT30M" // 30 minutes idle → auto-clear
+)
 
 var daprClient dapr.Client
 
@@ -20,6 +25,22 @@ type AddItemRequest struct {
 	Name     string  `json:"name"`
 	Price    float64 `json:"price"`
 	Quantity int     `json:"quantity"`
+}
+
+// resetExpiryTimer registers a 30-minute expiry timer on the cart actor.
+// If no further activity, the timer fires "Clear" to auto-expire abandoned carts.
+// Called from the frontend (not the actor) to avoid creating gRPC clients inside actor methods.
+func resetExpiryTimer(ctx context.Context, userID string) {
+	err := daprClient.RegisterActorTimer(ctx, &dapr.RegisterActorTimerRequest{
+		ActorType: cartActorType,
+		ActorID:   userID,
+		Name:      expiryTimer,
+		DueTime:   expiryDuration,
+		CallBack:  "Clear",
+	})
+	if err != nil {
+		log.Printf("frontendsvc: register expiry timer for %s: %s", userID, err)
+	}
 }
 
 func getCart(w http.ResponseWriter, r *http.Request) {
@@ -73,6 +94,8 @@ func addItem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	resetExpiryTimer(r.Context(), userID)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(resp.Data)
 }
@@ -94,6 +117,8 @@ func removeItem(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "unable to remove item", http.StatusInternalServerError)
 		return
 	}
+
+	resetExpiryTimer(r.Context(), userID)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(resp.Data)
