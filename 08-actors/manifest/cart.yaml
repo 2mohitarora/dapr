@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartsvc
+  labels:
+    app: cartsvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cartsvc
+  template:
+    metadata:
+      labels:
+        app: cartsvc
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "cartsvc"
+        dapr.io/app-port: "5050"
+        dapr.io/log-level: "debug"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+        - name: cartsvc
+          image: ko.local/cartsvc:latest
+          ports:
+            - containerPort: 5050
+          env:
+            - name: APP_PORT
+              value: "5050"
+          imagePullPolicy: Always
