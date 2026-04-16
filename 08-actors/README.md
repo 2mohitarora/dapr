@@ -87,31 +87,28 @@ ko build -B -L ./cartsvc --platform=linux/arm64
 kubectl apply -f manifest/state-store.yaml
 
 # Build and deploy services
-ko apply -f manifest/cart.yaml
-ko apply -f manifest/frontend.yaml
-
-# Port-forward to access the frontend
-kubectl port-forward svc/frontendsvc 8080:8080
+kubectl apply -f manifest/cart.yaml
+kubectl apply -f manifest/frontend.yaml
 ```
 
 ### Test
 
 ```bash
 # Add items
-curl -s -X POST http://localhost:8080/cart/alice/items \
+curl -s -X POST http://192.168.107.254/cart/alice/items \
   -d '{"id":"sku-100","name":"Keyboard","price":79.99,"quantity":1}' | jq
 
-curl -s -X POST http://localhost:8080/cart/alice/items \
+curl -s -X POST http://192.168.107.254/cart/alice/items \
   -d '{"id":"sku-200","name":"Monitor","price":349.00,"quantity":1}' | jq
 
 # View cart
-curl -s http://localhost:8080/cart/alice | jq
+curl -s http://192.168.107.254/cart/alice | jq
 
 # Checkout
-curl -s -X POST http://localhost:8080/cart/alice/checkout | jq
+curl -s -X POST http://192.168.107.254/cart/alice/checkout | jq
 
 # Cart is now empty
-curl -s http://localhost:8080/cart/alice | jq
+curl -s http://192.168.107.254/cart/alice | jq
 ```
 
 ## How the Actor Timer Works
