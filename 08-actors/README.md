@@ -66,11 +66,12 @@ Returns:
 
 ## Build & Deploy
 
-### Prerequisites
+### Build
 
-- Kubernetes cluster with Dapr installed
-- Redis deployed (e.g., via Helm: `helm install redis bitnami/redis`)
-- [ko](https://ko.build) installed
+```
+ko build -B -L ./frontendsvc --platform=linux/arm64
+ko build -B -L ./cartsvc --platform=linux/arm64
+```
 
 ### Deploy
 
