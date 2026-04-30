@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/dapr/go-sdk/service/common"
-	daprd "github.com/dapr/go-sdk/service/http"
+	daprd "github.com/dapr/go-sdk/service/grpc"
 	"github.com/google/uuid"
 )
 
@@ -21,7 +21,10 @@ func main() {
 		appPort = "5050"
 	}
 
-	dapr := daprd.NewService(fmt.Sprintf(":%s", appPort))
+	dapr, err := daprd.NewService(fmt.Sprintf(":%s", appPort))
+	if err != nil {
+		log.Fatalf("genid: service creation: %v", err)
+	}
 
 	// Define service endpoint /genid
 	if err := dapr.AddServiceInvocationHandler("/genid", generateId); err != nil {
