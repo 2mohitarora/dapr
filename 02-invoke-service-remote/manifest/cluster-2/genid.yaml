@@ -17,6 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "genidsvc"
         dapr.io/app-port: "5050"
+        dapr.io/app-protocol: "grpc"
         # dapr.io/config: "genidsvc-config"
     spec:
       containers:
