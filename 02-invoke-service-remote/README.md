@@ -24,7 +24,7 @@ kubectl apply -f ./manifest/cluster-2/genid.yaml
 
 # Invoke genid service by find Traefik external IP
 ```
-curl -v -H "Host: genidsvc.ingress" http://192.168.117.253/v1.0/invoke/genidsvc.default/method/genid -X POST
+curl -v http://192.168.117.253/v1.0/invoke/genidsvc.default/method/genid -X POST
 
 # Test front end application
 curl -i -d '{ "items": ["automobile"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
