@@ -1,6 +1,6 @@
 experimental:
   docker:
-    network: "vind-cluster-2"
+    network: "dapr-demo-cluster-2"
     nodes:
       - name: worker-1
     loadBalancer:

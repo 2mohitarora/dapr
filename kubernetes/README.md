@@ -19,7 +19,7 @@ docker context list
 
 # Create your first vcluster
 ```
-sudo vcluster create cluster-1 --driver docker --values cluster-1.yaml
+sudo vcluster create dapr-demo-cluster-1 --driver docker --values cluster-1.yaml
 
 helm repo add cilium https://helm.cilium.io/
 helm repo update
@@ -118,7 +118,7 @@ kubectl get svc -n traefik | grep traefik-ingress-dapr
 
 # Create second vcluster
 ```
-sudo vcluster create cluster-2 --driver docker --values cluster-2.yaml
+sudo vcluster create dapr-demo-cluster-2 --driver docker --values cluster-2.yaml
 
 helm repo add cilium https://helm.cilium.io/
 
@@ -223,25 +223,21 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 
 # Describe clusters
 ```
-vcluster describe cluster-1 --driver docker
-vcluster describe cluster-2 --driver docker
+vcluster describe dapr-demo-cluster-1 --driver docker
+vcluster describe dapr-demo-cluster-2 --driver docker
 ```
 
 # Cleanup
 ```
-sudo vcluster delete cluster-1 --driver docker
-sudo vcluster delete cluster-2 --driver docker
+sudo vcluster delete dapr-demo-cluster-1 --driver docker
+sudo vcluster delete dapr-demo-cluster-2 --driver docker
 ```
 
 # Sample command for logs
 ```
 # View control plane logs
-docker exec vcluster.cp.cluster-1 journalctl -u vcluster --no-pager
+docker exec vcluster.cp.dapr-demo-cluster-1 journalctl -u vcluster --no-pager
 
 # View worker node kubelet logs
-docker exec vcluster.node.cluster-1.worker-1 journalctl -u kubelet --no-pager
+docker exec vcluster.node.dapr-demo-cluster-1.worker-1 journalctl -u kubelet --no-pager
 ```
-
-# Networking
-- Each cluster uses a separate Docker network (vind-cluster-1 and vind-cluster-2) to keep them isolated from each other.
-- LoadBalancer is enabled for both clusters
