@@ -95,14 +95,14 @@ kubectl apply -f manifest/frontend.yaml
 
 ```bash
 # Add items
-curl -s -X POST http://192.168.107.254/cart/alice/items \
+curl -s -X POST http://192.168.147.254/cart/alice/items \
   -d '{"id":"sku-100","name":"Keyboard","price":79.99,"quantity":1}' | jq
 
-curl -s -X POST http://192.168.107.254/cart/alice/items \
+curl -s -X POST http://192.168.147.254/cart/alice/items \
   -d '{"id":"sku-200","name":"Monitor","price":349.00,"quantity":1}' | jq
 
 # View cart
-curl -s http://192.168.107.254/cart/alice | jq
+curl -s http://192.168.147.254/cart/alice | jq
 
 # Checkout
 curl -s -X POST http://192.168.107.254/cart/alice/checkout | jq

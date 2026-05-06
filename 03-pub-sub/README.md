@@ -45,9 +45,9 @@ kubectl get pods -l app=orderprocsvc
 
 # Test the application
 ```
-curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
+curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.147.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-16f8e4b6-b91d-4292-a78c-cf501e660a40"
+curl -i  -H "Content-type: application/json" "http://192.168.147.254/orders/order/order-16f8e4b6-b91d-4292-a78c-cf501e660a40"
 ```
 
 # Check application logs
@@ -98,7 +98,7 @@ kubectl apply -f ./manifest/frontend.yaml
 ```
 
 # Moment of truth
-curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.107.254/orders/new"
+curl -i -d '{ "items": ["bike"]}'  -H "Content-type: application/json" "http://192.168.147.254/orders/new"
 
-curl -i  -H "Content-type: application/json" "http://192.168.107.254/orders/order/order-5602c0f9-d276-4bc7-b042-ac6e666dd943"
+curl -i  -H "Content-type: application/json" "http://192.168.147.254/orders/order/order-5602c0f9-d276-4bc7-b042-ac6e666dd943"
 ```
